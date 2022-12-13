@@ -1,5 +1,5 @@
 {
-  "name": "online-store",
+  "name": "mobile-store",
   "version": "1.0.0",
   "description": "",
   "main": "webpack.base.config.js",
@@ -40,6 +40,7 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
+    "favicons-webpack-plugin": "^6.0.0",
     "file-loader": "^6.2.0",
     "node-loader": "^2.0.0",
     "postcss-loader": "^7.0.2",

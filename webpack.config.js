@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const EslintPlugin = require('eslint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 const baseConfig = {
   entry: path.resolve(__dirname, './src/index.ts'),
@@ -53,6 +54,7 @@ const baseConfig = {
     }),
     new CleanWebpackPlugin(),
     new EslintPlugin({ extensions: 'ts' }),
+    new FaviconsWebpackPlugin('./src/assets/image/favicon.png'),
   ],
 };
 
