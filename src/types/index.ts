@@ -1,9 +1,12 @@
-export interface IRoutItem {
-  path: RegExp | string;
+export interface IRout {
+  path: string;
   cb: (param?: string) => void;
 }
 
-export interface IRoutOptions {
-  root: string;
-  mode: string;
+export interface IMainPage {
+  draw: () => void;
+}
+
+export interface IErrorPage {
+  draw: () => void;
 }
