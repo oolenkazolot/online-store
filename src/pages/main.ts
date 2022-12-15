@@ -4,10 +4,10 @@ class MainPage {
     if (!mainElement) {
       return;
     }
-    mainElement.textContent = "";
-    const title: HTMLElement = document.createElement("h1");
-    title.textContent = "Привет";
-    mainElement?.append(title);
+    // mainElement.textContent = "";
+    // const title: HTMLElement = document.createElement("h1");
+    // title.textContent = "Привет";
+    // mainElement?.append(title);
   }
 }
 

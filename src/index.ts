@@ -1,8 +1,8 @@
-import './sass/style.scss';
-import Router from './utils/Routing';
-import MainPage from './pages/main';
-import ErrorPage from './pages/error';
-import { IMainPage, IErrorPage, IRout } from './types/index';
+import "./sass/style.scss";
+import Router from "./utils/Routing";
+import MainPage from "./pages/main";
+import ErrorPage from "./pages/error";
+import { IMainPage, IErrorPage, IRout } from "./types/index";
 
 const mainPage: IMainPage = new MainPage();
 const errorPage: IErrorPage = new ErrorPage();
@@ -11,20 +11,20 @@ const errorPage: IErrorPage = new ErrorPage();
 //список страниц с колбеками: путь и что делать
 const routs: IRout[] = [
   {
-    path: '',
+    path: "",
     cb: mainPage.draw,
   },
   {
-    path: 'cart',
+    path: "cart",
     cb: () => {
       //передать метод для отрисовки корзины
-      alert('welcome to cart');
+      alert("welcome to cart");
     },
   },
   {
-    path: 'products/:id',
+    path: "products/:id",
     cb: (id) => {
-      alert('welcome to products ' + id);
+      alert("welcome to products " + id);
     },
   },
 ];

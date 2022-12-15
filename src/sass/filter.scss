@@ -1,0 +1,76 @@
+.filter {
+  color: $color-gray;
+  width: 25%;
+
+  &__wrap {
+    padding: 0 10px;
+    border: 1px solid $bg-gray;
+    border-radius: 8px;
+  }
+
+  &__title {
+    font-size: 30px;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+}
+
+.filter-block {
+  padding-bottom: 20px;
+  border-bottom: 1px solid $bg-gray;
+
+  &__title {
+    font-size: 22px;
+    font-weight: 400;
+    margin: 10px 0;
+  }
+
+  &__items {
+    height: 10rem;
+    padding-right: 5px;
+    overflow: hidden;
+    overflow-y: auto;
+    @extend %scroll-gray;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__checkbox {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+
+    &:checked + .filter-block__custom-checkbox {
+      background: $color-main;
+      border: 1px solid $color-gray;
+    }
+  }
+
+  &__custom-checkbox {
+    background: $bg-white;
+    border: 1px solid $bg-gray;
+    border-radius: 3px;
+    flex: 0 0 16px;
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: 0.2s all ease;
+  }
+}
