@@ -1,0 +1,95 @@
+.header-top,
+.header-bottom {
+    border-bottom: 1px solid $bg-gray;
+}
+
+.header-top__wrapper,
+.header-bottom__wrapper {
+    max-width: 1600px;
+}
+
+.header-top__wrapper,
+.header-bottom__wrapper {
+    padding: 10px 40px;
+    color: $color-gray;
+    margin: 0 auto;
+    border-bottom: 1px solid $bg-gray;
+}
+
+.header-top__container,
+.header-top__mobile-container,
+.header-top__email-container,
+.header-top__signIn-container,
+.header-top__location-container,
+.header-bottom__logo-container {
+    @extend %flex;
+    &:hover {
+        cursor: pointer;;
+    }
+}
+
+.header-bottom__wrapper {
+    @extend %flex;
+    font-size: 1.4rem;
+}
+
+.header-top__mobile-icon {
+    @include icon (url('../assets/svg/icon-phone.svg'));
+}
+
+.header-top__email-icon {
+    @include icon (url('../assets/svg/icon-email.svg'));
+}
+
+.header-top__location-icon {
+    @include icon (url('../assets/svg/icon-location.svg'));
+    background-size: 15px 15px;
+}
+
+.header-top__signIn-icon {
+    @include icon (url('../assets/svg/icon-signIn.svg'));
+}
+
+.header-top__signIn-button {
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    background-color: transparent;
+    color: $color-gray;
+    cursor: pointer;
+}
+
+.header-bottom__logo {
+    @include icon (url('../assets/svg/logo.svg'));
+    width: 100px;
+    height: 100px;
+}
+
+.header-bottom__cart-total {
+    color: $color-main;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-right: 20px;
+}
+
+.header-bottom__cart {
+    @include icon (url('../assets/svg/cart.svg'));
+    width: 70px;
+    height: 70px;
+    position: relative;
+}
+
+.header-bottom__items-amount {
+    color: black;
+    font-size: 1.2rem;
+    position: absolute;
+    top: 16px;
+    left: 22px;
+    background-color: $color-main;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

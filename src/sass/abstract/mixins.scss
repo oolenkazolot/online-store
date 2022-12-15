@@ -1,0 +1,12 @@
+@mixin icon ($url) {
+    width: 15px;
+    height: 15px;
+    background-image: $url;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-right: 10px;
+    &:hover {
+        cursor: pointer;;
+    }
+}

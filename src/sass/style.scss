@@ -1,8 +1,10 @@
 @import 'variables.scss';
+@import './abstract/mixins.scss';
 @import 'header.scss';
 @import 'main-page.scss';
 @import 'scroll.scss';
 @import 'filter.scss';
+@import './abstract/placeholders.scss';
 
 * {
   box-sizing: border-box;
