@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const EslintPlugin = require('eslint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const { basename } = require('path/posix');
 
 const baseConfig = {
   entry: path.resolve(__dirname, './src/index.ts'),
@@ -42,19 +43,37 @@ const baseConfig = {
     path: path.resolve(__dirname, './dist'),
     assetModuleFilename: 'images/[name][ext]',
   },
+
+  performance: {
+    hints: false,
+    maxAssetSize: 512000,
+    maxEntrypointSize: 512000,
+  },
+
   plugins: [
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './src/index.html'),
-      filename: 'index.html',
-    }),
     new MiniCssExtractPlugin({
       filename: 'style.css',
       chunkFilename: '[id].css',
       ignoreOrder: false, // Enable to remove warnings about conflicting order
     }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './src/index.html'),
+      filename: 'index.html',
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './src/404.html'),
+      filename: '404.html',
+    }),
+    new FaviconsWebpackPlugin({
+      logo: './src/assets/favicons/favicon.png',
+      mode: 'webapp',
+      devMode: 'webapp',
+      prefix: 'assets/favicons/',
+      cache: true,
+      inject: true,
+    }),
     new CleanWebpackPlugin(),
     new EslintPlugin({ extensions: 'ts' }),
-    new FaviconsWebpackPlugin('./src/assets/image/favicon.png'),
   ],
 };
 
