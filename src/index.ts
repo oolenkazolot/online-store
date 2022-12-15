@@ -57,3 +57,9 @@ router.init();
 // c.setAttribute('href', 'products/15');
 // c.textContent = 'products page';
 // document.body.append(a, b, c);
+import { TopHeader, BottomHeader } from "./components/header";
+
+const headerTop = new TopHeader();
+headerTop.drawElements();
+const headerBottom = new BottomHeader();
+headerBottom.drawElements();

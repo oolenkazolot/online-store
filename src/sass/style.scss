@@ -1,5 +1,7 @@
 @import 'variables.scss';
+@import './abstract/mixins.scss';
 @import 'header.scss';
+@import './abstract/placeholders.scss';
 
 * {
   box-sizing: border-box;
