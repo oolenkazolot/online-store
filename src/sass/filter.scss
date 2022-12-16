@@ -1,6 +1,6 @@
 .filter {
   color: $color-gray;
-  width: 25%;
+  min-width: 270px;
 
   &__wrap {
     padding: 0 10px;
@@ -23,6 +23,7 @@
     font-size: 22px;
     font-weight: 400;
     margin: 10px 0;
+    text-transform: capitalize;
   }
 
   &__items {
@@ -73,4 +74,93 @@
     cursor: pointer;
     transition: 0.2s all ease;
   }
+}
+
+.filter-range {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  &__input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    outline: none;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    background-color: transparent;
+    pointer-events: none;
+
+    &::-webkit-slider-runnable-track {
+      -webkit-appearance: none;
+      height: 5px;
+    }
+
+    &::-moz-range-track {
+      -webkit-appearance: none;
+      height: 5px;
+    }
+
+    &::-ms-track {
+      -webkit-appearance: none;
+      height: 5px;
+    }
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 12px;
+      width: 12px;
+      background-color: $color-black;
+      cursor: pointer;
+      border-radius: 50%;
+      margin-top: -5px;
+      pointer-events: auto;
+    }
+
+    &::-moz-range-thumb {
+      -webkit-appearance: none;
+      height: 12px;
+      width: 12px;
+      background-color: $color-black;
+      cursor: pointer;
+      border-radius: 50%;
+      // margin-top: -5px;
+      pointer-events: auto;
+    }
+
+    &::-ms-thumb {
+      -webkit-appearance: none;
+      height: 12px;
+      width: 12px;
+      background-color: $color-black;
+      cursor: pointer;
+      border-radius: 50%;
+      // margin-top: -5px;
+      pointer-events: auto;
+    }
+
+    &:active::-webkit-slider-thumb {
+      background-color: $color-white;
+      border: 3px solid $color-black;
+    }
+  }
+
+  &__slider-track {
+    width: 100%;
+    height: 5px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    border-radius: 5px;
+  }
+}
+
+.filter-values {
+  text-align: center;
+  margin-bottom: 20px;
 }

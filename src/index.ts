@@ -12,7 +12,7 @@ const errorPage: IErrorPage = new ErrorPage();
 const routs: IRout[] = [
   {
     path: "",
-    cb: mainPage.draw,
+    cb: mainPage.draw.bind(mainPage),
   },
   {
     path: "cart",
