@@ -1,30 +1,36 @@
-import "./sass/style.scss";
-import Router from "./utils/Routing";
-import MainPage from "./pages/main";
-import ErrorPage from "./pages/error";
-import { IMainPage, IErrorPage, IRout } from "./types/index";
+import './sass/style.scss';
+import Router from './utils/Routing';
+import MainPage from './pages/main';
+import ErrorPage from './pages/error';
+import { IMainPage, IErrorPage, IRout } from './types/index';
 
 const mainPage: IMainPage = new MainPage();
 const errorPage: IErrorPage = new ErrorPage();
+const cartPage: ICartPage = new CartPage();
+
+const headerTop = new TopHeader();
+headerTop.drawElements();
+const headerBottom = new BottomHeader();
+headerBottom.drawElements();
 
 //router start
 //список страниц с колбеками: путь и что делать
 const routs: IRout[] = [
   {
-    path: "",
-    cb: mainPage.draw.bind(mainPage),
+    path: '',
+    cb: mainPage.draw,
   },
   {
-    path: "cart",
+    path: 'cart',
     cb: () => {
       //передать метод для отрисовки корзины
-      alert("welcome to cart");
+      alert('welcome to cart');
     },
   },
   {
-    path: "products/:id",
+    path: 'products/:id',
     cb: (id) => {
-      alert("welcome to products " + id);
+      alert('welcome to products ' + id);
     },
   },
 ];
@@ -35,11 +41,20 @@ router.init();
 
 // Для примера создания ссылки роутера
 //первый для кнопки(ссылки) на корзину
-// const a = document.createElement('a');
-// a.addEventListener('click', (e) => {
-//   e.preventDefault();
-//   router.navigate('cart');
-// });
+const a = document.createElement('a');
+a.addEventListener('click', (e) => {
+  e.preventDefault();
+  router.navigate('cart');
+});
+const cart = document.querySelector('.header-bottom__cart') as HTMLElement;
+const itemsInCart = document.querySelector('.header-bottom__items-amount') as HTMLElement;
+if (cart) {
+  cart.append(a);
+}
+if (itemsInCart) {
+  a.append(itemsInCart);
+}
+
 // a.setAttribute('href', 'cart');
 // a.textContent = 'cart page';
 // const b = document.createElement('a');
@@ -57,9 +72,3 @@ router.init();
 // c.setAttribute('href', 'products/15');
 // c.textContent = 'products page';
 // document.body.append(a, b, c);
-import { TopHeader, BottomHeader } from "./components/header";
-
-const headerTop = new TopHeader();
-headerTop.drawElements();
-const headerBottom = new BottomHeader();
-headerBottom.drawElements();

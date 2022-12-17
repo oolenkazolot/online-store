@@ -40,3 +40,6 @@ export interface IFilterRange {
   createFilterRange: () => HTMLElement;
   createFilterValues: () => HTMLElement;
 }
+export interface ICartPage {
+  draw: () => void;
+}
