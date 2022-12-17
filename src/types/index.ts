@@ -10,3 +10,7 @@ export interface IMainPage {
 export interface IErrorPage {
   draw: () => void;
 }
+
+export interface ICartPage {
+  draw: () => void;
+}

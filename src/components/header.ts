@@ -19,15 +19,19 @@ export class TopHeader {
     firstElClass: string,
     secElement: string,
     secElClass: string,
-    secElContent: string
+    secElContent: string,
+    firstElContent?: string
   ): HTMLElement {
     const newElem = this.createElement("div", contClass);
-    this.createElement("span", firstElClass, newElem);
+    const firstEl = this.createElement("span", firstElClass, newElem);
     this.createElement(
       secElement,
       secElClass,
       newElem
     ).innerHTML = secElContent;
+    if (firstElContent) {
+      firstEl.innerHTML = firstElContent;
+    }
     return newElem;
   }
 
@@ -104,7 +108,8 @@ export class BottomHeader extends TopHeader {
       "header-bottom__cart-total",
       "span",
       "header-bottom__total-sum",
-      "&#8364 0"
+      "&#8364 0",
+      "Cart total"
     );
 
     bottomWrapper.append(logoContainer, priceContainer);
@@ -120,7 +125,7 @@ export class BottomHeader extends TopHeader {
       cartContainer
     );
     const cartItemsAmount = super.createElement(
-      "div",
+      "span",
       "header-bottom__items-amount",
       Cart
     );

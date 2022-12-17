@@ -1,0 +1,250 @@
+* {
+  box-sizing: border-box;
+}
+
+.main__wrapper {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1600px;
+  margin: 0 auto;
+  margin-top: 5%;
+  padding: 0 3%;
+}
+
+.prod-cont,
+.sum-cont {
+  width: 69%;
+  color: $color-gray;
+  border: 1px solid $bg-gray;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 3px 3px 7px 0px rgba(34, 60, 80, 0.2);
+  height: fit-content;
+}
+
+.prod-cont__title-cont,
+.prod-cont__stat-cont,
+.prod-cont__items-cont,
+.prod-cont__pages-cont,
+.prod-cont__addInfo,
+.prod-cont__contr-wrap {
+  @extend %flex;
+}
+
+.prod-cont__pages-cont  {
+  padding-left: 1rem;
+}
+
+.prod-cont__title,
+.sum-cont__title {
+  font-size: 2rem;
+}
+
+.prod-cont__title-cont,
+.sum-cont__title {
+  background-color: $bg-whitesmoke;
+  padding: 0.5rem;
+  border-bottom: 1px solid $bg-gray;
+}
+
+.prod-cont__title-cont {
+  border: none;
+}
+
+.prod-cont__stat-cont {
+  text-transform: uppercase;
+  font-size: 1.2rem;
+}
+
+.prod-cont__items-num {
+  outline: 1px solid $bg-gray;
+  border: none;
+  width: 25px;
+  height: 25px;
+  font-size: 1.1rem;
+  font-family: 'Inter', sans-serif;
+  color: $color-gray;
+  text-align: center;
+  background-color: $color-main;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px 0px rgba(34, 60, 80, 0.2);
+  margin-left: 0.3rem;
+  color: black;
+}
+
+.prod-cont__separ {
+  width: 25px;
+  height: 25px;
+  border: 1px solid $bg-gray;
+  border-radius: 5px;
+  font-size: 1.4rem;
+  font-family: 'Inter', sans-serif;
+  color: $color-gray;
+  padding-bottom: 4px;
+  color: black;
+  @include buttons;
+}
+
+.prod-cont__count {
+  margin: 0 0.4rem;
+}
+
+.prod-cont__page {
+  padding-right: 0.3rem;
+}
+
+.prod-cont__card-cont {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem;
+  color: black;
+  border-top: 1px solid $bg-gray;
+}
+
+.prod-cont__item-num {
+  width: 30px;
+  height: 30px;
+  border: 2px solid $bg-gray;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.prod-cont__item-img {
+  width: 250px;
+  height: 132px;
+  background-size: cover;
+  background-image: url('https://i.dummyjson.com/data/products/1/1.jpg');
+}
+
+.prod-cont__item-img {
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.prod-cont__info-block {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.prod-cont__prod-name {
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid $bg-gray;
+}
+
+.prod-cont__item-descr {
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.prod-cont__addInfo {
+  padding: 0.8rem;
+  font-size: 0.9rem;
+}
+
+.prod-cont__stock-bl,
+.prod-cont__price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.prod-cont__stock-bl,
+.prod-cont__contr-wrap,
+.prod-cont__price {
+  padding: 0.8rem;
+}
+
+.prod-cont__contr {
+  background-color: $color-main;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+  padding-bottom: 4px;
+  border: 1px solid $bg-gray;
+  @include buttons;
+}
+
+.prod-cont__quantity{
+  margin: 0 1rem;
+  font-size: 1.2rem;
+}
+
+.prod-count__stock {
+  margin-right: 0.5rem;
+}
+
+.sum-cont {
+  width: 29%;
+}
+
+.sum-cont__prod-cont,
+.sum-prod__total-cont {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.sum-cont__title {
+  text-align: center;
+}
+
+.sum-cont__info-cont {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.sum-cont__info-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  color: black;
+}
+
+.sum-prod__promo-input {
+  height: 2rem;
+  border-radius: 25px;
+  outline: 2px solid $color-main;
+  border: none;
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.sum-cont__product,
+.sum-prod__total {
+  color: $color-main;
+  margin-right: 1rem;
+  font-weight: 700;
+}
+
+.sum-prod__test-promo {
+  font-size: 0.9rem;
+}
+
+.sum-cont__buy-btn {
+  padding: 11px 35px;
+  font-size: 15px;
+  font-weight: 600;
+  color: $color-dark-blue;
+  border-radius: 25px;
+  text-transform: uppercase;
+  border: none;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  @include buttons;
+}
