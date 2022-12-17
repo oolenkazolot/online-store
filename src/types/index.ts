@@ -37,6 +37,6 @@ export interface IFilter {
 }
 
 export interface IFilterRange {
-  drawFilterRange: () => HTMLElement;
-  drawFilterValues: () => HTMLElement;
+  createFilterRange: () => HTMLElement;
+  createFilterValues: () => HTMLElement;
 }

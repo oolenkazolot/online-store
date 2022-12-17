@@ -1,98 +1,89 @@
 class FilterRange {
-  public drawFilterRange(): HTMLElement {
+  private prefix: string;
+  private sliderOne: HTMLInputElement;
+  private sliderTwo: HTMLInputElement;
+  private sliderTrack: HTMLElement;
+  private displayValueOne: HTMLElement;
+  private displayValueTwo: HTMLElement;
+  constructor(prefix: string) {
+    this.prefix = prefix;
+    this.sliderOne = this.createSliderInput('0', '100', `${this.prefix}-slider-1`, '30', this.slideOne.bind(this));
+    this.sliderTwo = this.createSliderInput('0', '100', `${this.prefix}-slider-2`, '70', this.slideTwo.bind(this));
+    this.displayValueOne = this.createFilterDisplayValue(`${this.prefix}-range1`, '0');
+    this.displayValueTwo = this.createFilterDisplayValue(`${this.prefix}-range2`, '100');
+    this.sliderTrack = this.createSliderTrack();
+  }
+
+  public createFilterRange(): HTMLElement {
     const rangeFilter: HTMLElement = document.createElement('div');
     rangeFilter.classList.add('filter-range');
-    const filterSliderTrack: HTMLElement = document.createElement('div');
-    filterSliderTrack.classList.add('filter-range__slider-track');
-    const input1: HTMLElement = document.createElement('input');
-    input1.classList.add('filter-range__input');
-    input1.setAttribute('type', 'range');
-    input1.setAttribute('min', '0');
-    input1.setAttribute('max', '100');
-    input1.setAttribute('value', '30');
-    input1.setAttribute('id', 'slider-1');
-    input1.addEventListener('input', this.slideOne.bind(this));
-    const input2: HTMLElement = document.createElement('input');
-    input2.classList.add('filter-range__input');
-    input2.setAttribute('type', 'range');
-    input2.setAttribute('min', '0');
-    input2.setAttribute('max', '100');
-    input2.setAttribute('value', '70');
-    input2.setAttribute('id', 'slider-2');
-    input2.addEventListener('input', this.slideTwo.bind(this));
-    rangeFilter.append(filterSliderTrack, input1, input2);
+    rangeFilter.append(this.sliderTrack, this.sliderOne, this.sliderTwo);
     const slideOne = this.slideOne.bind(this);
     const slideTwo = this.slideTwo.bind(this);
-    window.onload = function () {
+    window.addEventListener('load', () => {
       slideOne();
       slideTwo();
-    };
+    });
     return rangeFilter;
   }
 
-  public drawFilterValues(): HTMLElement {
+  private createSliderTrack(): HTMLElement {
+    const filterSliderTrack: HTMLElement = document.createElement('div');
+    filterSliderTrack.classList.add('filter-range__slider-track');
+    return filterSliderTrack;
+  }
+
+  private createSliderInput(min: string, max: string, id: string, value: string, cb: () => void): HTMLInputElement {
+    const input: HTMLInputElement = document.createElement('input');
+    input.classList.add('filter-range__input');
+    input.setAttribute('type', 'range');
+    input.setAttribute('min', min);
+    input.setAttribute('max', max);
+    input.setAttribute('value', value);
+    input.setAttribute('id', id);
+    input.addEventListener('input', cb);
+    return input;
+  }
+
+  public createFilterValues(): HTMLElement {
     const filterValues: HTMLElement = document.createElement('div');
     filterValues.classList.add('filter-values');
-    const span1: HTMLElement = document.createElement('span');
-    span1.setAttribute('id', 'range1');
-    span1.textContent = '0';
     const span2: HTMLElement = document.createElement('span');
     span2.textContent = '-';
-    const span3: HTMLElement = document.createElement('span');
-    span3.setAttribute('id', 'range2');
-    span3.textContent = '100';
-    filterValues.append(span1, span2, span3);
+    filterValues.append(this.displayValueOne, span2, this.displayValueTwo);
     return filterValues;
   }
 
+  private createFilterDisplayValue(id: string, value: string): HTMLElement {
+    const span: HTMLElement = document.createElement('span');
+    span.setAttribute('id', id);
+    span.textContent = value;
+    return span;
+  }
+
   private slideOne(): void {
-    const sliderOne: HTMLInputElement | null = document.getElementById('slider-1') as HTMLInputElement;
-    const sliderTwo: HTMLInputElement | null = document.getElementById('slider-2') as HTMLInputElement;
     const minGap = 0;
-    const displayValOne: HTMLElement | null = document.getElementById('range1');
-
-    if (!sliderOne || !sliderTwo || !displayValOne) {
-      return;
+    if (parseInt(this.sliderTwo.value) - parseInt(this.sliderOne.value) <= minGap) {
+      this.sliderOne.value = parseInt(this.sliderTwo.value) - minGap + '';
     }
-
-    if (parseInt(sliderTwo.value) - parseInt(sliderOne.value) <= minGap) {
-      sliderOne.value = parseInt(sliderTwo.value) - minGap + '';
-    }
-
-    displayValOne.textContent = sliderOne.value;
+    this.displayValueOne.textContent = this.sliderOne.value;
     this.fillColor();
   }
 
   private slideTwo(): void {
-    const sliderOne: HTMLInputElement | null = document.getElementById('slider-1') as HTMLInputElement;
-    const sliderTwo: HTMLInputElement | null = document.getElementById('slider-2') as HTMLInputElement;
-    const displayValTwo: HTMLElement | null = document.getElementById('range2');
     const minGap = 0;
-    if (!sliderOne || !sliderTwo || !displayValTwo) {
-      return;
+    if (parseInt(this.sliderTwo.value) - parseInt(this.sliderOne.value) <= minGap) {
+      this.sliderTwo.value = parseInt(this.sliderOne.value) + minGap + '';
     }
-
-    if (parseInt(sliderTwo.value) - parseInt(sliderOne.value) <= minGap) {
-      sliderTwo.value = parseInt(sliderOne.value) + minGap + '';
-    }
-
-    displayValTwo.textContent = sliderTwo.value;
-
+    this.displayValueTwo.textContent = this.sliderTwo.value;
     this.fillColor();
   }
 
   private fillColor(): void {
-    const sliderOne: HTMLInputElement | null = document.getElementById('slider-1') as HTMLInputElement;
-    const sliderTwo: HTMLInputElement | null = document.getElementById('slider-2') as HTMLInputElement;
-    const sliderTrack: HTMLElement | null = document.querySelector('.filter-range__slider-track');
-    const sliderMaxValue: string = sliderOne.max;
-    if (!sliderOne || !sliderTwo || !sliderTrack) {
-      return;
-    }
-
-    const percent1 = (+sliderOne.value / +sliderMaxValue) * 100;
-    const percent2 = (+sliderTwo.value / +sliderMaxValue) * 100;
-    sliderTrack.style.background = `linear-gradient(to right, #f1f1f2 ${percent1}%, #fd2 ${percent1}%,  #fd2 ${percent2}%, #f1f1f2 ${percent2}%)`;
+    const sliderMaxValue: string = this.sliderOne.max;
+    const percent1 = (+this.sliderOne.value / +sliderMaxValue) * 100;
+    const percent2 = (+this.sliderTwo.value / +sliderMaxValue) * 100;
+    this.sliderTrack.style.background = `linear-gradient(to right, #f1f1f2 ${percent1}%, #fd2 ${percent1}%,  #fd2 ${percent2}%, #f1f1f2 ${percent2}%)`;
   }
 }
 
