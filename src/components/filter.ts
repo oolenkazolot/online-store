@@ -102,7 +102,7 @@ class Filter {
     block.classList.add('filter-block');
     const title: HTMLElement = document.createElement('h3');
     title.classList.add('filter-block__title');
-    title.textContent = 'Stosk';
+    title.textContent = 'Stock';
     const rangeFilter: HTMLElement = this.filterRange2.createFilterRange();
     const filterValues: HTMLElement = this.filterRange2.createFilterValues();
     block.append(title, filterValues, rangeFilter);
