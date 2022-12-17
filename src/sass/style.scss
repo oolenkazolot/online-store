@@ -1,6 +1,9 @@
 @import 'variables.scss';
 @import './abstract/mixins.scss';
 @import 'header.scss';
+@import 'main-page.scss';
+@import 'scroll.scss';
+@import 'filter.scss';
 @import './abstract/placeholders.scss';
 @import './cart.scss';
 
@@ -13,4 +16,5 @@
 
 body {
   font-family: 'Inter', sans-serif;
+  font-size: 14px;
 }

@@ -2,9 +2,9 @@ import "./sass/style.scss";
 import Router from "./utils/Routing";
 import MainPage from "./pages/main";
 import ErrorPage from "./pages/error";
+import CartPage from "./pages/cart";
 import { IMainPage, IErrorPage, IRout, ICartPage } from "./types/index";
 import { TopHeader, BottomHeader } from "./components/header";
-import CartPage from "./pages/cart";
 
 const mainPage: IMainPage = new MainPage();
 const errorPage: IErrorPage = new ErrorPage();
@@ -20,7 +20,7 @@ headerBottom.drawElements();
 const routs: IRout[] = [
   {
     path: "",
-    cb: mainPage.draw,
+    cb: mainPage.draw.bind(mainPage),
   },
   {
     path: "cart",
