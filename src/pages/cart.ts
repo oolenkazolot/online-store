@@ -1,35 +1,10 @@
 import { title } from "process";
 import textObj from "../utils/textObj";
+import Template from "../templates/template";
+import ModalWindow from "../components/modal-window";
+const modal = new ModalWindow();
 
-class Temp {
-  public createElement(
-    myClass: string,
-    parentElement?: HTMLElement,
-    text?: string
-  ): HTMLElement {
-    const newElem = document.createElement("div");
-    newElem.classList.add(myClass);
-    if (parentElement) {
-      parentElement.append(newElem);
-    }
-    if (text) {
-      newElem.innerText = text;
-    }
-    return newElem;
-  }
-
-  public createInput(
-    myClass: string,
-    parentElement: HTMLElement,
-    placeholder: string
-  ): HTMLInputElement {
-    const inputEl = document.createElement("input");
-    inputEl.classList.add(myClass);
-    inputEl.placeholder = placeholder;
-    parentElement.append(inputEl);
-    return inputEl;
-  }
-
+class Temp extends Template {
   public createCardHeader(): void {
     const mainElement = document.querySelector("main") as HTMLElement;
     mainElement.innerHTML = "";
@@ -127,6 +102,16 @@ class Temp {
     const sumInfoWrap = this.createElement("sum-cont__info-wrap", sumInfoCont);
     const buyBtn = document.createElement("button");
     buyBtn.classList.add("sum-cont__buy-btn");
+
+    buyBtn.addEventListener("click", () => {
+      modal.overlay.classList.remove("invisible");
+      modal.formWrapper.classList.remove("invisible");
+    });
+    modal.overlay.addEventListener("click", () => {
+      modal.overlay.classList.add("invisible");
+      modal.formWrapper.classList.add("invisible");
+    });
+
     sumInfoCont.append(buyBtn);
     buyBtn.innerText = textObj.buyBtn;
 
@@ -147,97 +132,6 @@ class Temp {
 
     const promo = this.createElement("promo", sumInfoWrap, textObj.testPromo);
   }
-
-  createModalWindow(): void {
-    const overlay = document.createElement("div");
-    overlay.classList.add("overlay");
-    document.body.append(overlay);
-
-    const formWrapper = this.createElement("form-wrapper", document.body);
-
-    const modalCont = document.createElement("form");
-    modalCont.classList.add("modal-cont");
-    formWrapper.append(modalCont);
-
-    const persInfoCont = this.createElement(
-      "modal-cont__pers-info-cont",
-      modalCont
-    );
-    const creditCardCont = this.createElement(
-      "modal-cont__credit-card-cont",
-      modalCont
-    );
-
-    const title1 = this.createElement("title1", persInfoCont, textObj.title1);
-    const nameCont = this.createElement("form-item", persInfoCont);
-    const numberCont = this.createElement("form-item", persInfoCont);
-    const addrCont = this.createElement("form-item", persInfoCont);
-    const emailCont = this.createElement("form-item", persInfoCont);
-
-    const title2 = this.createElement("title2", creditCardCont, textObj.title2);
-    const cardData = this.createElement("card-data", creditCardCont);
-
-    const nameInput = this.createInput("name-input", nameCont, "Name");
-    const nameError = this.createElement("pd-err", nameCont, textObj.nameErr);
-    nameError.classList.add("invisible");
-
-    const phoneInput = this.createInput(
-      "phone-input",
-      numberCont,
-      "Phone number"
-    );
-    const phoneErr = this.createElement("pd-err", numberCont, textObj.phoneErr);
-    phoneErr.classList.add("invisible");
-
-    const addressInput = this.createInput(
-      "address-input",
-      addrCont,
-      "Delivery address"
-    );
-    const addressErr = this.createElement("pd-err", addrCont, textObj.addrErr);
-    addressErr.classList.add("invisible");
-
-    const emailInput = this.createInput("email-input", emailCont, "E-mail");
-    const emailErr = this.createElement("pd-err", emailCont, textObj.emailErr);
-    emailErr.classList.add("invisible");
-
-    const cardNumberCont = this.createElement("card-details-cont", cardData);
-    const otherDataCont = this.createElement("other-cont", cardData);
-    const paymentSyst = this.createElement("payment-syst", cardNumberCont);
-    const cardInput = this.createInput(
-      "card-input",
-      cardNumberCont,
-      "Card number"
-    );
-
-    const validCont = this.createElement(
-      "validity-details-cont",
-      otherDataCont
-    );
-    const CVVCont = this.createElement("validity-details-cont", otherDataCont);
-
-    const valid = this.createElement("valid", validCont, textObj.valid);
-    const validDate = this.createInput("valid-date", validCont, "Valid thru");
-
-    const CVV = this.createElement("CVV", CVVCont, textObj.CVV);
-    const CVVNumb = this.createInput("CVV-numb", CVVCont, "Code");
-
-    const cardNumbErr = this.createElement("card-err", modalCont);
-    cardNumbErr.classList.add("invisible");
-    cardNumbErr.innerText = textObj.cardNumbErr;
-
-    const validThruErr = this.createElement("card-err", modalCont);
-    validThruErr.innerText = textObj.validErr;
-    validThruErr.classList.add("invisible");
-
-    const CVVError = this.createElement("card-err", modalCont, textObj.CVVErr);
-    CVVError.classList.add("invisible");
-
-    const confirmBtn = document.createElement("button");
-    confirmBtn.classList.add("modal-cont__button");
-    modalCont.append(confirmBtn);
-    confirmBtn.innerText = textObj.confirmBtn;
-  }
 }
 
 class CartPage {
@@ -246,7 +140,7 @@ class CartPage {
     temp.createCardHeader();
     temp.createItemBlock();
     temp.createSummary();
-    temp.createModalWindow();
+    modal.createModalWindow();
   }
 }
 

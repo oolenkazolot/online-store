@@ -8,6 +8,7 @@
   z-index: 10;
   top:0;
   left:0;
+  transition: $transition;
 }
 
 .form-wrapper {
@@ -20,6 +21,7 @@
   justify-content: center;
   align-items: center;
   z-index: 10;
+  transition: $transition;
 }
 
 .modal-cont {
@@ -145,5 +147,10 @@
 }
 
 .invisible {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.hidden {
   display: none;
 }
