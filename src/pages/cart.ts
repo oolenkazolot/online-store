@@ -1,14 +1,33 @@
-class Temporary {
+import { title } from "process";
+import textObj from "../utils/textObj";
+
+class Temp {
   public createElement(
     myClass: string,
-    parentElement?: HTMLElement
+    parentElement?: HTMLElement,
+    text?: string
   ): HTMLElement {
     const newElem = document.createElement("div");
     newElem.classList.add(myClass);
     if (parentElement) {
       parentElement.append(newElem);
     }
+    if (text) {
+      newElem.innerText = text;
+    }
     return newElem;
+  }
+
+  public createInput(
+    myClass: string,
+    parentElement: HTMLElement,
+    placeholder: string
+  ): HTMLInputElement {
+    const inputEl = document.createElement("input");
+    inputEl.classList.add(myClass);
+    inputEl.placeholder = placeholder;
+    parentElement.append(inputEl);
+    return inputEl;
   }
 
   public createCardHeader(): void {
@@ -22,91 +41,78 @@ class Temporary {
     titleProd.classList.add("prod-cont__title");
     titleCont.append(titleProd);
 
-    titleProd.innerText = "Products In Cart";
+    titleProd.innerText = textObj.titleProd;
 
     const statCont = this.createElement("prod-cont__stat-cont", titleCont);
     const itemsCont = this.createElement("prod-cont__items-cont", statCont);
-    const items = this.createElement("prod-cont__items", itemsCont);
+    const items = this.createElement("items", itemsCont, textObj.items);
     const itemsNum = document.createElement("input");
     itemsNum.classList.add("prod-cont__items-num");
     itemsCont.append(itemsNum);
 
-    items.innerText = "items:";
     itemsNum.value = "1";
 
     const pageCont = this.createElement("prod-cont__pages-cont", statCont);
-    const page = this.createElement("prod-cont__page", pageCont);
-
-    page.innerText = "page:";
+    const page = this.createElement("page", pageCont, textObj.page);
 
     const separLeft = document.createElement("button");
     separLeft.classList.add("prod-cont__separ");
     pageCont.append(separLeft);
 
-    const count = this.createElement("prod-cont__count", pageCont);
-    separLeft.innerText = "<";
-
-    count.innerText = "1";
+    const count = this.createElement("count", pageCont, textObj.count);
+    separLeft.innerText = textObj.separLeft;
 
     const separRight = document.createElement("button");
     separRight.classList.add("prod-cont__separ");
     pageCont.append(separRight);
-    separRight.innerText = ">";
+    separRight.innerText = textObj.separRight;
   }
 
   public createItemBlock(): void {
     const prodCont = document.querySelector(".prod-cont") as HTMLElement;
     const cardCont = this.createElement("prod-cont__card-cont", prodCont);
-    const itemNumber = this.createElement("prod-cont__item-num", cardCont);
-    itemNumber.innerText = "1";
+    const itemNumb = this.createElement("item-num", cardCont, textObj.itemNumb);
 
     const itemImage = this.createElement("prod-cont__item-img", cardCont);
     const infoBlock = this.createElement("prod-cont__info-block", cardCont);
     const controlBlock = this.createElement("prod-cont__contr-block", cardCont);
 
-    const prodName = this.createElement("prod-cont__prod-name", infoBlock);
-    prodName.innerText = "iPhone 9";
+    const prodName = this.createElement(
+      "prod-cont__prod-name",
+      infoBlock,
+      textObj.prodName
+    );
 
-    const itemDescr = this.createElement("prod-cont__item-descr", infoBlock);
-    itemDescr.innerText = "An apple mobile which is nothing like apple";
+    const desc = this.createElement("item-descr", infoBlock, textObj.desc);
 
     const addInfoCont = this.createElement("prod-cont__addInfo", infoBlock);
-    const ratWrapper = this.createElement("prod-cont__rat-wrap", addInfoCont);
-    const rating = this.createElement("prod-cont__rating", ratWrapper);
-    rating.innerText = "Rating";
+    const ratWrap = this.createElement("prod-cont__rat-wrap", addInfoCont);
+    const rating = this.createElement("rating", ratWrap, textObj.rating);
 
-    const ratNum = this.createElement("prod-cont__rat-num", ratWrapper);
-    ratNum.innerText = "4.69";
+    const ratNum = this.createElement("rat-num", ratWrap, textObj.ratNum);
 
-    const discWrapper = this.createElement("prod-cont__disc-wrap", addInfoCont);
-    const discount = this.createElement("prod-cont__discount", discWrapper);
-    discount.innerText = "Discount";
+    const discWrap = this.createElement("prod-cont__disc-wrap", addInfoCont);
+    const discount = this.createElement("discount", discWrap, textObj.disc);
 
-    const discNum = this.createElement("prod-cont__disc-num", discWrapper);
-    discNum.innerText = "12.96%";
+    const discNum = this.createElement("disc-num", discWrap, textObj.discNum);
 
-    const stockBlock = this.createElement("prod-cont__stock-bl", controlBlock);
-    const stock = this.createElement("prod-count__stock", stockBlock);
-    stock.innerText = "Stock:";
+    const stockBl = this.createElement("prod-cont__stock-bl", controlBlock);
+    const stock = this.createElement("stock", stockBl, textObj.stock);
 
-    const stockNum = this.createElement("prod-cont__stock-num", stockBlock);
-    stockNum.innerText = "94";
+    const stockNum = this.createElement("stock-num", stockBl, textObj.stockNum);
 
-    const controlsWrapper = this.createElement(
+    const controlsWrap = this.createElement(
       "prod-cont__contr-wrap",
       controlBlock
     );
     const price = this.createElement("prod-cont__price", controlBlock);
-    price.innerHTML = "&#8364 549";
+    price.innerHTML = textObj.price;
 
-    const incr = this.createElement("prod-cont__contr", controlsWrapper);
-    incr.innerText = "+";
+    const incr = this.createElement("contr", controlsWrap, textObj.incr);
 
-    const itemQt = this.createElement("prod-cont__quantity", controlsWrapper);
-    itemQt.innerText = "1";
+    const itemQt = this.createElement("quantity", controlsWrap, textObj.itemQt);
 
-    const decr = this.createElement("prod-cont__contr", controlsWrapper);
-    decr.innerText = "-";
+    const decr = this.createElement("contr", controlsWrap, textObj.decr);
   }
 
   public createSummary(): void {
@@ -115,44 +121,132 @@ class Temporary {
     const summaryTitle = document.createElement("h2");
     summaryTitle.classList.add("sum-cont__title");
     summaryCont.append(summaryTitle);
-    summaryTitle.innerText = "Summary";
+    summaryTitle.innerText = textObj.summaryTitle;
 
     const sumInfoCont = this.createElement("sum-cont__info-cont", summaryCont);
     const sumInfoWrap = this.createElement("sum-cont__info-wrap", sumInfoCont);
     const buyBtn = document.createElement("button");
     buyBtn.classList.add("sum-cont__buy-btn");
     sumInfoCont.append(buyBtn);
-    buyBtn.innerText = "buy now";
+    buyBtn.innerText = textObj.buyBtn;
 
-    const productsCont = this.createElement("sum-cont__prod-cont", sumInfoWrap);
-    const products = this.createElement("sum-cont__product", productsCont);
-    products.innerText = "Products:";
-    const prodAmt = this.createElement("sum-cont__prod-amt", productsCont);
-    prodAmt.innerText = "1";
+    const prodCont = this.createElement("sum-cont__prod-cont", sumInfoWrap);
+    const products = this.createElement("product", prodCont, textObj.products);
+    const prodAmt = this.createElement("prod-amt", prodCont, textObj.prodAmt);
 
     const totalCont = this.createElement("sum-prod__total-cont", sumInfoWrap);
-    const total = this.createElement("sum-prod__total", totalCont);
-    total.innerText = "Total:";
+    const total = this.createElement("total", totalCont, textObj.total);
 
-    const totalSum = this.createElement("sum-prod__total-sum", totalCont);
-    totalSum.innerHTML = "&#8364 549";
+    const totalSum = this.createElement("total-sum", totalCont);
+    totalSum.innerHTML = textObj.totSum;
 
     const promoInput = document.createElement("input");
     promoInput.classList.add("sum-prod__promo-input");
     sumInfoWrap.append(promoInput);
     promoInput.placeholder = "Enter promo code";
 
-    const testPromo = this.createElement("sum-prod__test-promo", sumInfoWrap);
-    testPromo.innerText = "Promo for test: 'RS', 'EPM";
+    const promo = this.createElement("promo", sumInfoWrap, textObj.testPromo);
+  }
+
+  createModalWindow(): void {
+    const overlay = document.createElement("div");
+    overlay.classList.add("overlay");
+    document.body.append(overlay);
+
+    const formWrapper = this.createElement("form-wrapper", document.body);
+
+    const modalCont = document.createElement("form");
+    modalCont.classList.add("modal-cont");
+    formWrapper.append(modalCont);
+
+    const persInfoCont = this.createElement(
+      "modal-cont__pers-info-cont",
+      modalCont
+    );
+    const creditCardCont = this.createElement(
+      "modal-cont__credit-card-cont",
+      modalCont
+    );
+
+    const title1 = this.createElement("title1", persInfoCont, textObj.title1);
+    const nameCont = this.createElement("form-item", persInfoCont);
+    const numberCont = this.createElement("form-item", persInfoCont);
+    const addrCont = this.createElement("form-item", persInfoCont);
+    const emailCont = this.createElement("form-item", persInfoCont);
+
+    const title2 = this.createElement("title2", creditCardCont, textObj.title2);
+    const cardData = this.createElement("card-data", creditCardCont);
+
+    const nameInput = this.createInput("name-input", nameCont, "Name");
+    const nameError = this.createElement("pd-err", nameCont, textObj.nameErr);
+    nameError.classList.add("invisible");
+
+    const phoneInput = this.createInput(
+      "phone-input",
+      numberCont,
+      "Phone number"
+    );
+    const phoneErr = this.createElement("pd-err", numberCont, textObj.phoneErr);
+    phoneErr.classList.add("invisible");
+
+    const addressInput = this.createInput(
+      "address-input",
+      addrCont,
+      "Delivery address"
+    );
+    const addressErr = this.createElement("pd-err", addrCont, textObj.addrErr);
+    addressErr.classList.add("invisible");
+
+    const emailInput = this.createInput("email-input", emailCont, "E-mail");
+    const emailErr = this.createElement("pd-err", emailCont, textObj.emailErr);
+    emailErr.classList.add("invisible");
+
+    const cardNumberCont = this.createElement("card-details-cont", cardData);
+    const otherDataCont = this.createElement("other-cont", cardData);
+    const paymentSyst = this.createElement("payment-syst", cardNumberCont);
+    const cardInput = this.createInput(
+      "card-input",
+      cardNumberCont,
+      "Card number"
+    );
+
+    const validCont = this.createElement(
+      "validity-details-cont",
+      otherDataCont
+    );
+    const CVVCont = this.createElement("validity-details-cont", otherDataCont);
+
+    const valid = this.createElement("valid", validCont, textObj.valid);
+    const validDate = this.createInput("valid-date", validCont, "Valid thru");
+
+    const CVV = this.createElement("CVV", CVVCont, textObj.CVV);
+    const CVVNumb = this.createInput("CVV-numb", CVVCont, "Code");
+
+    const cardNumbErr = this.createElement("card-err", modalCont);
+    cardNumbErr.classList.add("invisible");
+    cardNumbErr.innerText = textObj.cardNumbErr;
+
+    const validThruErr = this.createElement("card-err", modalCont);
+    validThruErr.innerText = textObj.validErr;
+    validThruErr.classList.add("invisible");
+
+    const CVVError = this.createElement("card-err", modalCont, textObj.CVVErr);
+    CVVError.classList.add("invisible");
+
+    const confirmBtn = document.createElement("button");
+    confirmBtn.classList.add("modal-cont__button");
+    modalCont.append(confirmBtn);
+    confirmBtn.innerText = textObj.confirmBtn;
   }
 }
 
 class CartPage {
   public draw(): void {
-    const temp = new Temporary();
+    const temp = new Temp();
     temp.createCardHeader();
     temp.createItemBlock();
     temp.createSummary();
+    temp.createModalWindow();
   }
 }
 

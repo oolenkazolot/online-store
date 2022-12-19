@@ -43,3 +43,7 @@ export interface IFilterRange {
 export interface ICartPage {
   draw: () => void;
 }
+
+export type TtextObject = {
+  [key: string]: string;
+};

@@ -1,0 +1,149 @@
+
+.overlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000;
+  opacity: 0.4;
+  z-index: 10;
+  top:0;
+  left:0;
+}
+
+.form-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal-cont {
+  position: fixed;
+  background-color: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  color: $color-modal-title;
+  width: 45%;
+  border: 2px solid $bg-gray;
+  max-width: 800px;
+  background: -webkit-linear-gradient(90deg, #b6c3ca,#ffffff);
+  }
+
+.modal-cont__pers-info-cont,
+.modal-cont__credit-card-cont,
+.modal-cont {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-cont__pers-info-cont {
+  width:80%;
+}
+
+.title1,
+.title2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.form-item {
+  width: 100%;
+}
+
+.name-input,
+.phone-input,
+.address-input,
+.address-input,
+.email-input {
+  display: flex;
+  align-items: center;
+  box-shadow: 1px 1px 3px 0px rgba(34, 60, 80, 0.2);
+  border-radius: 25px;
+  background: white;
+  padding: 0.5rem;
+  outline: none;
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  border: 1px solid $bg-gray;
+  margin-bottom: 0.8rem;
+}
+
+.pd-err {
+  @include error (1rem);
+}
+
+.card-data {
+  border: 1px solid $color-main;
+  margin: 0 auto;
+  border-radius: 0.6rem;
+  background: -webkit-linear-gradient(90deg, #ffde7a,#ffba52,#ffa05c);
+  width: 90%;
+  height: 9rem;
+  margin-bottom: 0.4rem;
+}
+
+.card-details-cont {
+  @extend %flex;
+  padding: 1rem;
+}
+
+.payment-syst {
+  width: 50px;
+  height: 40px;
+  background-image: url(../assets/cardsIcons/creditCard.png);
+  background-size: cover;
+  background-position: center;
+}
+
+.card-input {
+  height: 25px;
+  width: 70%;
+  @extend %cardInput;
+}
+
+.valid-cont,
+.CVV-cont {
+  @extend %flex;
+  padding: 0.3rem 1rem;
+}
+
+.validity-details-cont {
+  @extend %flex;
+  padding: 0.3rem 1rem;
+}
+
+.valid-date,
+.CVV-numb {
+  @extend %cardInput;
+  padding: 0.1rem;
+}
+
+.card-err {
+  @include error (0.2rem);
+}
+
+.modal-cont__button {
+  @include buttons;
+  padding: 11px 35px;
+  font-size: 15px;
+  font-weight: 600;
+  color: $color-dark-blue;
+  border-radius: 25px;
+  text-transform: uppercase;
+  border: none;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.invisible {
+  display: none;
+}
