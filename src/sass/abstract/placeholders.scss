@@ -4,3 +4,10 @@
     align-items: center;
 }
 
+%cardInput {
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid $color-gray;
+    text-align: center;
+    font-size: 0.9rem;
+}
