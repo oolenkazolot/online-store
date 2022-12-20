@@ -1,7 +1,13 @@
 .main-page {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   margin-top: 50px;
   padding: 0 30px;
+
+  @media (max-width: 960px) {
+    display: block;
+    justify-content: start;
+    margin-top: 30px;
+    padding: 0 20px;
+  }
 }

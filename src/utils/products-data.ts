@@ -5,7 +5,7 @@ const productsData = {
       title: "iPhone 9",
       description: "An apple mobile which is nothing like apple",
       price: 549,
-      discountPercentage: 12.96,
+      discount: 12.96,
       rating: 4.69,
       stock: 94,
       brand: "Apple",
@@ -25,7 +25,7 @@ const productsData = {
       description:
         "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
       price: 899,
-      discountPercentage: 17.94,
+      discount: 17.94,
       rating: 4.44,
       stock: 34,
       brand: "Apple",
@@ -40,11 +40,11 @@ const productsData = {
     },
     {
       id: 3,
-      title: "Samsung Universe 9",
+      title: "Universe 9",
       description:
         "Samsung's new variant which goes beyond Galaxy to the Universe",
       price: 1249,
-      discountPercentage: 15.46,
+      discount: 15.46,
       rating: 4.09,
       stock: 36,
       brand: "Samsung",
@@ -54,10 +54,10 @@ const productsData = {
     },
     {
       id: 4,
-      title: "OPPOF19",
+      title: "F19",
       description: "OPPO F19 is officially announced on April 2021.",
       price: 280,
-      discountPercentage: 17.91,
+      discount: 17.91,
       rating: 4.3,
       stock: 123,
       brand: "OPPO",
@@ -73,11 +73,11 @@ const productsData = {
     },
     {
       id: 5,
-      title: "Huawei P30",
+      title: "P30",
       description:
         "Huawei’s re-badged P30 Pro New Edition was officially unveiled yesterday in Germany and now the device has made its way to the UK.",
       price: 499,
-      discountPercentage: 10.58,
+      discount: 10.58,
       rating: 4.09,
       stock: 32,
       brand: "Huawei",
@@ -95,10 +95,10 @@ const productsData = {
       description:
         "MacBook Pro 2021 with mini-LED display may launch between September, November",
       price: 1749,
-      discountPercentage: 11.02,
+      discount: 11.02,
       rating: 4.57,
       stock: 83,
-      brand: "APPle",
+      brand: "Apple",
       category: "laptops",
       thumbnail: "https://i.dummyjson.com/data/products/6/thumbnail.png",
       images: [
@@ -110,11 +110,11 @@ const productsData = {
     },
     {
       id: 7,
-      title: "Samsung Galaxy Book",
+      title: "Galaxy Book",
       description:
         "Samsung Galaxy Book S (2020) Laptop With Intel Lakefield Chip, 8GB of RAM Launched",
       price: 1499,
-      discountPercentage: 4.15,
+      discount: 4.15,
       rating: 4.25,
       stock: 50,
       brand: "Samsung",
@@ -129,11 +129,11 @@ const productsData = {
     },
     {
       id: 8,
-      title: "Microsoft Surface Laptop 4",
+      title: "Laptop 4",
       description:
         "Style and speed. Stand out on HD video calls backed by Studio Mics. Capture ideas on the vibrant touchscreen.",
       price: 1499,
-      discountPercentage: 10.23,
+      discount: 10.23,
       rating: 4.43,
       stock: 68,
       brand: "Microsoft Surface",
@@ -149,11 +149,11 @@ const productsData = {
     },
     {
       id: 9,
-      title: "Infinix INBOOK",
+      title: "INBOOK",
       description:
         "Infinix Inbook X1 Ci3 10th 8GB 256GB 14 Win10 Grey – 1 Year Warranty",
       price: 1099,
-      discountPercentage: 11.83,
+      discount: 11.83,
       rating: 4.54,
       stock: 96,
       brand: "Infinix",
@@ -169,11 +169,11 @@ const productsData = {
     },
     {
       id: 10,
-      title: "HP Pavilion 15-DK1056WM",
+      title: "15-DK1056WM",
       description:
         "HP Pavilion 15-DK1056WM Gaming Laptop 10th Gen Core i5, 8GB, 256GB SSD, GTX 1650 4GB, Windows 10",
       price: 1099,
-      discountPercentage: 6.18,
+      discount: 6.18,
       rating: 4.43,
       stock: 89,
       brand: "HP Pavilion",
@@ -192,7 +192,7 @@ const productsData = {
       description:
         "Mega Discount, Impression of Acqua Di Gio by GiorgioArmani concentrated attar perfume Oil",
       price: 13,
-      discountPercentage: 8.4,
+      discount: 8.4,
       rating: 4.26,
       stock: 65,
       brand: "Impression of Acqua Di Gio",
@@ -210,7 +210,7 @@ const productsData = {
       title: "Brown Perfume",
       description: "Royal_Mirage Sport Brown Perfume for Men & Women - 120ml",
       price: 40,
-      discountPercentage: 15.66,
+      discount: 15.66,
       rating: 4,
       stock: 52,
       brand: "Royal_Mirage",
@@ -226,11 +226,11 @@ const productsData = {
     },
     {
       id: 13,
-      title: "Fog Scent Xpressio Perfume",
+      title: "Perfume",
       description:
         "Product details of Best Fog Scent Xpressio Perfume 100ml For Men cool long lasting perfumes for Men",
       price: 13,
-      discountPercentage: 8.14,
+      discount: 8.14,
       rating: 4.59,
       stock: 61,
       brand: "Fog Scent Xpressio",
@@ -250,7 +250,7 @@ const productsData = {
       description:
         "Original Al Munakh® by Mahal Al Musk | Our Impression of Climate | 6ml Non-Alcoholic Concentrated Perfume Oil",
       price: 120,
-      discountPercentage: 15.6,
+      discount: 15.6,
       rating: 4.21,
       stock: 114,
       brand: "Al Munakh",
@@ -269,7 +269,7 @@ const productsData = {
       description:
         "Genuine  Al-Rehab spray perfume from UAE/Saudi Arabia/Yemen High Quality",
       price: 30,
-      discountPercentage: 10.99,
+      discount: 10.99,
       rating: 4.7,
       stock: 105,
       brand: "Lord - Al-Rehab",
@@ -289,7 +289,7 @@ const productsData = {
       description:
         "L'OrÃ©al Paris introduces Hyaluron Expert Replumping Serum formulated with 1.5% Hyaluronic Acid",
       price: 19,
-      discountPercentage: 13.31,
+      discount: 13.31,
       rating: 4.83,
       stock: 110,
       brand: "L'Oreal Paris",
@@ -309,7 +309,7 @@ const productsData = {
       description:
         "Tea tree oil contains a number of compounds, including terpinen-4-ol, that have been shown to kill certain bacteria,",
       price: 12,
-      discountPercentage: 4.09,
+      discount: 4.09,
       rating: 4.52,
       stock: 78,
       brand: "Hemani Tea",
@@ -328,7 +328,7 @@ const productsData = {
       description:
         "Dermive Oil Free Moisturizer with SPF 20 is specifically formulated with ceramides, hyaluronic acid & sunscreen.",
       price: 40,
-      discountPercentage: 13.1,
+      discount: 13.1,
       rating: 4.56,
       stock: 88,
       brand: "Dermive",
@@ -348,7 +348,7 @@ const productsData = {
       description:
         "Product name: rorec collagen hyaluronic acid white face serum riceNet weight: 15 m",
       price: 46,
-      discountPercentage: 10.68,
+      discount: 10.68,
       rating: 4.42,
       stock: 54,
       brand: "ROREC White Rice",
@@ -367,7 +367,7 @@ const productsData = {
       description:
         "Fair & Clear is Pakistan's only pure Freckle cream which helpsfade Freckles, Darkspots and pigments. Mercury level is 0%, so there are no side effects.",
       price: 70,
-      discountPercentage: 16.99,
+      discount: 16.99,
       rating: 4.06,
       stock: 140,
       brand: "Fair & Clear",
@@ -386,7 +386,7 @@ const productsData = {
       title: "- Daal Masoor 500 grams",
       description: "Fine quality Branded Product Keep in a cool and dry place",
       price: 20,
-      discountPercentage: 4.81,
+      discount: 4.81,
       rating: 4.44,
       stock: 133,
       brand: "Saaf & Khaas",
@@ -403,7 +403,7 @@ const productsData = {
       title: "Elbow Macaroni - 400 gm",
       description: "Product details of Bake Parlor Big Elbow Macaroni - 400 gm",
       price: 14,
-      discountPercentage: 15.58,
+      discount: 15.58,
       rating: 4.57,
       stock: 146,
       brand: "Bake Parlor Big",
@@ -421,7 +421,7 @@ const productsData = {
       description:
         "Specifications of Orange Essence Food Flavour For Cakes and Baking Food Item",
       price: 14,
-      discountPercentage: 8.04,
+      discount: 8.04,
       rating: 4.85,
       stock: 26,
       brand: "Baking Food Items",
@@ -441,7 +441,7 @@ const productsData = {
       description:
         "original fauji cereal muesli 250gm box pack original fauji cereals muesli fruit nuts flakes breakfast cereal break fast faujicereals cerels cerel foji fouji",
       price: 46,
-      discountPercentage: 16.8,
+      discount: 16.8,
       rating: 4.94,
       stock: 113,
       brand: "fauji",
@@ -461,7 +461,7 @@ const productsData = {
       description:
         "Dry Rose Flower Powder Gulab Powder 50 Gram • Treats Wounds",
       price: 70,
-      discountPercentage: 13.58,
+      discount: 13.58,
       rating: 4.87,
       stock: 47,
       brand: "Dry Rose",
@@ -481,7 +481,7 @@ const productsData = {
       description:
         "Boho Decor Plant Hanger For Home Wall Decoration Macrame Wall Hanging Shelf",
       price: 41,
-      discountPercentage: 17.86,
+      discount: 17.86,
       rating: 4.08,
       stock: 131,
       brand: "Boho Decor",
@@ -502,7 +502,7 @@ const productsData = {
       description:
         "Package Include 6 Birds with Adhesive Tape Shape: 3D Shaped Wooden Birds Material: Wooden MDF, Laminated 3.5mm",
       price: 51,
-      discountPercentage: 15.58,
+      discount: 15.58,
       rating: 4.41,
       stock: 17,
       brand: "Flying Wooden",
@@ -522,7 +522,7 @@ const productsData = {
       description:
         "3D led lamp sticker Wall sticker 3d wall art light on/off button  cell operated (included)",
       price: 20,
-      discountPercentage: 16.49,
+      discount: 16.49,
       rating: 4.82,
       stock: 54,
       brand: "LED Lights",
@@ -542,7 +542,7 @@ const productsData = {
       description:
         "Handcraft Chinese style art luxury palace hotel villa mansion home decor ceramic vase with brass fruit plate",
       price: 60,
-      discountPercentage: 15.34,
+      discount: 15.34,
       rating: 4.44,
       stock: 7,
       brand: "luxury palace",
@@ -562,7 +562,7 @@ const productsData = {
       description:
         "Attractive DesignMetallic materialFour key hooksReliable & DurablePremium Quality",
       price: 30,
-      discountPercentage: 2.92,
+      discount: 2.92,
       rating: 4.92,
       stock: 54,
       brand: "Golden",
@@ -581,7 +581,7 @@ const productsData = {
       description:
         "Mornadi Velvet Bed Base with Headboard Slats Support Classic Style Bedroom Furniture Bed Set",
       price: 40,
-      discountPercentage: 17,
+      discount: 17,
       rating: 4.16,
       stock: 140,
       brand: "Furniture Bed Set",
@@ -601,7 +601,7 @@ const productsData = {
       description:
         "Ratttan Outdoor furniture Set Waterproof  Rattan Sofa for Coffe Cafe",
       price: 50,
-      discountPercentage: 15.59,
+      discount: 15.59,
       rating: 4.74,
       stock: 30,
       brand: "Ratttan Outdoor",
@@ -620,7 +620,7 @@ const productsData = {
       description:
         "3 Tier Corner Shelves | 3 PCs Wall Mount Kitchen Shelf | Floating Bedroom Shelf",
       price: 700,
-      discountPercentage: 17,
+      discount: 17,
       rating: 4.31,
       stock: 106,
       brand: "Kitchen Shelf",
@@ -640,7 +640,7 @@ const productsData = {
       description:
         "V﻿ery good quality plastic table for multi purpose now in reasonable price",
       price: 50,
-      discountPercentage: 4,
+      discount: 4,
       rating: 4.01,
       stock: 136,
       brand: "Multi Purpose",
@@ -660,7 +660,7 @@ const productsData = {
       description:
         "Material: Stainless Steel and Fabric  Item Size: 110 cm x 45 cm x 175 cm Package Contents: 1 Storage Wardrobe",
       price: 41,
-      discountPercentage: 7.98,
+      discount: 7.98,
       rating: 4.06,
       stock: 68,
       brand: "AmnaMart",
@@ -680,7 +680,7 @@ const productsData = {
       description:
         "Cotton Solid Color Professional Wear Sleeve Shirt Womens Work Blouses Wholesale Clothing Casual Plain Custom Top OEM Customized",
       price: 90,
-      discountPercentage: 10.89,
+      discount: 10.89,
       rating: 4.26,
       stock: 39,
       brand: "Professional Wear",
@@ -700,7 +700,7 @@ const productsData = {
       description:
         "PACK OF 3 CAMISOLES ,VERY COMFORTABLE SOFT COTTON STUFF, COMFORTABLE IN ALL FOUR SEASONS",
       price: 50,
-      discountPercentage: 12.05,
+      discount: 12.05,
       rating: 4.52,
       stock: 107,
       brand: "Soft Cotton",
@@ -719,7 +719,7 @@ const productsData = {
       title: "sublimation plain kids tank",
       description: "sublimation plain kids tank tops wholesale",
       price: 100,
-      discountPercentage: 11.12,
+      discount: 11.12,
       rating: 4.8,
       stock: 20,
       brand: "Soft Cotton",
@@ -738,7 +738,7 @@ const productsData = {
       description:
         "2021 Custom Winter Fall Zebra Knit Crop Top Women Sweaters Wool Mohair Cos Customize Crew Neck Women' S Crop Top Sweater",
       price: 600,
-      discountPercentage: 17.2,
+      discount: 17.2,
       rating: 4.55,
       stock: 55,
       brand: "Top Sweater",
@@ -758,7 +758,7 @@ const productsData = {
       description:
         "women winter clothes thick fleece hoodie top with sweat pantjogger women sweatsuit set joggers pants two piece pants set",
       price: 57,
-      discountPercentage: 13.39,
+      discount: 13.39,
       rating: 4.91,
       stock: 84,
       brand: "Top Sweater",
@@ -774,7 +774,7 @@ const productsData = {
       title: "NIGHT SUIT",
       description: "NIGHT SUIT RED MICKY MOUSE..  For Girls. Fantastic Suits.",
       price: 55,
-      discountPercentage: 15.05,
+      discount: 15.05,
       rating: 4.65,
       stock: 21,
       brand: "RED MICKY MOUSE..",
@@ -794,7 +794,7 @@ const productsData = {
       description:
         "FABRIC: LILEIN CHEST: 21 LENGHT: 37 TROUSER: (38) :ARABIC LILEIN",
       price: 80,
-      discountPercentage: 15.37,
+      discount: 15.37,
       rating: 4.05,
       stock: 148,
       brand: "Digital Printed",
@@ -814,7 +814,7 @@ const productsData = {
       description:
         "Ghazi fabric long frock gold printed ready to wear stitched collection (G992)",
       price: 600,
-      discountPercentage: 15.55,
+      discount: 15.55,
       rating: 4.31,
       stock: 150,
       brand: "Ghazi Fabric",
@@ -834,7 +834,7 @@ const productsData = {
       description:
         "This classy shirt for women gives you a gorgeous look on everyday wear and specially for semi-casual wears.",
       price: 79,
-      discountPercentage: 16.88,
+      discount: 16.88,
       rating: 4.03,
       stock: 2,
       brand: "Ghazi Fabric",
@@ -854,7 +854,7 @@ const productsData = {
       description:
         "Ready to wear, Unique design according to modern standard fashion, Best fitting ,Imported stuff",
       price: 50,
-      discountPercentage: 5.07,
+      discount: 5.07,
       rating: 4.67,
       stock: 96,
       brand: "IELGY",
@@ -874,7 +874,7 @@ const productsData = {
       description:
         "Close: Lace, Style with bottom: Increased inside, Sole Material: Rubber",
       price: 40,
-      discountPercentage: 16.96,
+      discount: 16.96,
       rating: 4.14,
       stock: 72,
       brand: "IELGY fashion",
@@ -894,7 +894,7 @@ const productsData = {
       description:
         "Synthetic Leather Casual Sneaker shoes for Women/girls Sneakers For Women",
       price: 120,
-      discountPercentage: 10.37,
+      discount: 10.37,
       rating: 4.19,
       stock: 50,
       brand: "Synthetic Leather",
@@ -913,7 +913,7 @@ const productsData = {
       description:
         "Features: Flip-flops, Mid Heel, Comfortable, Striped Heel, Antiskid, Striped",
       price: 40,
-      discountPercentage: 10.83,
+      discount: 10.83,
       rating: 4.02,
       stock: 25,
       brand: "Sandals Flip Flops",
@@ -933,7 +933,7 @@ const productsData = {
       description:
         "Womens Chappals & Shoe Ladies Metallic Tong Thong Sandal Flat Summer 2020 Maasai Sandals",
       price: 23,
-      discountPercentage: 2.62,
+      discount: 2.62,
       rating: 4.72,
       stock: 107,
       brand: "Maasai Sandals",
@@ -952,7 +952,7 @@ const productsData = {
       description:
         "2020 New Arrivals Genuine Leather Fashion Trend Platform Summer Women Shoes",
       price: 36,
-      discountPercentage: 16.87,
+      discount: 16.87,
       rating: 4.33,
       stock: 46,
       brand: "Arrivals Genuine",
@@ -970,7 +970,7 @@ const productsData = {
       description:
         "Many store is creating new designs and trend every month and every year. Daraz.pk have a beautiful range of men fashion brands",
       price: 23,
-      discountPercentage: 12.76,
+      discount: 12.76,
       rating: 4.26,
       stock: 132,
       brand: "Vintage Apparel",
@@ -989,7 +989,7 @@ const productsData = {
       description:
         "quality and professional print - It doesn't just look high quality, it is high quality.",
       price: 10,
-      discountPercentage: 14.72,
+      discount: 14.72,
       rating: 4.52,
       stock: 128,
       brand: "FREE FIRE",
@@ -1008,7 +1008,7 @@ const productsData = {
       title: "printed high quality T shirts",
       description: "Brand: vintage Apparel ,Export quality",
       price: 35,
-      discountPercentage: 7.54,
+      discount: 7.54,
       rating: 4.89,
       stock: 6,
       brand: "Vintage Apparel",
@@ -1028,7 +1028,7 @@ const productsData = {
       description:
         "Product Description Features: 100% Ultra soft Polyester Jersey. Vibrant & colorful printing on front. Feels soft as cotton without ever cracking",
       price: 46,
-      discountPercentage: 16.44,
+      discount: 16.44,
       rating: 4.62,
       stock: 136,
       brand: "The Warehouse",
@@ -1047,7 +1047,7 @@ const productsData = {
       title: "Money Heist Printed Summer T Shirts",
       description: "Fabric Jercy, Size: M & L Wear Stylish Dual Stiched",
       price: 66,
-      discountPercentage: 15.97,
+      discount: 15.97,
       rating: 4.9,
       stock: 122,
       brand: "The Warehouse",
@@ -1067,7 +1067,7 @@ const productsData = {
       description:
         "Gender: Men , Colors: Same as DisplayedCondition: 100% Brand New",
       price: 40,
-      discountPercentage: 12.57,
+      discount: 12.57,
       rating: 4.38,
       stock: 6,
       brand: "Sneakers",
@@ -1088,7 +1088,7 @@ const productsData = {
       description:
         "Men Shoes - Loafers for men - Rubber Shoes - Nylon Shoes - Shoes for men - Moccassion - Pure Nylon (Rubber) Expot Quality.",
       price: 47,
-      discountPercentage: 10.91,
+      discount: 10.91,
       rating: 4.91,
       stock: 20,
       brand: "Rubber",
@@ -1108,7 +1108,7 @@ const productsData = {
       description:
         "Pattern Type: Solid, Material: PU, Toe Shape: Pointed Toe ,Outsole Material: Rubber",
       price: 57,
-      discountPercentage: 12,
+      discount: 12,
       rating: 4.41,
       stock: 68,
       brand: "The Warehouse",
@@ -1128,7 +1128,7 @@ const productsData = {
       description:
         "Comfortable stretch cloth, lightweight body; ,rubber sole, anti-skid wear;",
       price: 20,
-      discountPercentage: 8.71,
+      discount: 8.71,
       rating: 4.33,
       stock: 137,
       brand: "Sneakers",
@@ -1148,7 +1148,7 @@ const productsData = {
       description:
         "High Quality ,Stylish design ,Comfortable wear ,FAshion ,Durable",
       price: 58,
-      discountPercentage: 7.55,
+      discount: 7.55,
       rating: 4.55,
       stock: 129,
       brand: "Sneakers",
@@ -1166,7 +1166,7 @@ const productsData = {
       title: "Leather Straps Wristwatch",
       description: "Style:Sport ,Clasp:Buckles ,Water Resistance Depth:3Bar",
       price: 120,
-      discountPercentage: 7.14,
+      discount: 7.14,
       rating: 4.63,
       stock: 91,
       brand: "Naviforce",
@@ -1184,7 +1184,7 @@ const productsData = {
       description:
         "Watch Crown With Environmental IPS Bronze Electroplating; Display system of 12 hours",
       price: 46,
-      discountPercentage: 3.15,
+      discount: 3.15,
       rating: 4.05,
       stock: 95,
       brand: "SKMEI 9117",
@@ -1201,7 +1201,7 @@ const productsData = {
       description:
         "Men Silver Chain Royal Blue Premium Watch Latest Analog Watch",
       price: 50,
-      discountPercentage: 2.56,
+      discount: 2.56,
       rating: 4.89,
       stock: 142,
       brand: "SKMEI 9117",
@@ -1220,7 +1220,7 @@ const productsData = {
       description:
         "Leather Strap Skeleton Watch for Men - Stylish and Latest Design",
       price: 46,
-      discountPercentage: 10.2,
+      discount: 10.2,
       rating: 4.98,
       stock: 61,
       brand: "Strap Skeleton",
@@ -1239,7 +1239,7 @@ const productsData = {
       description:
         "Stylish Watch For Man (Luxury) Classy Men's Stainless Steel Wrist Watch - Box Packed",
       price: 47,
-      discountPercentage: 17.79,
+      discount: 17.79,
       rating: 4.79,
       stock: 94,
       brand: "Stainless",
@@ -1258,7 +1258,7 @@ const productsData = {
       title: "Steel Analog Couple Watches",
       description: "Elegant design, Stylish ,Unique & Trendy,Comfortable wear",
       price: 35,
-      discountPercentage: 3.23,
+      discount: 3.23,
       rating: 4.79,
       stock: 24,
       brand: "Eastern Watches",
@@ -1278,7 +1278,7 @@ const productsData = {
       description:
         "Buy this awesome  The product is originally manufactured by the company and it's a top selling product with a very reasonable",
       price: 60,
-      discountPercentage: 16.69,
+      discount: 16.69,
       rating: 4.03,
       stock: 46,
       brand: "Eastern Watches",
@@ -1298,7 +1298,7 @@ const productsData = {
       description:
         "Stylish Luxury Digital Watch For Girls / Women - Led Smart Ladies Watches For Girls",
       price: 57,
-      discountPercentage: 9.03,
+      discount: 9.03,
       rating: 4.55,
       stock: 77,
       brand: "Luxury Digital",
@@ -1315,7 +1315,7 @@ const productsData = {
       description:
         "Product details of Golden Watch Pearls Bracelet Watch For Girls - Golden Chain Ladies Bracelate Watch for Women",
       price: 47,
-      discountPercentage: 17.55,
+      discount: 17.55,
       rating: 4.77,
       stock: 89,
       brand: "Watch Pearls",
@@ -1335,7 +1335,7 @@ const productsData = {
       description:
         "Fashion Skmei 1830 Shell Dial Stainless Steel Women Wrist Watch Lady Bracelet Watch Quartz Watches Ladies",
       price: 35,
-      discountPercentage: 8.98,
+      discount: 8.98,
       rating: 4.08,
       stock: 111,
       brand: "Bracelet",
@@ -1353,7 +1353,7 @@ const productsData = {
       description:
         "LouisWill Women Shoulder Bags Long Clutches Cross Body Bags Phone Bags PU Leather Hand Bags Large Capacity Card Holders Zipper Coin Purses Fashion Crossbody Bags for Girls Ladies",
       price: 46,
-      discountPercentage: 14.65,
+      discount: 14.65,
       rating: 4.71,
       stock: 17,
       brand: "LouisWill",
@@ -1372,7 +1372,7 @@ const productsData = {
       description:
         "This fashion is designed to add a charming effect to your casual outfit. This Bag is made of synthetic leather.",
       price: 23,
-      discountPercentage: 17.5,
+      discount: 17.5,
       rating: 4.91,
       stock: 27,
       brand: "LouisWill",
@@ -1392,7 +1392,7 @@ const productsData = {
       description:
         "This fashion is designed to add a charming effect to your casual outfit. This Bag is made of synthetic leather.",
       price: 44,
-      discountPercentage: 10.39,
+      discount: 10.39,
       rating: 4.18,
       stock: 101,
       brand: "Bracelet",
@@ -1411,7 +1411,7 @@ const productsData = {
       description:
         "It features an attractive design that makes it a must have accessory in your collection. We sell different kind of bags for boys, kids, women, girls and also for unisex.",
       price: 57,
-      discountPercentage: 11.19,
+      discount: 11.19,
       rating: 4.01,
       stock: 43,
       brand: "Copenhagen Luxe",
@@ -1431,7 +1431,7 @@ const productsData = {
       description:
         "Seven Pocket Women Bag Handbags Lady Shoulder Crossbody Bag Female Purse Seven Pocket Bag",
       price: 68,
-      discountPercentage: 14.87,
+      discount: 14.87,
       rating: 4.93,
       stock: 13,
       brand: "Steal Frame",
@@ -1450,7 +1450,7 @@ const productsData = {
       description:
         "Jewelry Type:RingsCertificate Type:NonePlating:Silver PlatedShapeattern:noneStyle:CLASSICReligious",
       price: 70,
-      discountPercentage: 13.57,
+      discount: 13.57,
       rating: 4.61,
       stock: 51,
       brand: "Darojay",
@@ -1468,7 +1468,7 @@ const productsData = {
       description:
         "Brand: The Greetings Flower Colour: RedRing Colour: GoldenSize: Adjustable",
       price: 100,
-      discountPercentage: 3.22,
+      discount: 3.22,
       rating: 4.21,
       stock: 149,
       brand: "Copenhagen Luxe",
@@ -1487,7 +1487,7 @@ const productsData = {
       description:
         "Fashion Jewellery 3Pcs Adjustable Pearl Rhinestone Korean Style Open Rings For Women",
       price: 30,
-      discountPercentage: 8.02,
+      discount: 8.02,
       rating: 4.69,
       stock: 9,
       brand: "Fashion Jewellery",
@@ -1501,7 +1501,7 @@ const productsData = {
       description:
         "Elegant Female Pearl Earrings Set Zircon Pearl Earings Women Party Accessories 9 Pairs/Set",
       price: 30,
-      discountPercentage: 12.8,
+      discount: 12.8,
       rating: 4.74,
       stock: 16,
       brand: "Fashion Jewellery",
@@ -1515,7 +1515,7 @@ const productsData = {
       description:
         "Pair Of Ear Cuff Butterfly Long Chain Pin Tassel Earrings - Silver ( Long Life Quality Product)",
       price: 45,
-      discountPercentage: 17.75,
+      discount: 17.75,
       rating: 4.59,
       stock: 9,
       brand: "Cuff Butterfly",
@@ -1535,7 +1535,7 @@ const productsData = {
       description:
         "A pair of sunglasses can protect your eyes from being hurt. For car driving, vacation travel, outdoor activities, social gatherings,",
       price: 19,
-      discountPercentage: 10.1,
+      discount: 10.1,
       rating: 4.94,
       stock: 78,
       brand: "Designer Sun Glasses",
@@ -1555,7 +1555,7 @@ const productsData = {
       description:
         "Orignal Metal Kabir Singh design 2020 Sunglasses Men Brand Designer Sun Glasses Kabir Singh Square Sunglass",
       price: 50,
-      discountPercentage: 15.6,
+      discount: 15.6,
       rating: 4.62,
       stock: 78,
       brand: "Designer Sun Glasses",
@@ -1575,7 +1575,7 @@ const productsData = {
       description:
         "Wiley X Night Vision Yellow Glasses for Riders - Night Vision Anti Fog Driving Glasses - Free Night Glass Cover - Shield Eyes From Dust and Virus- For Night Sport Matches",
       price: 30,
-      discountPercentage: 6.33,
+      discount: 6.33,
       rating: 4.97,
       stock: 115,
       brand: "mastar watch",
@@ -1595,7 +1595,7 @@ const productsData = {
       description:
         "Fashion Oversized Square Sunglasses Retro Gradient Big Frame Sunglasses For Women One Piece Gafas Shade Mirror Clear Lens 17059",
       price: 28,
-      discountPercentage: 13.89,
+      discount: 13.89,
       rating: 4.64,
       stock: 64,
       brand: "mastar watch",
@@ -1613,7 +1613,7 @@ const productsData = {
       description:
         "LouisWill Men Sunglasses Polarized Sunglasses UV400 Sunglasses Day Night Dual Use Safety Driving Night Vision Eyewear AL-MG Frame Sun Glasses with Free Box for Drivers",
       price: 50,
-      discountPercentage: 11.27,
+      discount: 11.27,
       rating: 4.98,
       stock: 92,
       brand: "LouisWill",
@@ -1631,7 +1631,7 @@ const productsData = {
       description:
         "Bluetooth Aux Bluetooth Car Aux Car Bluetooth Transmitter Aux Audio Receiver Handfree Car Bluetooth Music Receiver Universal 3.5mm Streaming A2DP Wireless Auto AUX Audio Adapter With Mic For Phone MP3",
       price: 25,
-      discountPercentage: 10.56,
+      discount: 10.56,
       rating: 4.57,
       stock: 22,
       brand: "Car Aux",
@@ -1651,7 +1651,7 @@ const productsData = {
       description:
         "Both Heat and Cool Purpose, Temperature control range; -50 to +110, Temperature measurement accuracy; 0.1, Control accuracy; 0.1",
       price: 40,
-      discountPercentage: 11.3,
+      discount: 11.3,
       rating: 4.54,
       stock: 37,
       brand: "W1209 DC12V",
@@ -1671,7 +1671,7 @@ const productsData = {
       description:
         "TC Reusable Silicone Magic Washing Gloves with Scrubber, Cleaning Brush Scrubber Gloves Heat Resistant Pair for Cleaning of Kitchen, Dishes, Vegetables and Fruits, Bathroom, Car Wash, Pet Care and Multipurpose",
       price: 29,
-      discountPercentage: 3.19,
+      discount: 3.19,
       rating: 4.98,
       stock: 42,
       brand: "TC Reusable",
@@ -1691,7 +1691,7 @@ const productsData = {
       description:
         "best Quality CHarger , Highly Recommended to all best Quality CHarger , Highly Recommended to all",
       price: 40,
-      discountPercentage: 17.53,
+      discount: 17.53,
       rating: 4.2,
       stock: 79,
       brand: "TC Reusable",
@@ -1711,7 +1711,7 @@ const productsData = {
       description:
         "Universal fitment and easy to install no special wires, can be easily installed and removed. Fits most standard tyre air stem valves of road, mountain bicycles, motocycles and cars.Bright led will turn on w",
       price: 35,
-      discountPercentage: 11.08,
+      discount: 11.08,
       rating: 4.1,
       stock: 63,
       brand: "Neon LED Light",
@@ -1731,7 +1731,7 @@ const productsData = {
       description:
         "Engine Type:Wet sump, Single Cylinder, Four Stroke, Two Valves, Air Cooled with SOHC (Single Over Head Cam) Chain Drive Bore & Stroke:47.0 x 49.5 MM",
       price: 569,
-      discountPercentage: 13.63,
+      discount: 13.63,
       rating: 4.04,
       stock: 115,
       brand: "METRO 70cc Motorcycle - MR70",
@@ -1751,7 +1751,7 @@ const productsData = {
       description:
         "HOT SALE IN EUROPE electric racing motorcycle electric motorcycle for sale adult electric motorcycles",
       price: 920,
-      discountPercentage: 14.4,
+      discount: 14.4,
       rating: 4.19,
       stock: 22,
       brand: "BRAVE BULL",
@@ -1770,7 +1770,7 @@ const productsData = {
       description:
         "150cc 4-Stroke Motorcycle Automatic Motor Gas Motorcycles Scooter motorcycles 150cc scooter",
       price: 1050,
-      discountPercentage: 3.34,
+      discount: 3.34,
       rating: 4.84,
       stock: 127,
       brand: "shock absorber",
@@ -1790,7 +1790,7 @@ const productsData = {
       description:
         "new arrivals Fashion motocross goggles motorcycle motocross racing motorcycle",
       price: 900,
-      discountPercentage: 3.85,
+      discount: 3.85,
       rating: 4.06,
       stock: 109,
       brand: "JIEPOLLY",
@@ -1809,7 +1809,7 @@ const productsData = {
       description:
         "Wholesale cargo lashing Belt Tie Down end Ratchet strap customized strap 25mm motorcycle 1500kgs with rubber handle",
       price: 930,
-      discountPercentage: 17.67,
+      discount: 17.67,
       rating: 4.21,
       stock: 144,
       brand: "Xiangle",
@@ -1829,7 +1829,7 @@ const productsData = {
       description:
         "Wholesale slim hanging decorative kid room lighting ceiling kitchen chandeliers pendant light modern",
       price: 30,
-      discountPercentage: 14.89,
+      discount: 14.89,
       rating: 4.83,
       stock: 96,
       brand: "lightingbrilliance",
@@ -1849,7 +1849,7 @@ const productsData = {
       description:
         "Metal Ceramic Flower Chandelier Home Lighting American Vintage Hanging Lighting Pendant Lamp",
       price: 35,
-      discountPercentage: 10.94,
+      discount: 10.94,
       rating: 4.93,
       stock: 146,
       brand: "Ifei Home",
@@ -1869,7 +1869,7 @@ const productsData = {
       description:
         "3 lights lndenpant kitchen islang dining room pendant rice paper chandelier contemporary led pendant light modern chandelier",
       price: 34,
-      discountPercentage: 5.92,
+      discount: 5.92,
       rating: 4.99,
       stock: 44,
       brand: "DADAWU",
@@ -1889,7 +1889,7 @@ const productsData = {
       description:
         "American Vintage Wood Pendant Light Farmhouse Antique Hanging Lamp Lampara Colgante",
       price: 46,
-      discountPercentage: 8.84,
+      discount: 8.84,
       rating: 4.32,
       stock: 138,
       brand: "Ifei Home",
@@ -1908,7 +1908,7 @@ const productsData = {
       title: "Crystal chandelier maria theresa for 12 light",
       description: "Crystal chandelier maria theresa for 12 light",
       price: 47,
-      discountPercentage: 16,
+      discount: 16,
       rating: 4.74,
       stock: 133,
       brand: "YIOSI",

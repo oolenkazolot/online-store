@@ -59,6 +59,10 @@ class Products {
       {}
     );
   }
+
+  public getProducts(): IProduct[] {
+    return productsData.products;
+  }
 }
 
 export default Products;

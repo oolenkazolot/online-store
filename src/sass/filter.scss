@@ -2,6 +2,10 @@
   color: $color-gray;
   min-width: 270px;
 
+  @media (max-width: 960px) {
+    margin-bottom: 20px;
+  }
+
   &__wrap {
     padding: 0 10px;
     border: 1px solid $bg-gray;
@@ -32,6 +36,7 @@
     overflow: hidden;
     overflow-y: auto;
     @extend %scroll-gray;
+    cursor: pointer;
   }
 
   &__item {
@@ -73,6 +78,11 @@
     margin-right: 10px;
     cursor: pointer;
     transition: 0.2s all ease;
+  }
+
+  &__btn {
+    display: block;
+    margin: 20px auto;
   }
 }
 
@@ -119,6 +129,14 @@
       border-radius: 50%;
       margin-top: -5px;
       pointer-events: auto;
+      transition: background-color $transition ease;
+
+      &:hover {
+        background-color: $hover;
+      }
+      &:active {
+        background-color: $active;
+      }
     }
 
     &::-moz-range-thumb {
@@ -129,6 +147,14 @@
       cursor: pointer;
       border-radius: 50%;
       pointer-events: auto;
+      transition: background-color $transition ease;
+
+      &:hover {
+        background-color: $hover;
+      }
+      &:active {
+        background-color: $active;
+      }
     }
 
     &::-ms-thumb {
@@ -139,11 +165,14 @@
       cursor: pointer;
       border-radius: 50%;
       pointer-events: auto;
-    }
+      transition: background-color $transition ease;
 
-    &:active::-webkit-slider-thumb {
-      background-color: $color-white;
-      border: 3px solid $color-black;
+      &:hover {
+        background-color: $hover;
+      }
+      &:active {
+        background-color: $active;
+      }
     }
   }
 
