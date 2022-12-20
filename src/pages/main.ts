@@ -1,10 +1,13 @@
 import Filter from "../components/filter";
-import { IFilter } from "../types/index";
+import ProductsView from "../components/products-view.ts";
+import { IFilter, IProductsView } from "../types/index";
 
 class MainPage {
   private filter: IFilter;
+  private productsView: IProductsView;
   constructor() {
     this.filter = new Filter();
+    this.productsView = new ProductsView();
   }
 
   public draw(): void {
@@ -15,8 +18,9 @@ class MainPage {
     mainElement.textContent = "";
     const mainPageElement: HTMLElement = document.createElement("div");
     mainPageElement.classList.add("main-page");
-    const filterElement: HTMLElement = this.filter.drawFilter();
-    mainPageElement.append(filterElement);
+    const filterElement: HTMLElement = this.filter.createFilter();
+    const productsViewBlock: HTMLElement = this.productsView.createProductsViewBlock();
+    mainPageElement.append(filterElement, productsViewBlock);
     mainElement.append(mainPageElement);
   }
 }

@@ -12,7 +12,7 @@ class Filter {
     this.filterRange2 = new FilterRange("stock");
   }
 
-  public drawFilter(): HTMLElement {
+  public createFilter(): HTMLElement {
     const filterElement: HTMLElement = document.createElement("aside");
     filterElement.classList.add("filter");
     const filterTitle: HTMLElement = document.createElement("h2");
@@ -30,7 +30,14 @@ class Filter {
     const blockBrands: HTMLElement = this.createFilterBlockBrands();
     const blockPrice: HTMLElement = this.createFilterBlockPrice();
     const blockStock: HTMLElement = this.createFilterBlockStock();
-    filterWrap.append(blockCategories, blockBrands, blockPrice, blockStock);
+    const btnReset: HTMLElement = this.createFilterBtnReset();
+    filterWrap.append(
+      blockCategories,
+      blockBrands,
+      blockPrice,
+      blockStock,
+      btnReset
+    );
     return filterWrap;
   }
 
@@ -107,6 +114,15 @@ class Filter {
     const filterValues: HTMLElement = this.filterRange2.createFilterValues();
     block.append(title, filterValues, rangeFilter);
     return block;
+  }
+
+  private createFilterBtnReset(): HTMLElement {
+    const btnReset: HTMLElement = document.createElement("button");
+    btnReset.classList.add("filter-block__btn");
+    btnReset.classList.add("btn");
+    btnReset.textContent = "Reset";
+
+    return btnReset;
   }
 }
 

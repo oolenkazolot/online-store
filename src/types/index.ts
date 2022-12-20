@@ -16,7 +16,7 @@ export interface IProduct {
   title: string;
   description: string;
   price: number;
-  discountPercentage: number;
+  discount: number;
   rating: number;
   stock: number;
   brand: string;
@@ -30,10 +30,11 @@ export interface IProducts {
   getBrands: () => string[];
   getCategoriesObject: () => Record<string, number>;
   getBrandsObject: () => Record<string, number>;
+  getProducts: () => IProduct[];
 }
 
 export interface IFilter {
-  drawFilter: () => HTMLElement;
+  createFilter: () => HTMLElement;
 }
 
 export interface IFilterRange {
@@ -42,4 +43,24 @@ export interface IFilterRange {
 }
 export interface ICartPage {
   draw: () => void;
+}
+
+export interface IProductsSortOptionals {
+  value: string;
+  disabled?: boolean;
+  selected?: boolean;
+  content: string;
+  class?: string;
+}
+
+export interface IProductsSort {
+  createProductsSort: () => HTMLElement;
+}
+
+export interface IProductsView {
+  createProductsViewBlock: () => HTMLElement;
+}
+
+export interface IProductsList {
+  createProductsList: () => HTMLElement;
 }
