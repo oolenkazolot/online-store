@@ -116,7 +116,7 @@ class Temp extends Template {
     buyBtn.innerText = textObj.buyBtn;
 
     const prodCont = this.createElement("sum-cont__prod-cont", sumInfoWrap);
-    const products = this.createElement("product", prodCont, textObj.products);
+    const products = this.createElement("prod-c", prodCont, textObj.products);
     const prodAmt = this.createElement("prod-amt", prodCont, textObj.prodAmt);
 
     const totalCont = this.createElement("sum-prod__total-cont", sumInfoWrap);
