@@ -64,3 +64,6 @@ export interface IProductsView {
 export interface IProductsList {
   createProductsList: () => HTMLElement;
 }
+export type TtextObject = {
+  [key: string]: string;
+};
