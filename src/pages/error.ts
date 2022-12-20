@@ -1,3 +1,5 @@
+import { wrap } from "module";
+
 class ErrorPage {
   public draw(): void {
     const mainElement: HTMLElement | null = document.querySelector("main");
@@ -5,8 +7,9 @@ class ErrorPage {
       return;
     }
     mainElement.textContent = "";
-
-    //дальше в main добавить новый контент
+    const wrapper = document.createElement("div");
+    mainElement.append(wrapper);
+    wrapper.className = "error-wrapper";
   }
 }
 
