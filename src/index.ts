@@ -12,6 +12,7 @@ const cartPage: ICartPage = new CartPage();
 
 const headerTop = new TopHeader();
 headerTop.drawElements();
+
 const headerBottom = new BottomHeader();
 headerBottom.drawElements();
 
@@ -35,6 +36,7 @@ const routs: IRout[] = [
 ];
 //объект роутера
 const router = new Router(routs, errorPage.draw);
+mainPage.router = router;
 //проврка какая скйчас страница
 router.init();
 
@@ -59,10 +61,10 @@ if (itemsInCart) {
 // const b = document.createElement('a');
 // b.addEventListener('click', (e) => {
 //   e.preventDefault();
-//   router.navigate('');
+//   router.navigate('jhkjh');
 // });
-// b.setAttribute('href', '');
-// b.textContent = 'main page';
+// b.setAttribute('href', 'hjgjh');
+// b.textContent = 'error page';
 // const c = document.createElement('a');
 // c.addEventListener('click', (e) => {
 //   e.preventDefault();
@@ -70,4 +72,4 @@ if (itemsInCart) {
 // });
 // c.setAttribute('href', 'products/15');
 // c.textContent = 'products page';
-// document.body.append(a, b, c);
+// document.body.append(b);

@@ -3,8 +3,14 @@ export interface IRout {
   cb: (param?: string) => void;
 }
 
+export interface IRouter {
+  navigate: (path: string) => void;
+  init: () => void;
+}
+
 export interface IMainPage {
   draw: () => void;
+  router?: IRouter;
 }
 
 export interface IErrorPage {
@@ -58,11 +64,11 @@ export interface IProductsSort {
 }
 
 export interface IProductsView {
-  createProductsViewBlock: () => HTMLElement;
+  createProductsViewBlock: (router?: IRouter) => HTMLElement;
 }
 
 export interface IProductsList {
-  createProductsList: () => HTMLElement;
+  createProductsList: (router?: IRouter) => HTMLElement;
 }
 export type TtextObject = {
   [key: string]: string;
