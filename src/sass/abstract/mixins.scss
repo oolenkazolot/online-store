@@ -20,8 +20,11 @@
     cursor: pointer;
     transition: 0.4s;
     &:hover {
-      background-color: rgba(255, 222, 36, 0.8);
-    }
+        background-color: $hover;
+      }
+    &:active {
+        background-color: $active;
+      }
 }
 
 @mixin error($marginBottom) {
