@@ -9,18 +9,38 @@
   margin: 0 auto;
   margin-top: 5%;
   padding: 0 3%;
+  @media (max-width: 850px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
+}
+
+.sum-cont {
+  margin-bottom: 1rem;
+  width: 29%;
+}
+
+.prod-cont {
+  width: 69%;
+}
+
 
 .prod-cont,
 .sum-cont {
-  width: 69%;
   color: $color-gray;
   border: 1px solid $bg-gray;
   border-radius: 0.5rem;
   overflow: hidden;
   box-shadow: 3px 3px 7px 0px rgba(34, 60, 80, 0.2);
   height: fit-content;
+  @media (max-width: 850px) {
+    width: 100%;
 }
+}
+
+
 
 .prod-cont__title-cont,
 .prod-cont__stat-cont,
@@ -38,6 +58,9 @@
 .prod-cont__title,
 .sum-cont__title {
   font-size: 2rem;
+  @media (max-width: 850px) {
+    font-size: 1.5rem;
+}
 }
 
 .prod-cont__title-cont,
@@ -49,11 +72,18 @@
 
 .prod-cont__title-cont {
   border: none;
+  @media (max-width: 690px) {
+    flex-direction: column;
+    gap: 0.5rem;
+}
 }
 
 .prod-cont__stat-cont {
   text-transform: uppercase;
   font-size: 1.2rem;
+  @media (max-width: 850px) {
+    font-size: 1rem;
+}
 }
 
 .prod-cont__items-num {
@@ -101,6 +131,11 @@
   padding: 1rem;
   color: black;
   border-top: 1px solid $bg-gray;
+  @media (max-width: 500px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
 }
 
 .item-num {
@@ -117,12 +152,10 @@
 .prod-cont__item-img {
   width: 250px;
   height: 132px;
-  background-size: cover;
+  background-size: contain;
   background-image: url('https://i.dummyjson.com/data/products/1/1.jpg');
-}
-
-.prod-cont__item-img {
-  border-radius: 3px;
+  background-repeat: no-repeat;
+  border-radius: 10px;
   cursor: pointer;
 }
 
@@ -147,6 +180,9 @@
 .prod-cont__addInfo {
   padding: 0.8rem;
   font-size: 0.9rem;
+  @media (max-width: 500px) {
+    padding: 0;
+}
 }
 
 .prod-cont__stock-bl,
@@ -160,6 +196,9 @@
 .prod-cont__contr-wrap,
 .prod-cont__price {
   padding: 0.8rem;
+  @media (max-width: 500px) {
+    padding: 0 0 0.5rem 0;
+}
 }
 
 .contr {
@@ -186,9 +225,7 @@
   margin-right: 0.5rem;
 }
 
-.sum-cont {
-  width: 29%;
-}
+
 
 .sum-cont__prod-cont,
 .sum-prod__total-cont {
@@ -196,6 +233,10 @@
   align-items: center;
   font-size: 1.5rem;
   margin-bottom: 2rem;
+  @media (max-width: 690px) {
+    margin-bottom: 1rem;
+}
+
 }
 
 .sum-cont__title {
@@ -215,6 +256,9 @@
   align-items: center;
   padding: 1rem;
   color: black;
+  @media (max-width: 690px) {
+    margin-bottom: 0.5rem;
+}
 }
 
 .sum-prod__promo-input {
@@ -244,6 +288,9 @@
 .promo {
   font-size: 0.9rem;
   margin-bottom: 1.5rem;
+  @media (max-width: 690px) {
+    margin-bottom: 0;
+}
 }
 
 .sum-cont__buy-btn {
@@ -263,4 +310,18 @@
   &:active {
     background-color: $active;
   }
+}
+
+.data-cont {
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  margin: 0 3rem;
+  gap: 15px;
+  @media (max-width: 1200px) {
+   flex-direction: column;
+   align-items: center;
+   justify-content: space-between;
+   margin: 0;
+}
 }

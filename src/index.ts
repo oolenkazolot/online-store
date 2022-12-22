@@ -16,7 +16,7 @@ const headerTop = new TopHeader();
 headerTop.drawElements();
 
 const headerBottom = new BottomHeader();
-headerBottom.drawElements();
+// headerBottom.drawElements();
 
 //router start
 //список страниц с колбеками: путь и что делать
@@ -38,8 +38,6 @@ const routs: IRout[] = [
 ];
 //объект роутера
 const router = new Router(routs, errorPage.draw);
-mainPage.router = router;
-productPage.router = router;
 //проврка какая скйчас страница
 router.init();
 

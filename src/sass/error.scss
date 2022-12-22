@@ -1,8 +1,11 @@
 .error-wrapper {
   background-image: url(../assets/images/error.jpg);
-  background-size: auto 90vh;
+  background-size: contain;
   background-repeat: no-repeat;
   width: 100vw;
   height: calc(100vh - 164px);
   background-position: center;
+  @media (max-width: 710px) {
+    height: calc(100vh - 257px);
+}
 }

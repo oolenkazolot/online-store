@@ -48,8 +48,9 @@ class Temp extends Template {
     const cardCont = this.createElement("prod-cont__card-cont", prodCont);
     const itemNumb = this.createElement("item-num", cardCont, textObj.itemNumb);
 
-    const itemImage = this.createElement("prod-cont__item-img", cardCont);
-    const infoBlock = this.createElement("prod-cont__info-block", cardCont);
+    const dataCont = this.createElement("data-cont", cardCont);
+    const itemImage = this.createElement("prod-cont__item-img", dataCont);
+    const infoBlock = this.createElement("prod-cont__info-block", dataCont);
     const controlBlock = this.createElement("prod-cont__contr-block", cardCont);
 
     const prodName = this.createElement(
