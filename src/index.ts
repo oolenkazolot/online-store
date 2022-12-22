@@ -5,6 +5,7 @@ import ErrorPage from "./pages/error";
 import CartPage from "./pages/cart";
 import { IMainPage, IErrorPage, IRout, ICartPage } from "./types/index";
 import { TopHeader, BottomHeader } from "./components/header";
+import { IRouter } from "./types/index";
 
 const mainPage: IMainPage = new MainPage();
 const errorPage: IErrorPage = new ErrorPage();
@@ -13,7 +14,7 @@ const cartPage: ICartPage = new CartPage();
 const headerTop = new TopHeader();
 headerTop.drawElements();
 const headerBottom = new BottomHeader();
-headerBottom.drawElements();
+// headerBottom.drawElements();
 
 //router start
 //список страниц с колбеками: путь и что делать
@@ -35,26 +36,12 @@ const routs: IRout[] = [
 ];
 //объект роутера
 const router = new Router(routs, errorPage.draw);
+mainPage.router = router;
+headerBottom.router = router;
+headerBottom.drawElements();
+
 //проврка какая скйчас страница
 router.init();
-
-// Для примера создания ссылки роутера
-//первый для кнопки(ссылки) на корзину
-const a = document.createElement("a");
-a.addEventListener("click", (e) => {
-  e.preventDefault();
-  router.navigate("cart");
-});
-const cart = document.querySelector(".header-bottom__cart") as HTMLElement;
-const itemsInCart = document.querySelector(
-  ".header-bottom__items-amount"
-) as HTMLElement;
-if (cart) {
-  cart.append(a);
-}
-if (itemsInCart) {
-  a.append(itemsInCart);
-}
 
 // a.setAttribute('href', 'cart');
 // a.textContent = 'cart page';

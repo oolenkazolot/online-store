@@ -3,8 +3,14 @@ export interface IRout {
   cb: (param?: string) => void;
 }
 
+export interface IRouter {
+  navigate: (path: string) => void;
+  init: () => void;
+}
+
 export interface IMainPage {
   draw: () => void;
+  router?: IRouter;
 }
 
 export interface IErrorPage {

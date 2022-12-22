@@ -1,3 +1,5 @@
+import { IRouter } from "src/types";
+
 export class TopHeader {
   public header = document.querySelector("header") as HTMLElement;
 
@@ -85,6 +87,7 @@ export class TopHeader {
 }
 
 export class BottomHeader extends TopHeader {
+  public router?: IRouter;
   public drawElements(): void {
     const headerBottom = super.createElement(
       "div",
@@ -130,5 +133,43 @@ export class BottomHeader extends TopHeader {
       Cart
     );
     cartItemsAmount.innerHTML = "0";
+    this.createLinkOnMainPage();
+    this.createLinkOnCartPage();
+  }
+
+  public createLinkOnMainPage(): void {
+    const logo = document.querySelector(".header-bottom__title") as HTMLElement;
+    const logoCont = document.querySelector(".header-bottom__logo-container");
+    const a = document.createElement("a");
+    const main = document.querySelector("main") as HTMLElement;
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (this.router) {
+        main.innerHTML = "";
+        this.router.navigate("");
+      }
+    });
+    a.append(logo);
+    logoCont?.append(a);
+  }
+
+  public createLinkOnCartPage(): void {
+    const a = document.createElement("a");
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (this.router) {
+        this.router.navigate("cart");
+      }
+    });
+    const cart = document.querySelector(".header-bottom__cart") as HTMLElement;
+    const itemsInCart = document.querySelector(
+      ".header-bottom__items-amount"
+    ) as HTMLElement;
+    if (cart) {
+      cart.append(a);
+    }
+    if (itemsInCart) {
+      a.append(itemsInCart);
+    }
   }
 }

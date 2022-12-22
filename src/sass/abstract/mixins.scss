@@ -9,6 +9,11 @@
     &:hover {
         cursor: pointer;;
     }
+    @media (max-width: 450px) {
+        width: 10px;
+        height: 10px;
+        margin-right: 5px;
+    }
 }
 
 @mixin buttons {
