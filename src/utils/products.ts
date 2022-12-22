@@ -63,6 +63,16 @@ class Products {
   public getProducts(): IProduct[] {
     return productsData.products;
   }
+
+  public getProduct(id: string | undefined): IProduct | undefined {
+    const product = productsData.products.find((element) => {
+      const numId = Number(id);
+      if (id && element.id === numId) {
+        return element;
+      }
+    });
+    return product;
+  }
 }
 
 export default Products;

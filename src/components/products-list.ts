@@ -1,4 +1,4 @@
-import { IProducts, IProduct } from "../types/index";
+import { IProducts, IProduct, IRouter } from "../types/index";
 import Products from "../utils/products";
 
 class ProductsList {
@@ -8,15 +8,15 @@ class ProductsList {
     this.products = new Products();
   }
 
-  public createProductsList(): HTMLElement {
+  public createProductsList(router?: IRouter): HTMLElement {
     const productsList: HTMLElement = document.createElement("div");
     productsList.classList.add("products__list");
-    const productsElements = this.createProductsElement();
+    const productsElements = this.createProductsElement(router);
     productsList.append(...productsElements);
     return productsList;
   }
 
-  private createProductsElement(): HTMLElement[] {
+  private createProductsElement(router?: IRouter): HTMLElement[] {
     const products: IProduct[] = this.products.getProducts();
     const productsElements = products.map(
       (item: IProduct, index: number): HTMLElement => {
@@ -26,7 +26,10 @@ class ProductsList {
         const productName: HTMLElement = this.createProductName(item);
         const productImg: HTMLElement = this.createProductImg(item);
         const productInfo: HTMLElement = this.createProductInfo(item);
-        const productBtnWrap: HTMLElement = this.createProductBtnWrap(item);
+        const productBtnWrap: HTMLElement = this.createProductBtnWrap(
+          item,
+          router
+        );
         productElement.append(
           productName,
           productImg,
@@ -77,22 +80,29 @@ class ProductsList {
     return productInfo;
   }
 
-  private createProductBtnWrap(item: IProduct): HTMLElement {
+  private createProductBtnWrap(item: IProduct, router?: IRouter): HTMLElement {
     const productBtnWrap: HTMLElement = document.createElement("div");
     productBtnWrap.classList.add("product__btn-wrap");
     const productPrice: HTMLElement = document.createElement("h3");
     productPrice.classList.add("product__price");
     productPrice.textContent = "€" + item.price;
-    const btnDetails = this.createBtnDetails();
+    const btnDetails = this.createBtnDetails(item.id, router);
     const btnCart = this.createBtnCart();
     productBtnWrap.append(productPrice, btnDetails, btnCart);
     return productBtnWrap;
   }
 
-  private createBtnDetails(): HTMLElement {
+  private createBtnDetails(id: number, router?: IRouter): HTMLElement {
     const btnDetails: HTMLElement = document.createElement("button");
     btnDetails.classList.add("product__btn-details");
     btnDetails.textContent = "Details";
+    if (router) {
+      btnDetails.addEventListener("click", (e) => {
+        e.preventDefault();
+        router.navigate(`products/${id}`);
+      });
+    }
+
     return btnDetails;
   }
 

@@ -1,10 +1,11 @@
 import Filter from "../components/filter";
 import ProductsView from "../components/products-view.ts";
-import { IFilter, IProductsView } from "../types/index";
+import { IFilter, IProductsView, IRouter } from "../types/index";
 
 class MainPage {
   private filter: IFilter;
   private productsView: IProductsView;
+  public router?: IRouter;
   constructor() {
     this.filter = new Filter();
     this.productsView = new ProductsView();
@@ -12,6 +13,7 @@ class MainPage {
 
   public draw(): void {
     const mainElement: HTMLElement | null = document.querySelector("main");
+
     if (!mainElement) {
       return;
     }
@@ -19,7 +21,9 @@ class MainPage {
     const mainPageElement: HTMLElement = document.createElement("div");
     mainPageElement.classList.add("main-page");
     const filterElement: HTMLElement = this.filter.createFilter();
-    const productsViewBlock: HTMLElement = this.productsView.createProductsViewBlock();
+    const productsViewBlock: HTMLElement = this.productsView.createProductsViewBlock(
+      this.router
+    );
     mainPageElement.append(filterElement, productsViewBlock);
     mainElement.append(mainPageElement);
   }

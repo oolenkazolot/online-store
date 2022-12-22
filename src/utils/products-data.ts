@@ -39,20 +39,6 @@ const productsData = {
       ],
     },
     {
-      id: 3,
-      title: "Universe 9",
-      description:
-        "Samsung's new variant which goes beyond Galaxy to the Universe",
-      price: 1249,
-      discount: 15.46,
-      rating: 4.09,
-      stock: 36,
-      brand: "Samsung",
-      category: "smartphones",
-      thumbnail: "https://i.dummyjson.com/data/products/3/thumbnail.jpg",
-      images: ["https://i.dummyjson.com/data/products/3/1.jpg"],
-    },
-    {
       id: 4,
       title: "F19",
       description: "OPPO F19 is officially announced on April 2021.",
@@ -87,6 +73,7 @@ const productsData = {
         "https://i.dummyjson.com/data/products/5/1.jpg",
         "https://i.dummyjson.com/data/products/5/2.jpg",
         "https://i.dummyjson.com/data/products/5/3.jpg",
+        "https://i.dummyjson.com/data/products/5/thumbnail.jpg",
       ],
     },
     {
@@ -106,6 +93,7 @@ const productsData = {
         "https://i.dummyjson.com/data/products/6/2.jpg",
         "https://i.dummyjson.com/data/products/6/3.png",
         "https://i.dummyjson.com/data/products/6/4.jpg",
+        "https://i.dummyjson.com/data/products/6/thumbnail.png",
       ],
     },
     {
@@ -396,6 +384,7 @@ const productsData = {
         "https://i.dummyjson.com/data/products/21/1.png",
         "https://i.dummyjson.com/data/products/21/2.jpg",
         "https://i.dummyjson.com/data/products/21/3.jpg",
+        "https://i.dummyjson.com/data/products/21/thumbnail.png",
       ],
     },
     {
@@ -413,6 +402,7 @@ const productsData = {
         "https://i.dummyjson.com/data/products/22/1.jpg",
         "https://i.dummyjson.com/data/products/22/2.jpg",
         "https://i.dummyjson.com/data/products/22/3.jpg",
+        "https://i.dummyjson.com/data/products/22/thumbnail.jpg",
       ],
     },
     {
@@ -767,6 +757,7 @@ const productsData = {
       images: [
         "https://i.dummyjson.com/data/products/40/1.jpg",
         "https://i.dummyjson.com/data/products/40/2.jpg",
+        "https://i.dummyjson.com/data/products/40/thumbnail.jpg",
       ],
     },
     {
@@ -962,6 +953,7 @@ const productsData = {
         "https://i.dummyjson.com/data/products/50/1.jpeg",
         "https://i.dummyjson.com/data/products/50/2.jpg",
         "https://i.dummyjson.com/data/products/50/3.jpg",
+        "https://i.dummyjson.com/data/products/50/thumbnail.jpg",
       ],
     },
     {
@@ -1176,6 +1168,7 @@ const productsData = {
         "https://i.dummyjson.com/data/products/61/1.jpg",
         "https://i.dummyjson.com/data/products/61/2.png",
         "https://i.dummyjson.com/data/products/61/3.jpg",
+        "https://i.dummyjson.com/data/products/61/thumbnail.jpg",
       ],
     },
     {
@@ -1193,6 +1186,7 @@ const productsData = {
       images: [
         "https://i.dummyjson.com/data/products/62/1.jpg",
         "https://i.dummyjson.com/data/products/62/2.jpg",
+        "https://i.dummyjson.com/data/products/62/thumbnail.jpg",
       ],
     },
     {
@@ -1212,6 +1206,7 @@ const productsData = {
         "https://i.dummyjson.com/data/products/63/2.jpg",
         "https://i.dummyjson.com/data/products/63/3.png",
         "https://i.dummyjson.com/data/products/63/4.jpeg",
+        "https://i.dummyjson.com/data/products/63/thumbnail.webp",
       ],
     },
     {
@@ -1307,6 +1302,7 @@ const productsData = {
       images: [
         "https://i.dummyjson.com/data/products/68/1.jpg",
         "https://i.dummyjson.com/data/products/68/2.jpg",
+        "https://i.dummyjson.com/data/products/68/thumbnail.webp",
       ],
     },
     {
@@ -1480,34 +1476,6 @@ const productsData = {
         "https://i.dummyjson.com/data/products/77/3.jpg",
         "https://i.dummyjson.com/data/products/77/thumbnail.jpg",
       ],
-    },
-    {
-      id: 78,
-      title: "Rhinestone Korean Style Open Rings",
-      description:
-        "Fashion Jewellery 3Pcs Adjustable Pearl Rhinestone Korean Style Open Rings For Women",
-      price: 30,
-      discount: 8.02,
-      rating: 4.69,
-      stock: 9,
-      brand: "Fashion Jewellery",
-      category: "womens-jewellery",
-      thumbnail: "https://i.dummyjson.com/data/products/78/thumbnail.jpg",
-      images: ["https://i.dummyjson.com/data/products/78/thumbnail.jpg"],
-    },
-    {
-      id: 79,
-      title: "Elegant Female Pearl Earrings",
-      description:
-        "Elegant Female Pearl Earrings Set Zircon Pearl Earings Women Party Accessories 9 Pairs/Set",
-      price: 30,
-      discount: 12.8,
-      rating: 4.74,
-      stock: 16,
-      brand: "Fashion Jewellery",
-      category: "womens-jewellery",
-      thumbnail: "https://i.dummyjson.com/data/products/79/thumbnail.jpg",
-      images: ["https://i.dummyjson.com/data/products/79/1.jpg"],
     },
     {
       id: 80,

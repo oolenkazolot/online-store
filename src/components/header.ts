@@ -2,7 +2,6 @@ import { IRouter } from "src/types";
 
 export class TopHeader {
   public header = document.querySelector("header") as HTMLElement;
-
   public createElement(
     element: string,
     myClass: string,
@@ -114,7 +113,6 @@ export class BottomHeader extends TopHeader {
       "&#8364 0",
       "Cart total"
     );
-
     bottomWrapper.append(logoContainer, priceContainer);
 
     const cartContainer = super.createElement(

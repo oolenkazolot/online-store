@@ -37,6 +37,7 @@ export interface IProducts {
   getCategoriesObject: () => Record<string, number>;
   getBrandsObject: () => Record<string, number>;
   getProducts: () => IProduct[];
+  getProduct: (id: string | undefined) => IProduct | undefined;
 }
 
 export interface IFilter {
@@ -64,12 +65,28 @@ export interface IProductsSort {
 }
 
 export interface IProductsView {
-  createProductsViewBlock: () => HTMLElement;
+  createProductsViewBlock: (router?: IRouter) => HTMLElement;
 }
 
 export interface IProductsList {
-  createProductsList: () => HTMLElement;
+  createProductsList: (router?: IRouter) => HTMLElement;
 }
 export type TtextObject = {
   [key: string]: string;
 };
+
+export interface IProductPage {
+  draw: (id: string | undefined) => void;
+  router?: IRouter;
+}
+
+export interface ILinkNavigation {
+  createLinksNavigation: (
+    id: string | undefined,
+    router?: IRouter
+  ) => HTMLElement;
+}
+
+export interface IProductDetail {
+  createProductDetail: (id: string | undefined) => HTMLElement;
+}
