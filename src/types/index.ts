@@ -81,7 +81,10 @@ export interface IProductPage {
 }
 
 export interface ILinkNavigation {
-  createLinksNavigation: (id: string | undefined, router?: IRouter) => HTMLElement;
+  createLinksNavigation: (
+    id: string | undefined,
+    router?: IRouter
+  ) => HTMLElement;
 }
 
 export interface IProductDetail {

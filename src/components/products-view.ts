@@ -1,6 +1,6 @@
-import { IProductsSort, IProductsList, IRouter } from '../types/index';
-import ProductsSort from './products-sort';
-import ProductsList from './products-list';
+import { IProductsSort, IProductsList, IRouter } from "../types/index";
+import ProductsSort from "./products-sort";
+import ProductsList from "./products-list";
 
 class ProductsView {
   private productsSort: IProductsSort;
@@ -10,13 +10,15 @@ class ProductsView {
     this.productsList = new ProductsList();
   }
   public createProductsViewBlock(router?: IRouter): HTMLElement {
-    const productsViewBlock: HTMLElement = document.createElement('div');
-    productsViewBlock.classList.add('products');
-    const title: HTMLElement = document.createElement('h2');
-    title.classList.add('products__title');
-    title.textContent = 'Products';
+    const productsViewBlock: HTMLElement = document.createElement("div");
+    productsViewBlock.classList.add("products");
+    const title: HTMLElement = document.createElement("h2");
+    title.classList.add("products__title");
+    title.textContent = "Products";
     const productsSortBlock: HTMLElement = this.productsSort.createProductsSort();
-    const productsListBlock: HTMLElement = this.productsList.createProductsList(router);
+    const productsListBlock: HTMLElement = this.productsList.createProductsList(
+      router
+    );
     productsViewBlock.append(title, productsSortBlock, productsListBlock);
     return productsViewBlock;
   }
