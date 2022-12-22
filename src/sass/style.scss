@@ -10,6 +10,8 @@
 @import './select-sorting.scss';
 @import './modal.scss';
 @import './error.scss';
+@import './product-page.scss';
+@import './product-detail.scss';
 
 * {
   box-sizing: border-box;
@@ -61,7 +63,6 @@ body {
 }
 
 .btn {
-  min-width: 120px;
   padding: 10px;
   background-color: $color-main;
   border-radius: 25px;
