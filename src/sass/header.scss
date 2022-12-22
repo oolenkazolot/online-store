@@ -14,23 +14,81 @@
     color: $color-gray;
     margin: 0 auto;
     border-bottom: 1px solid $bg-gray;
+    @media (max-width: 450px) {
+        padding: 10px;
+    }   
 }
 
 .header-top__container,
-.header-top__mobile-container,
-.header-top__email-container,
-.header-top__signIn-container,
-.header-top__location-container,
-.header-bottom__logo-container {
+.header-bottom__logo-container
+ {
     @extend %flex;
     &:hover {
         cursor: pointer;;
     }
 }
 
+.header-bottom__logo-container {
+    @media (max-width: 710px) {
+        margin-right: 6rem;
+    }
+    @media (max-width: 510px) {
+        margin-right: 0;
+    }
+}
+
+.header-top__container {
+    @media (max-width: 710px) {
+        flex-wrap: wrap;
+    }
+}
+
+.header-top__mobile-container,
+.header-top__email-container,
+.header-top__signIn-container,
+.header-top__location-container
+ {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &:hover {
+        cursor: pointer;;
+    }
+    @media (max-width: 710px) {
+        width: 50%;
+        justify-content: center;
+    }
+    @media (max-width: 450px) {
+        width: 50%;
+        justify-content: center;
+        font-size: 12px;
+    }
+}
+
+.header-top__mobile-container {
+    @media (max-width: 710px) {
+       margin-bottom: 0.7rem;
+    }
+    @media (max-width: 450px) {
+        width: 45%;
+    }
+}
+
+.header-top__email-container {
+    @media (max-width: 710px) {
+        margin-bottom: 0.7rem;
+     }
+    @media (max-width: 450px) {
+        width: 55%;
+    }
+}
+
 .header-bottom__wrapper {
     @extend %flex;
     font-size: 1.4rem;
+    @media (max-width: 710px) {
+        flex-direction: column;
+     }
 }
 
 .header-top__mobile-icon {
@@ -44,6 +102,10 @@
 .header-top__location-icon {
     @include icon (url('../assets/svg/icon-location.svg'));
     background-size: 15px 15px;
+    @media (max-width: 450px) {
+        background-size: 10px 10px;
+    }
+
 }
 
 .header-top__signIn-icon {
@@ -57,12 +119,19 @@
     background-color: transparent;
     color: $color-gray;
     cursor: pointer;
+    @media (max-width: 450px) {
+        font-size: 12px;
+    }
 }
 
 .header-bottom__logo {
     @include icon (url('../assets/svg/logo.svg'));
     width: 100px;
     height: 100px;
+    @media (max-width: 710px) {
+        width: 80px;
+        height: 80px;
+     }
 }
 
 .header-bottom__cart-total {
@@ -70,6 +139,30 @@
     font-size: 1.8rem;
     font-weight: 700;
     margin-right: 20px;
+    @media (max-width: 820px) {
+        font-size: 1.8rem;
+    }
+    @media (max-width: 510px) {
+        font-size: 1.5rem;
+    }
+}
+
+.header-bottom__title {
+    @media (max-width: 820px) {
+        font-size: 2.5rem;
+    }
+    @media (max-width: 510px) {
+        font-size: 2rem;
+    }
+}
+
+.header-bottom__total-sum {
+    @media (max-width: 820px) {
+        font-size: 1.2rem;
+    }
+    @media (max-width: 510px) {
+        font-size: 1rem;
+    }
 }
 
 .header-bottom__cart {
@@ -77,6 +170,10 @@
     width: 70px;
     height: 70px;
     position: relative;
+    @media (max-width: 820px) {
+        width: 50px;
+        height: 50px;
+    }
 }
 
 .header-bottom__items-amount {
@@ -89,6 +186,19 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media (max-width: 820px) {
+        font-size: 1rem;
+        top: 10px;
+        left: 15px;
+        width: 25px;
+        height: 25px;
+    }
+}
+
+.header-bottom__price-container {
     display: flex;
     justify-content: center;
     align-items: center;
