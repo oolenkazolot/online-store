@@ -116,16 +116,24 @@
     margin-right: 10px;
   }
 
-  &__img {
+  &__slide {
     width: 100px;
-    border: 1px solid $color-main;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: transform $transition, border-color $transition;
+    height: 70px;
 
     &:not(:last-child) {
       margin-bottom: 10px;
     }
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border: 1px solid $color-main;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform $transition, border-color $transition;
 
     &:hover {
       transform: scale(1.1);
