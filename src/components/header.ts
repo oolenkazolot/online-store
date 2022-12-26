@@ -113,6 +113,7 @@ export class BottomHeader extends TopHeader {
       "&#8364 0",
       "Cart total"
     );
+
     bottomWrapper.append(logoContainer, priceContainer);
 
     const cartContainer = super.createElement(
@@ -130,7 +131,34 @@ export class BottomHeader extends TopHeader {
       "header-bottom__items-amount",
       Cart
     );
-    cartItemsAmount.innerHTML = "0";
+
+    if (localStorage.getItem("itemsArray")) {
+      if (JSON.parse(String(localStorage.getItem("itemsArray"))).length > 0) {
+        cartItemsAmount.innerHTML = JSON.parse(
+          String(localStorage.getItem("itemsArray"))
+        )[1];
+      } else {
+        cartItemsAmount.innerHTML = "0";
+      }
+    } else {
+      cartItemsAmount.innerHTML = "0";
+    }
+
+    const totalSum = document.querySelector(
+      ".header-bottom__total-sum"
+    ) as HTMLElement;
+    if (localStorage.getItem("itemsArray")) {
+      if (JSON.parse(String(localStorage.getItem("itemsArray"))).length > 0) {
+        totalSum.innerHTML = `&#8364 ${
+          JSON.parse(String(localStorage.getItem("itemsArray")))[0]
+        }`;
+      } else {
+        totalSum.innerHTML = "&#8364 0";
+      }
+    } else {
+      totalSum.innerHTML = "&#8364 0";
+    }
+
     this.createLinkOnMainPage();
     this.createLinkOnCartPage();
   }
