@@ -30,7 +30,7 @@
 .prod-cont,
 .sum-cont {
   color: $color-gray;
-  border: 1px solid $bg-gray;
+  border: 2px solid $color-main;
   border-radius: 0.5rem;
   overflow: hidden;
   box-shadow: 3px 3px 7px 0px rgba(34, 60, 80, 0.2);
@@ -128,9 +128,9 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 1rem;
+  padding: 0 1rem;
   color: black;
-  border-top: 1px solid $bg-gray;
+  border-top: 2px solid $color-main;
   @media (max-width: 500px) {
     flex-direction: column;
     align-items: center;
@@ -147,14 +147,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 500px) {
+  margin-top: 1rem;
+}
 }
 
 .prod-cont__item-img {
   width: 250px;
   height: 132px;
-  background-size: contain;
-  background-image: url('https://i.dummyjson.com/data/products/1/1.jpg');
-  background-repeat: no-repeat;
   border-radius: 10px;
   cursor: pointer;
 }
@@ -163,6 +163,11 @@
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  width: 48%;
+  @media (max-width: 1200px) {
+  width: 100%;
+ }
+
 }
 
 .prod-cont__prod-name {
@@ -217,7 +222,6 @@
 }
 
 .quantity{
-  margin: 0 1rem;
   font-size: 1.2rem;
 }
 
@@ -241,6 +245,7 @@
 
 .sum-cont__title {
   text-align: center;
+  border-bottom: 2px solid $color-main;
 }
 
 .sum-cont__info-cont {
@@ -315,13 +320,37 @@
 .data-cont {
   display: flex;
   width: 90%;
-  justify-content: space-between;
-  margin: 0 3rem;
+  justify-content: space-evenly;
+  align-items: center;
   gap: 15px;
   @media (max-width: 1200px) {
    flex-direction: column;
    align-items: center;
    justify-content: space-between;
-   margin: 0;
+   width: 85%;
+   margin-top: 1rem;
+}
+  @media (max-width: 850px) {
+   width: 55%;
+}
+  @media (max-width: 500px) {
+    width: 100%;
+}
+}
+
+
+.total-sum {
+  font-size: 1.75rem;
+  color: #000;
+  text-shadow: #fc0 1px 0 10px;
+}
+
+.prod-cont__contr-block {
+  width: 25%;
+  @media (max-width: 1200px) {
+    width: 29%;
+ }
+  @media (max-width: 500px) {
+   width: 70%;
 }
 }
