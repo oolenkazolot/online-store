@@ -81,15 +81,16 @@ export interface IProductPage {
 }
 
 export interface ILinkNavigation {
-  createLinksNavigation: (id: string | undefined, router?: IRouter) => HTMLElement;
+  createLinksNavigation: (
+    id: string | undefined,
+    router?: IRouter
+  ) => HTMLElement;
 }
 
 export interface IProductDetail {
   createProductDetail: (id: string | undefined) => HTMLElement;
 }
 
-export interface IFilterState {
-  filterActive?: string[];
 export interface IProductInCart {
   id: number;
   title: string;
