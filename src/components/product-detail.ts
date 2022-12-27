@@ -57,12 +57,15 @@ class ProductDetail {
     }
 
     const imagesElements = imagesSlides.map((item: string) => {
+      const slide: HTMLElement = document.createElement("div");
+      slide.classList.add("slides__slide");
       const img: HTMLElement = document.createElement("img");
       img.classList.add("slides__img");
       img.setAttribute("src", item);
       img.setAttribute("alt", "product-img");
       img.addEventListener("click", () => this.showSlidesImg(item));
-      return img;
+      slide.append(img);
+      return slide;
     });
 
     slidesBlock.append(...imagesElements);

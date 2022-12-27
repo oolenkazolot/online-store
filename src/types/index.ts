@@ -36,12 +36,14 @@ export interface IProducts {
   getBrands: () => string[];
   getCategoriesObject: () => Record<string, number>;
   getBrandsObject: () => Record<string, number>;
-  getProducts: () => IProduct[];
   getProduct: (id: string | undefined) => IProduct | undefined;
+  getProductsFilters: () => IProduct[];
+  getMinMaxPrice: () => string[];
+  getMinMaxStock: () => string[];
 }
 
 export interface IFilter {
-  createFilter: () => HTMLElement;
+  createFilter: (router?: IRouter) => HTMLElement;
 }
 
 export interface IFilterRange {
@@ -70,7 +72,9 @@ export interface IProductsView {
 
 export interface IProductsList {
   createProductsList: (router?: IRouter) => HTMLElement;
+  draw: (router?: IRouter) => void;
 }
+
 export type TtextObject = {
   [key: string]: string;
 };
@@ -81,10 +85,7 @@ export interface IProductPage {
 }
 
 export interface ILinkNavigation {
-  createLinksNavigation: (
-    id: string | undefined,
-    router?: IRouter
-  ) => HTMLElement;
+  createLinksNavigation: (id: string | undefined, router?: IRouter) => HTMLElement;
 }
 
 export interface IProductDetail {
