@@ -1,4 +1,5 @@
-import { IProducts, IFilterRange } from '../types/index';
+import { log } from 'console';
+import { IProducts, IFilterRange, IRouter } from '../types/index';
 import Products from '../utils/products';
 import FilterRange from './filter-range';
 
@@ -36,18 +37,19 @@ class Filter {
   }
 
   private createFilterBlockCategories(): HTMLElement {
+    const nameBlock: string = 'category';
     const block: HTMLElement = document.createElement('div');
     block.classList.add('filter-block');
     const title: HTMLElement = document.createElement('h3');
     title.classList.add('filter-block__title');
-    title.textContent = 'Category';
+    title.textContent = nameBlock;
     const obj: Record<string, number> = this.products.getCategoriesObject();
-    const blockItems = this.createFilterBlockItems(obj);
+    const blockItems = this.createFilterBlockItems(obj, nameBlock);
     block.append(title, blockItems);
     return block;
   }
 
-  private createFilterBlockItems(obj: Record<string, number>): HTMLElement {
+  private createFilterBlockItems(obj: Record<string, number>, nameBlock: string): HTMLElement {
     const blockItems: HTMLElement = document.createElement('div');
     blockItems.classList.add('filter-block__items');
     for (const key in obj) {
@@ -55,10 +57,17 @@ class Filter {
       item.classList.add('filter-block__item');
       const label: HTMLElement = document.createElement('label');
       label.classList.add('filter-block__checkbox');
-      const input: HTMLElement = document.createElement('input');
+      const input: HTMLInputElement = document.createElement('input');
       input.classList.add('filter-block__input');
       input.setAttribute('id', key);
       input.setAttribute('type', 'checkbox');
+      input.addEventListener('change', () => {
+        if (input.checked) {
+          this.addQueryParameters(input.id, nameBlock);
+        } else {
+          this.removeQueryParameters(input.id, nameBlock);
+        }
+      });
       const customCheckbox: HTMLElement = document.createElement('span');
       customCheckbox.classList.add('filter-block__custom-checkbox');
       const span: HTMLElement = document.createElement('span');
@@ -75,13 +84,14 @@ class Filter {
   }
 
   private createFilterBlockBrands(): HTMLElement {
+    const nameBlock: string = 'brand';
     const block: HTMLElement = document.createElement('div');
     block.classList.add('filter-block');
     const title: HTMLElement = document.createElement('h3');
     title.classList.add('filter-block__title');
-    title.textContent = 'Brand';
+    title.textContent = nameBlock;
     const obj: Record<string, number> = this.products.getBrandsObject();
-    const blockItems = this.createFilterBlockItems(obj);
+    const blockItems = this.createFilterBlockItems(obj, nameBlock);
     block.append(title, blockItems);
     return block;
   }
@@ -123,6 +133,34 @@ class Filter {
     btnCopyLink.textContent = 'Copy link';
     block.append(btnReset, btnCopyLink);
     return block;
+  }
+
+  private addQueryParameters(id: string, nameBlock: string) {
+    let url = new URL(window.location.href);
+    const param: string = url.searchParams.get(nameBlock) || '';
+    if (param) {
+      url.searchParams.append(nameBlock, id);
+    } else {
+      url.searchParams.set(nameBlock, id);
+    }
+
+    window.history.pushState(null, '', url);
+  }
+
+  private removeQueryParameters(id: string, nameBlock: string) {
+    let url = new URL(window.location.href);
+    const urlParameters = url.searchParams.getAll(nameBlock);
+    const newUrlParameters = urlParameters.filter((item) => {
+      return item !== id;
+    });
+    url.searchParams.delete(nameBlock);
+    if (newUrlParameters.length) {
+      newUrlParameters.forEach((element) => {
+        url.searchParams.append(nameBlock, element);
+      });
+    }
+
+    window.history.pushState(null, '', url);
   }
 }
 
