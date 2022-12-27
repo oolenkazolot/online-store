@@ -113,6 +113,7 @@ export class BottomHeader extends TopHeader {
       "&#8364 0",
       "Cart total"
     );
+
     bottomWrapper.append(logoContainer, priceContainer);
 
     const cartContainer = super.createElement(
@@ -130,7 +131,22 @@ export class BottomHeader extends TopHeader {
       "header-bottom__items-amount",
       Cart
     );
-    cartItemsAmount.innerHTML = "0";
+
+    const totalSum = document.querySelector(
+      ".header-bottom__total-sum"
+    ) as HTMLElement;
+    const storage: number[] | [] = JSON.parse(
+      String(localStorage.getItem("itemsArray"))
+    );
+
+    if (storage && storage.length) {
+      cartItemsAmount.innerHTML = String(storage[1]);
+      totalSum.innerHTML = `&#8364 ${storage[0]}`;
+    } else {
+      cartItemsAmount.innerHTML = "0";
+      totalSum.innerHTML = "0";
+    }
+
     this.createLinkOnMainPage();
     this.createLinkOnCartPage();
   }
