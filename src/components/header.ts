@@ -132,31 +132,19 @@ export class BottomHeader extends TopHeader {
       Cart
     );
 
-    if (localStorage.getItem("itemsArray")) {
-      if (JSON.parse(String(localStorage.getItem("itemsArray"))).length > 0) {
-        cartItemsAmount.innerHTML = JSON.parse(
-          String(localStorage.getItem("itemsArray"))
-        )[1];
-      } else {
-        cartItemsAmount.innerHTML = "0";
-      }
-    } else {
-      cartItemsAmount.innerHTML = "0";
-    }
-
     const totalSum = document.querySelector(
       ".header-bottom__total-sum"
     ) as HTMLElement;
-    if (localStorage.getItem("itemsArray")) {
-      if (JSON.parse(String(localStorage.getItem("itemsArray"))).length > 0) {
-        totalSum.innerHTML = `&#8364 ${
-          JSON.parse(String(localStorage.getItem("itemsArray")))[0]
-        }`;
-      } else {
-        totalSum.innerHTML = "&#8364 0";
-      }
+    const storage: number[] | [] = JSON.parse(
+      String(localStorage.getItem("itemsArray"))
+    );
+
+    if (storage && storage.length) {
+      cartItemsAmount.innerHTML = String(storage[1]);
+      totalSum.innerHTML = `&#8364 ${storage[0]}`;
     } else {
-      totalSum.innerHTML = "&#8364 0";
+      cartItemsAmount.innerHTML = "0";
+      totalSum.innerHTML = "0";
     }
 
     this.createLinkOnMainPage();
