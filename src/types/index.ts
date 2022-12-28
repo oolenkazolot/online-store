@@ -34,21 +34,25 @@ export interface IProduct {
 export interface IProducts {
   getCategories: () => string[];
   getBrands: () => string[];
-  getCategoriesObject: () => Record<string, number>;
-  getBrandsObject: () => Record<string, number>;
+  getCategoriesObject: () => Record<string, IProductsAmount>;
+  getBrandsObject: () => Record<string, IProductsAmount>;
   getProduct: (id: string | undefined) => IProduct | undefined;
   getProductsFilters: () => IProduct[];
+  getMinMaxPriceUrlParameters: () => string[];
+  getMinMaxStockUrlParameters: () => string[];
   getMinMaxPrice: () => string[];
   getMinMaxStock: () => string[];
 }
 
 export interface IFilter {
   createFilter: (router?: IRouter) => HTMLElement;
+  drawFilterBlock: () => void;
 }
 
 export interface IFilterRange {
   createFilterRange: () => HTMLElement;
   createFilterValues: () => HTMLElement;
+  updateValues: (min: string, max: string) => void;
 }
 export interface ICartPage {
   draw: () => void;
@@ -85,7 +89,10 @@ export interface IProductPage {
 }
 
 export interface ILinkNavigation {
-  createLinksNavigation: (id: string | undefined, router?: IRouter) => HTMLElement;
+  createLinksNavigation: (
+    id: string | undefined,
+    router?: IRouter
+  ) => HTMLElement;
 }
 
 export interface IProductDetail {
@@ -106,4 +113,9 @@ export interface IProductInCart {
   images: string[];
   quantityInCart: number;
   totalSum: string;
+}
+
+export interface IProductsAmount {
+  all: number;
+  filter: number;
 }
