@@ -24,6 +24,7 @@
 
 .prod-cont {
   width: 69%;
+  margin-bottom: 1rem;
 }
 
 
@@ -89,7 +90,7 @@
 .prod-cont__items-num {
   outline: 1px solid $bg-gray;
   border: none;
-  width: 25px;
+  width: 45px;
   height: 25px;
   font-size: 1.1rem;
   font-family: 'Inter', sans-serif;
@@ -131,6 +132,10 @@
   padding: 0 1rem;
   color: black;
   border-top: 2px solid $color-main;
+  height: 11.5rem;
+  @media (max-width: 1200px) {
+    height: auto;
+   }
   @media (max-width: 500px) {
     flex-direction: column;
     align-items: center;
