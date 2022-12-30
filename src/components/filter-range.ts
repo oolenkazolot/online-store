@@ -1,6 +1,6 @@
 class FilterRange {
   private prefix: string;
-  private drawProductList: () => void;
+  private updateView: () => void;
   private min: string;
   private max: string;
   private minValue: string;
@@ -16,13 +16,13 @@ class FilterRange {
     max: string,
     minValue: string,
     maxValue: string,
-    drawProductList: () => void
+    updateView: () => void
   ) {
     this.min = min;
     this.max = max;
     this.minValue = minValue;
     this.maxValue = maxValue;
-    this.drawProductList = drawProductList;
+    this.updateView = updateView;
     this.prefix = prefix;
 
     this.sliderOne = this.createSliderInput(
@@ -48,6 +48,18 @@ class FilterRange {
       this.max
     );
     this.sliderTrack = this.createSliderTrack();
+  }
+
+  public updateValues(min: string, max: string): void {
+    if (!Number.isFinite(+min) || !Number.isFinite(+max)) {
+      this.sliderOne.value = this.min;
+      this.sliderTwo.value = this.max;
+    } else {
+      this.sliderOne.value = min;
+      this.sliderTwo.value = max;
+    }
+    this.slideOne();
+    this.slideTwo();
   }
 
   public createFilterRange(): HTMLElement {
@@ -91,13 +103,14 @@ class FilterRange {
     const filterValues: HTMLElement = document.createElement("div");
     filterValues.classList.add("filter-values");
     const span2: HTMLElement = document.createElement("span");
-    span2.textContent = "-";
+    span2.textContent = "⟷";
     filterValues.append(this.displayValueOne, span2, this.displayValueTwo);
     return filterValues;
   }
 
   private createFilterDisplayValue(id: string, value: string): HTMLElement {
     const span: HTMLElement = document.createElement("span");
+    span.classList.add(`filter-values__${id}`);
     span.setAttribute("id", id);
     span.textContent = value;
     return span;
@@ -143,7 +156,7 @@ class FilterRange {
       this.sliderOne.value + "," + this.sliderTwo.value
     );
     window.history.pushState(null, "", url);
-    this.drawProductList();
+    this.updateView();
   }
 }
 

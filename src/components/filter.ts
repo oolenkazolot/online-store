@@ -1,4 +1,9 @@
-import { IProducts, IFilterRange, IRouter } from "../types/index";
+import {
+  IProducts,
+  IFilterRange,
+  IRouter,
+  IProductsAmount,
+} from "../types/index";
 import Products from "../utils/products";
 import FilterRange from "./filter-range";
 
@@ -11,7 +16,9 @@ class Filter {
   private minMaxStock: string[];
   private minMaxPriceValue: string[];
   private minMaxStockValue: string[];
+  private block: HTMLElement;
   constructor(drawProductList: () => void) {
+    this.block = document.createElement("div");
     this.products = new Products();
     this.drawProductList = drawProductList;
     this.minMaxPrice = this.products.getMinMaxPrice();
@@ -24,7 +31,7 @@ class Filter {
       this.minMaxPrice[1],
       this.minMaxPriceValue[0],
       this.minMaxPriceValue[1],
-      this.drawProductList
+      this.updateView.bind(this)
     );
     this.filterRange2 = new FilterRange(
       "stock",
@@ -32,8 +39,13 @@ class Filter {
       this.minMaxStock[1],
       this.minMaxStockValue[0],
       this.minMaxStockValue[1],
-      this.drawProductList
+      this.updateView.bind(this)
     );
+  }
+
+  public updateView(): void {
+    this.drawProductList();
+    this.drawFilterBlock();
   }
 
   public createFilter(router?: IRouter | undefined): HTMLElement {
@@ -45,6 +57,16 @@ class Filter {
     const filterWrap = this.createFilterWrap(router);
     filterElement.append(filterTitle, filterWrap);
     return filterElement;
+  }
+
+  private updatePrice(): void {
+    const minMaxPrice = this.products.getMinMaxPriceUrlParameters();
+    this.filterRange1.updateValues(minMaxPrice[0], minMaxPrice[1]);
+  }
+
+  private updateStock(): void {
+    const minMaxStock = this.products.getMinMaxStockUrlParameters();
+    this.filterRange2.updateValues(minMaxStock[0], minMaxStock[1]);
   }
 
   private createValuesMinMaxPrice(): string[] {
@@ -72,17 +94,19 @@ class Filter {
     filterWrap.classList.add("filter__wrap");
     const blockCategories: HTMLElement = this.createFilterBlockCategories();
     const blockBrands: HTMLElement = this.createFilterBlockBrands();
+    this.block.append(blockCategories, blockBrands);
     const blockPrice: HTMLElement = this.createFilterBlockPrice();
     const blockStock: HTMLElement = this.createFilterBlockStock();
     const blockButtons: HTMLElement = this.createFilterBlockButtons(router);
-    filterWrap.append(
-      blockCategories,
-      blockBrands,
-      blockPrice,
-      blockStock,
-      blockButtons
-    );
+    filterWrap.append(this.block, blockPrice, blockStock, blockButtons);
     return filterWrap;
+  }
+
+  public drawFilterBlock(): void {
+    this.block.textContent = "";
+    const blockCategories: HTMLElement = this.createFilterBlockCategories();
+    const blockBrands: HTMLElement = this.createFilterBlockBrands();
+    this.block.append(blockCategories, blockBrands);
   }
 
   private createFilterBlockCategories(): HTMLElement {
@@ -92,14 +116,17 @@ class Filter {
     const title: HTMLElement = document.createElement("h3");
     title.classList.add("filter-block__title");
     title.textContent = nameBlock;
-    const obj: Record<string, number> = this.products.getCategoriesObject();
+    const obj: Record<
+      string,
+      IProductsAmount
+    > = this.products.getCategoriesObject();
     const blockItems = this.createFilterBlockItems(obj, nameBlock);
     block.append(title, blockItems);
     return block;
   }
 
   private createFilterBlockItems(
-    obj: Record<string, number>,
+    obj: Record<string, IProductsAmount>,
     nameBlock: string
   ): HTMLElement {
     const blockItems: HTMLElement = document.createElement("div");
@@ -116,6 +143,9 @@ class Filter {
         } else {
           this.removeQueryParametersBrandsCategory(input.id, nameBlock);
         }
+        this.updatePrice();
+        this.updateStock();
+        this.drawFilterBlock();
       });
       const customCheckbox: HTMLElement = document.createElement("span");
       customCheckbox.classList.add("filter-block__custom-checkbox");
@@ -125,7 +155,7 @@ class Filter {
       label.append(input, customCheckbox, span);
       const count: HTMLElement = document.createElement("span");
       count.classList.add("filter-block__count");
-      count.textContent = "(" + obj[key] + "/" + obj[key] + ")";
+      count.textContent = "(" + obj[key].filter + "/" + obj[key].all + ")";
       item.append(label, count);
       blockItems.append(item);
     }
@@ -156,7 +186,10 @@ class Filter {
     const title: HTMLElement = document.createElement("h3");
     title.classList.add("filter-block__title");
     title.textContent = nameBlock;
-    const obj: Record<string, number> = this.products.getBrandsObject();
+    const obj: Record<
+      string,
+      IProductsAmount
+    > = this.products.getBrandsObject();
     const blockItems = this.createFilterBlockItems(obj, nameBlock);
     block.append(title, blockItems);
     return block;

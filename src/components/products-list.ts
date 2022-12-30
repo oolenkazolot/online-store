@@ -25,6 +25,14 @@ class ProductsList {
 
   private createProductsElement(router?: IRouter): HTMLElement[] {
     const products: IProduct[] = this.products.getProductsFilters();
+    if (!products.length) {
+      const productElement: HTMLElement = document.createElement("div");
+      productElement.classList.add("products__not-found");
+      productElement.textContent = "No products found 😏";
+      this.productsList.classList.add("products__list--block");
+      return [productElement];
+    }
+    this.productsList.classList.remove("products__list--block");
     const productsElements = products.map(
       (item: IProduct, index: number): HTMLElement => {
         const productElement: HTMLElement = document.createElement("div");
