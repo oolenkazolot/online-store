@@ -119,11 +119,40 @@ const itemsInCart = [
     ],
     quantityInCart: 1,
   },
+  {
+    id: 8,
+    title: "Laptop 4",
+    description:
+      "Style and speed. Stand out on HD video calls backed by Studio Mics. Capture ideas on the vibrant touchscreen.",
+    price: 1499,
+    discount: 10.23,
+    rating: 4.43,
+    stock: 68,
+    brand: "Microsoft Surface",
+    category: "laptops",
+    thumbnail: "https://i.dummyjson.com/data/products/8/thumbnail.jpg",
+    images: [
+      "https://i.dummyjson.com/data/products/8/1.jpg",
+      "https://i.dummyjson.com/data/products/8/2.jpg",
+      "https://i.dummyjson.com/data/products/8/3.jpg",
+      "https://i.dummyjson.com/data/products/8/4.jpg",
+      "https://i.dummyjson.com/data/products/8/thumbnail.jpg",
+    ],
+    quantityInCart: 1,
+  },
 ];
 localStorage.setItem("itemsInCart", JSON.stringify(itemsInCart));
 
 class Temp extends Template {
-  public createCardHeader(): void {
+  page = this.getPage();
+
+  public getPage(): number {
+    if (localStorage.getItem("page")) {
+      return Number(localStorage.getItem("page"));
+    } else return 1;
+  }
+
+  public createCardHeader(itemsInCart: IProductInCart[] | []): void {
     const mainElement = document.querySelector("main") as HTMLElement;
     mainElement.innerHTML = "";
 
@@ -141,9 +170,12 @@ class Temp extends Template {
     const items = this.createElement("items", itemsCont, textObj.items);
     const itemsNum = document.createElement("input");
     itemsNum.classList.add("prod-cont__items-num");
+    itemsNum.type = "number";
+    itemsNum.min = "1";
+    itemsNum.max = `${itemsInCart.length}`;
     itemsCont.append(itemsNum);
 
-    itemsNum.value = "1";
+    itemsNum.value = "3";
 
     const pageCont = this.createElement("prod-cont__pages-cont", statCont);
     const page = this.createElement("page", pageCont, textObj.page);
@@ -162,84 +194,112 @@ class Temp extends Template {
     const cardsWrapper = this.createElement("cards-wrapper", prodCont);
   }
 
-  public createItemBlock(itemsInCartObj: IProductInCart[] | []): void {
-    for (let i = 0; i < itemsInCartObj.length; i++) {
-      const cardsWrapper = document.querySelector(
-        ".cards-wrapper"
-      ) as HTMLElement;
+  public createItemBlock(
+    itemsInCartObj: IProductInCart[] | [],
+    page: number
+  ): void {
+    const paginationArray = this.createArraysForPagination(itemsInCartObj);
+    const itemsNum = document.querySelector(
+      ".prod-cont__items-num"
+    ) as HTMLInputElement;
 
-      const cardCont = this.createElement("prod-cont__card-cont", cardsWrapper);
-      cardCont.setAttribute("data-id", String(itemsInCartObj[i].id));
-      const itemNumb = this.createElement("item-num", cardCont, String(i + 1));
+    if (paginationArray[page - 1]) {
+      for (let i = 0; i < paginationArray[page - 1].length; i++) {
+        const cardsWrapper = document.querySelector(
+          ".cards-wrapper"
+        ) as HTMLElement;
 
-      const dataCont = this.createElement("data-cont", cardCont);
-      const imageCont = this.createElement("img-cont", dataCont);
-      const itemImage = document.createElement("img");
-      itemImage.className = "prod-cont__item-img";
-      imageCont.append(itemImage);
-      itemImage.src = itemsInCartObj[i].thumbnail;
+        const cardCont = this.createElement(
+          "prod-cont__card-cont",
+          cardsWrapper
+        );
+        cardCont.setAttribute(
+          "data-id",
+          String(paginationArray[page - 1][i].id)
+        );
+        const itemNumb = this.createElement(
+          "item-num",
+          cardCont,
+          String(i + 1 + Number(itemsNum.value) * (this.page - 1))
+        );
 
-      const infoBlock = this.createElement("prod-cont__info-block", dataCont);
-      const controlBlock = this.createElement(
-        "prod-cont__contr-block",
-        cardCont
-      );
+        const dataCont = this.createElement("data-cont", cardCont);
+        const imageCont = this.createElement("img-cont", dataCont);
+        const itemImage = document.createElement("img");
+        itemImage.className = "prod-cont__item-img";
+        imageCont.append(itemImage);
+        itemImage.src = paginationArray[page - 1][i].thumbnail;
 
-      const prodName = this.createElement(
-        "prod-cont__prod-name",
-        infoBlock,
-        itemsInCartObj[i].title
-      );
+        const infoBlock = this.createElement("prod-cont__info-block", dataCont);
+        const controlBlock = this.createElement(
+          "prod-cont__contr-block",
+          cardCont
+        );
 
-      const desc = this.createElement(
-        "item-descr",
-        infoBlock,
-        itemsInCartObj[i].description
-      );
+        const prodName = this.createElement(
+          "prod-cont__prod-name",
+          infoBlock,
+          paginationArray[page - 1][i].title
+        );
 
-      const addInfoCont = this.createElement("prod-cont__addInfo", infoBlock);
-      const ratWrap = this.createElement("prod-cont__rat-wrap", addInfoCont);
-      const rating = this.createElement("rating", ratWrap, textObj.rating);
+        const desc = this.createElement(
+          "item-descr",
+          infoBlock,
+          paginationArray[page - 1][i].description
+        );
 
-      const ratNum = this.createElement(
-        "rat-num",
-        ratWrap,
-        String(itemsInCartObj[i].rating)
-      );
+        const addInfoCont = this.createElement("prod-cont__addInfo", infoBlock);
+        const ratWrap = this.createElement("prod-cont__rat-wrap", addInfoCont);
+        const rating = this.createElement("rating", ratWrap, textObj.rating);
 
-      const discWrap = this.createElement("prod-cont__disc-wrap", addInfoCont);
-      const discount = this.createElement("discount", discWrap, textObj.disc);
+        const ratNum = this.createElement(
+          "rat-num",
+          ratWrap,
+          String(paginationArray[page - 1][i].rating)
+        );
 
-      const discNum = this.createElement(
-        "disc-num",
-        discWrap,
-        String(itemsInCartObj[i].discount)
-      );
+        const discWrap = this.createElement(
+          "prod-cont__disc-wrap",
+          addInfoCont
+        );
+        const discount = this.createElement("discount", discWrap, textObj.disc);
 
-      const stockBl = this.createElement("prod-cont__stock-bl", controlBlock);
-      const stock = this.createElement("stock", stockBl, textObj.stock);
+        const discNum = this.createElement(
+          "disc-num",
+          discWrap,
+          String(paginationArray[page - 1][i].discount)
+        );
 
-      const stockNum = this.createElement(
-        "stock-num",
-        stockBl,
-        String(itemsInCartObj[i].stock)
-      );
-      stockNum.setAttribute("data-id", String(itemsInCartObj[i].id));
-      const controlsWrap = this.createElement(
-        "prod-cont__contr-wrap",
-        controlBlock
-      );
-      const price = this.createElement("prod-cont__price", controlBlock);
-      price.innerHTML = `&#8364 ${String(itemsInCartObj[i].price)}`;
-      price.setAttribute("data-id", String(itemsInCartObj[i].id));
+        const stockBl = this.createElement("prod-cont__stock-bl", controlBlock);
+        const stock = this.createElement("stock", stockBl, textObj.stock);
 
-      const incr = this.createElement("contr", controlsWrap, textObj.incr);
-      const itemQt = this.createElement("quantity", controlsWrap);
-      itemQt.setAttribute("data-id", String(itemsInCartObj[i].id));
-      itemQt.innerText = String(itemsInCartObj[i].quantityInCart);
-      incr.setAttribute("data-id", String(itemsInCartObj[i].id));
-      const decr = this.createElement("contr", controlsWrap, textObj.decr);
-      decr.setAttribute("data-id", String(itemsInCartObj[i].id));
+        const stockNum = this.createElement(
+          "stock-num",
+          stockBl,
+          String(paginationArray[page - 1][i].stock)
+        );
+        stockNum.setAttribute(
+          "data-id",
+          String(paginationArray[page - 1][i].id)
+        );
+        const controlsWrap = this.createElement(
+          "prod-cont__contr-wrap",
+          controlBlock
+        );
+        const price = this.createElement("prod-cont__price", controlBlock);
+        price.innerHTML = `&#8364 ${String(
+          paginationArray[page - 1][i].price
+        )}`;
+        price.setAttribute("data-id", String(paginationArray[page - 1][i].id));
+
+        const incr = this.createElement("contr", controlsWrap, textObj.incr);
+        const itemQt = this.createElement("quantity", controlsWrap);
+        itemQt.setAttribute("data-id", String(paginationArray[page - 1][i].id));
+        itemQt.innerText = String(paginationArray[page - 1][i].quantityInCart);
+        incr.setAttribute("data-id", String(paginationArray[page - 1][i].id));
+        const decr = this.createElement("contr", controlsWrap, textObj.decr);
+        decr.setAttribute("data-id", String(paginationArray[page - 1][i].id));
+      }
     }
   }
 
@@ -313,6 +373,12 @@ class Temp extends Template {
       const stockArray = document.querySelectorAll(".stock-num");
       const priceElements = document.querySelectorAll(".prod-cont__price");
       const target = event.target as HTMLElement;
+      const paginationArray = temp.createArraysForPagination(itemsInCart);
+      const pageEl = document.querySelector(".count") as HTMLElement;
+      const itemsNum = document.querySelector(
+        ".prod-cont__items-num"
+      ) as HTMLInputElement;
+
       if (target.classList.contains("contr")) {
         itemsInCart.forEach((el, index) => {
           if (el.id === Number(target.dataset.id)) {
@@ -344,10 +410,18 @@ class Temp extends Template {
                   JSON.stringify(itemsInCart)
                 );
                 cardsWrapper.innerHTML = "";
-                temp.createItemBlock(itemsInCart);
+                const paginationArray = temp.createArraysForPagination(
+                  itemsInCart
+                );
+                if (!paginationArray[temp.page - 1]) {
+                  temp.page--;
+                  pageEl.innerText = String(temp.page);
+                }
+                temp.createItemBlock(itemsInCart, temp.page);
+                itemsNum.max = `${itemsInCart.length}`;
               }
             }
-            for (let i = 0; i < itemsInCart.length; i++) {
+            for (let i = 0; i < quantities.length; i++) {
               const elementQt = quantities[i] as HTMLElement;
               const elementSt = stockArray[i] as HTMLElement;
               const elementPr = priceElements[i] as HTMLElement;
@@ -386,17 +460,132 @@ class Temp extends Template {
       return [0, 0];
     }
   }
+
+  public createArraysForPagination(
+    itemsInCart: IProductInCart[] | []
+  ): IProductInCart[][] {
+    const rowsInput = document.querySelector(
+      ".prod-cont__items-num"
+    ) as HTMLInputElement;
+    const inputValue = Number(rowsInput.value);
+    const paginationArray = [];
+    for (let i = 0; i < itemsInCart.length; i = i + inputValue) {
+      paginationArray.push(itemsInCart.slice(i, i + inputValue));
+    }
+    return paginationArray;
+  }
+
+  public changePages(): void {
+    const btnBlock = document.querySelector(
+      ".prod-cont__pages-cont"
+    ) as HTMLElement;
+    const pageEl = document.querySelector(".count") as HTMLElement;
+
+    btnBlock.addEventListener("click", switchPage);
+
+    function switchPage(event: Event): void {
+      const itemsInCart = temp.getLocalStorageData();
+      const paginationArray = temp.createArraysForPagination(itemsInCart);
+      const cardsWrapper = document.querySelector(
+        ".cards-wrapper"
+      ) as HTMLElement;
+      const target = event.target as HTMLElement;
+      const rowsInput = document.querySelector(
+        ".prod-cont__items-num"
+      ) as HTMLInputElement;
+      const inputValue = Number(rowsInput.value);
+
+      if (target.innerText === ">") {
+        if (temp.page <= paginationArray.length - 1) {
+          temp.page++;
+          pageEl.innerText = String(temp.page);
+          cardsWrapper.innerHTML = "";
+          temp.addQueryParameters("page", String(temp.page), itemsInCart);
+        }
+      }
+      if (target.innerText === "<") {
+        if (temp.page > 1) {
+          temp.page--;
+          pageEl.innerText = String(temp.page);
+          cardsWrapper.innerHTML = "";
+          temp.addQueryParameters("page", String(temp.page), itemsInCart);
+        }
+      }
+    }
+  }
+
+  public changePageNum(itemsInCart: IProductInCart[] | []): void {
+    const rowsInput = document.querySelector(
+      ".prod-cont__items-num"
+    ) as HTMLInputElement;
+    const cardsWrapper = document.querySelector(
+      ".cards-wrapper"
+    ) as HTMLElement;
+    const pageEl = document.querySelector(".count") as HTMLElement;
+    rowsInput.addEventListener("input", changePage);
+    function changePage(): void {
+      if (Number(rowsInput.value) > 0) {
+        const paginationArray = temp.createArraysForPagination(itemsInCart);
+        if (!paginationArray[temp.page - 1]) {
+          temp.page = paginationArray.length;
+          pageEl.innerHTML = String(temp.page);
+        }
+        cardsWrapper.innerHTML = "";
+        temp.addQueryParameters("items", rowsInput.value, itemsInCart);
+      }
+    }
+  }
+
+  public addQueryParameters(
+    paramName: string,
+    items: string,
+    itemsInCart: IProductInCart[] | []
+  ): void {
+    const url = new URL(window.location.href);
+    const param: string = url.searchParams.get(paramName) || "";
+    url.searchParams.set(paramName, items);
+    window.history.pushState(null, "", url);
+    this.createItemBlock(itemsInCart, this.page);
+  }
+
+  // public linkChange(
+  //   paramName: string,
+  //   itemsInCart: IProductInCart[] | []
+  // ): void {
+  //   window.addEventListener(
+  //     "popstate",
+  //     () => {
+  //       const url = new URL(window.location.href);
+  //       const param: string = url.searchParams.get(paramName) || "";
+  //       const rowsInput = document.querySelector(
+  //         ".prod-cont__items-num"
+  //       ) as HTMLInputElement;
+  //       const cardsWrapper = document.querySelector(
+  //         ".cards-wrapper"
+  //       ) as HTMLElement;
+  //       rowsInput.value = param;
+  //       cardsWrapper.innerHTML = "";
+  //       this.createItemBlock(itemsInCart, this.page);
+  //     },
+  //     false
+  //   );
+  // }
 }
+
 const temp = new Temp();
 
 class CartPage {
   public draw(): void {
     const itemsInCart = temp.getLocalStorageData();
     temp.getTotalSumAndQt(itemsInCart);
-    temp.createCardHeader();
-    temp.createItemBlock(itemsInCart);
+    temp.createCardHeader(itemsInCart);
+    temp.createItemBlock(itemsInCart, temp.page);
     temp.createSummary(itemsInCart);
     temp.changeAmountInCart(itemsInCart);
+    temp.createArraysForPagination(itemsInCart);
+    temp.changePages();
+    temp.changePageNum(itemsInCart);
+    // temp.linkChange("items", itemsInCart);
     modal.createModalWindow();
   }
 }
