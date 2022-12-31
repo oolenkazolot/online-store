@@ -95,10 +95,21 @@ class ProductsSort {
   private createSearchBar(router?: IRouter): HTMLElement {
     const searchBar: HTMLElement = document.createElement('div');
     searchBar.classList.add('search-bar');
+    const input = this.createInputSearch(router);
+    searchBar.append(input);
+    return searchBar;
+  }
+
+  private createInputSearch(router?: IRouter): HTMLInputElement {
     const input: HTMLInputElement = document.createElement('input');
     input.classList.add('search-bar__input');
     input.setAttribute('type', 'text');
     input.setAttribute('placeholder', 'Search product');
+    const url = new URL(window.location.href);
+    const urlParameterSearch: string | null = url.searchParams.get('search');
+    if (urlParameterSearch) {
+      input.setAttribute('value', urlParameterSearch);
+    }
     input.addEventListener('input', () => {
       if (input.value) {
         this.addQueryParametersSearch(input.value, router);
@@ -106,8 +117,7 @@ class ProductsSort {
         this.removeQueryParametersSearch(router);
       }
     });
-    searchBar.append(input);
-    return searchBar;
+    return input;
   }
 
   private createViewModeBlock(): HTMLElement {

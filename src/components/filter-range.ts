@@ -43,10 +43,8 @@ class FilterRange {
     rangeFilter.append(this.sliderTrack, this.sliderOne, this.sliderTwo);
     const slideOne = this.slideOne.bind(this);
     const slideTwo = this.slideTwo.bind(this);
-    window.addEventListener('load', () => {
-      slideOne();
-      slideTwo();
-    });
+    slideOne();
+    slideTwo();
     return rangeFilter;
   }
 

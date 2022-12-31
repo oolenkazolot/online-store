@@ -156,9 +156,9 @@ class Products {
 
   public getProductsFiltersSearch(): IProduct[] {
     const url = new URL(window.location.href);
-    const urlParameterSearch: string | null = url.searchParams.get('search');
+    let urlParameterSearch: string | null = url.searchParams.get('search');
     if (urlParameterSearch) {
-      urlParameterSearch.toLowerCase();
+      urlParameterSearch = urlParameterSearch.toLowerCase();
     }
 
     const productsFilters = this.getProductsFilters();

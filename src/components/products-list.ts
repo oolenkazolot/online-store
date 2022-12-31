@@ -1,3 +1,4 @@
+import { log } from 'console';
 import { IProducts, IProduct, IRouter } from '../types/index';
 import Products from '../utils/products';
 
@@ -11,6 +12,7 @@ class ProductsList {
   }
 
   public createProductsList(router?: IRouter): HTMLElement {
+    this.productsList.textContent = '';
     this.productsList.classList.add('products__list');
     const productsElements = this.createProductsElement(router);
     this.productsList.append(...productsElements);
@@ -43,6 +45,7 @@ class ProductsList {
       this.productsList.classList.add('products__list--block');
       return [productElement];
     }
+
     this.productsList.classList.remove('products__list--block');
     const productsElements = products.map(
       (item: IProduct, index: number): HTMLElement => {
@@ -114,9 +117,11 @@ class ProductsList {
     const btnDetails: HTMLElement = document.createElement('button');
     btnDetails.classList.add('product__btn-details');
     btnDetails.textContent = 'Details';
+
     if (router) {
       btnDetails.addEventListener('click', (e) => {
         e.preventDefault();
+
         router.navigate(`products/${id}`);
       });
     }
