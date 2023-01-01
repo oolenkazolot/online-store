@@ -10,14 +10,7 @@ class FilterRange {
   private sliderTrack: HTMLElement;
   private displayValueOne: HTMLElement;
   private displayValueTwo: HTMLElement;
-  constructor(
-    prefix: string,
-    min: string,
-    max: string,
-    minValue: string,
-    maxValue: string,
-    updateView: () => void
-  ) {
+  constructor(prefix: string, min: string, max: string, minValue: string, maxValue: string, updateView: () => void) {
     this.min = min;
     this.max = max;
     this.minValue = minValue;
@@ -25,28 +18,10 @@ class FilterRange {
     this.updateView = updateView;
     this.prefix = prefix;
 
-    this.sliderOne = this.createSliderInput(
-      this.min,
-      this.max,
-      `${this.prefix}-slider-1`,
-      this.minValue,
-      this.slideOne.bind(this)
-    );
-    this.sliderTwo = this.createSliderInput(
-      this.min,
-      this.max,
-      `${this.prefix}-slider-2`,
-      this.maxValue,
-      this.slideTwo.bind(this)
-    );
-    this.displayValueOne = this.createFilterDisplayValue(
-      `${this.prefix}-range1`,
-      this.min
-    );
-    this.displayValueTwo = this.createFilterDisplayValue(
-      `${this.prefix}-range2`,
-      this.max
-    );
+    this.sliderOne = this.createSliderInput(this.min, this.max, `${this.prefix}-slider-1`, this.minValue, this.slideOne.bind(this));
+    this.sliderTwo = this.createSliderInput(this.min, this.max, `${this.prefix}-slider-2`, this.maxValue, this.slideTwo.bind(this));
+    this.displayValueOne = this.createFilterDisplayValue(`${this.prefix}-range1`, this.min);
+    this.displayValueTwo = this.createFilterDisplayValue(`${this.prefix}-range2`, this.max);
     this.sliderTrack = this.createSliderTrack();
   }
 
@@ -63,66 +38,55 @@ class FilterRange {
   }
 
   public createFilterRange(): HTMLElement {
-    const rangeFilter: HTMLElement = document.createElement("div");
-    rangeFilter.classList.add("filter-range");
+    const rangeFilter: HTMLElement = document.createElement('div');
+    rangeFilter.classList.add('filter-range');
     rangeFilter.append(this.sliderTrack, this.sliderOne, this.sliderTwo);
     const slideOne = this.slideOne.bind(this);
     const slideTwo = this.slideTwo.bind(this);
-    window.addEventListener("load", () => {
-      slideOne();
-      slideTwo();
-    });
+    slideOne();
+    slideTwo();
     return rangeFilter;
   }
 
   private createSliderTrack(): HTMLElement {
-    const filterSliderTrack: HTMLElement = document.createElement("div");
-    filterSliderTrack.classList.add("filter-range__slider-track");
+    const filterSliderTrack: HTMLElement = document.createElement('div');
+    filterSliderTrack.classList.add('filter-range__slider-track');
     return filterSliderTrack;
   }
 
-  private createSliderInput(
-    min: string,
-    max: string,
-    id: string,
-    value: string,
-    cb: () => void
-  ): HTMLInputElement {
-    const input: HTMLInputElement = document.createElement("input");
-    input.classList.add("filter-range__input");
-    input.setAttribute("type", "range");
-    input.setAttribute("min", min);
-    input.setAttribute("max", max);
-    input.setAttribute("value", value);
-    input.setAttribute("id", id);
-    input.addEventListener("input", cb);
+  private createSliderInput(min: string, max: string, id: string, value: string, cb: () => void): HTMLInputElement {
+    const input: HTMLInputElement = document.createElement('input');
+    input.classList.add('filter-range__input');
+    input.setAttribute('type', 'range');
+    input.setAttribute('min', min);
+    input.setAttribute('max', max);
+    input.setAttribute('value', value);
+    input.setAttribute('id', id);
+    input.addEventListener('input', cb);
     return input;
   }
 
   public createFilterValues(): HTMLElement {
-    const filterValues: HTMLElement = document.createElement("div");
-    filterValues.classList.add("filter-values");
-    const span2: HTMLElement = document.createElement("span");
-    span2.textContent = "⟷";
+    const filterValues: HTMLElement = document.createElement('div');
+    filterValues.classList.add('filter-values');
+    const span2: HTMLElement = document.createElement('span');
+    span2.textContent = '⟷';
     filterValues.append(this.displayValueOne, span2, this.displayValueTwo);
     return filterValues;
   }
 
   private createFilterDisplayValue(id: string, value: string): HTMLElement {
-    const span: HTMLElement = document.createElement("span");
+    const span: HTMLElement = document.createElement('span');
     span.classList.add(`filter-values__${id}`);
-    span.setAttribute("id", id);
+    span.setAttribute('id', id);
     span.textContent = value;
     return span;
   }
 
   private slideOne(): void {
     const minGap = 0;
-    if (
-      parseInt(this.sliderTwo.value) - parseInt(this.sliderOne.value) <=
-      minGap
-    ) {
-      this.sliderOne.value = parseInt(this.sliderTwo.value) - minGap + "";
+    if (parseInt(this.sliderTwo.value) - parseInt(this.sliderOne.value) <= minGap) {
+      this.sliderOne.value = parseInt(this.sliderTwo.value) - minGap + '';
     }
     this.displayValueOne.textContent = this.sliderOne.value;
     this.fillColor();
@@ -131,11 +95,8 @@ class FilterRange {
 
   private slideTwo(): void {
     const minGap = 0;
-    if (
-      parseInt(this.sliderTwo.value) - parseInt(this.sliderOne.value) <=
-      minGap
-    ) {
-      this.sliderTwo.value = parseInt(this.sliderOne.value) + minGap + "";
+    if (parseInt(this.sliderTwo.value) - parseInt(this.sliderOne.value) <= minGap) {
+      this.sliderTwo.value = parseInt(this.sliderOne.value) + minGap + '';
     }
     this.displayValueTwo.textContent = this.sliderTwo.value;
     this.fillColor();
@@ -151,11 +112,8 @@ class FilterRange {
 
   private addQueryParametersPriceStock(): void {
     const url = new URL(window.location.href);
-    url.searchParams.set(
-      this.prefix,
-      this.sliderOne.value + "," + this.sliderTwo.value
-    );
-    window.history.pushState(null, "", url);
+    url.searchParams.set(this.prefix, this.sliderOne.value + ',' + this.sliderTwo.value);
+    window.history.pushState(null, '', url);
     this.updateView();
   }
 }
