@@ -17,7 +17,7 @@ const textObj: TtextObject = {
   summaryTitle: "Summary",
   buyBtn: "buy now",
   products: "Products:",
-  total: "Total",
+  total: "Total:",
   testPromo: "Promo for test: 'RS', 'EPM",
   title1: "Personal details",
   title2: "Credit card details",
@@ -31,6 +31,7 @@ const textObj: TtextObject = {
   validErr: "Card valid thru validation: Error",
   CVVErr: "CVV validation: Error: enter 3 numbers",
   confirmBtn: "confirm",
+  message: "Cart is empty",
 };
 
 export default textObj;
