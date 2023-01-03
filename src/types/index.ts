@@ -43,6 +43,7 @@ export interface IProducts {
   getMinMaxPrice: () => string[];
   getMinMaxStock: () => string[];
   getProductsFiltersSearch: () => IProduct[];
+  getProductsFiltersSort: () => IProduct[];
 }
 
 export interface IFilter {
@@ -90,7 +91,10 @@ export interface IProductPage {
 }
 
 export interface ILinkNavigation {
-  createLinksNavigation: (id: string | undefined, router?: IRouter) => HTMLElement;
+  createLinksNavigation: (
+    id: string | undefined,
+    router?: IRouter
+  ) => HTMLElement;
 }
 
 export interface IProductDetail {
