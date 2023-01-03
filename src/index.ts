@@ -1,11 +1,17 @@
-import './sass/style.scss';
-import Router from './utils/Routing';
-import MainPage from './pages/main';
-import ErrorPage from './pages/error';
-import CartPage from './pages/cart';
-import { IMainPage, IErrorPage, IRout, ICartPage, IProductPage } from './types/index';
-import { TopHeader, BottomHeader } from './components/header';
-import ProductPage from './pages/product';
+import "./sass/style.scss";
+import Router from "./utils/Routing";
+import MainPage from "./pages/main";
+import ErrorPage from "./pages/error";
+import CartPage from "./pages/cart";
+import {
+  IMainPage,
+  IErrorPage,
+  IRout,
+  ICartPage,
+  IProductPage,
+} from "./types/index";
+import { TopHeader, BottomHeader } from "./components/header";
+import ProductPage from "./pages/product";
 
 const mainPage: IMainPage = new MainPage();
 const errorPage: IErrorPage = new ErrorPage();
@@ -22,15 +28,15 @@ const headerBottom = new BottomHeader();
 //список страниц с колбеками: путь и что делать
 const routs: IRout[] = [
   {
-    path: '',
+    path: "",
     cb: mainPage.draw.bind(mainPage),
   },
   {
-    path: 'cart',
+    path: "cart",
     cb: cartPage.draw,
   },
   {
-    path: 'products/:id',
+    path: "products/:id",
     cb: (id) => {
       productPage.draw(id);
     },
@@ -47,13 +53,15 @@ router.init();
 
 // Для примера создания ссылки роутера
 //первый для кнопки(ссылки) на корзину
-const a = document.createElement('a');
-a.addEventListener('click', (e) => {
+const a = document.createElement("a");
+a.addEventListener("click", (e) => {
   e.preventDefault();
-  router.navigate('cart');
+  router.navigate("cart");
 });
-const cart = document.querySelector('.header-bottom__cart') as HTMLElement;
-const itemsInCart = document.querySelector('.header-bottom__items-amount') as HTMLElement;
+const cart = document.querySelector(".header-bottom__cart") as HTMLElement;
+const itemsInCart = document.querySelector(
+  ".header-bottom__items-amount"
+) as HTMLElement;
 if (cart) {
   cart.append(a);
 }
