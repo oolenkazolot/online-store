@@ -42,8 +42,8 @@ export interface IProducts {
   getMinMaxStockUrlParameters: () => string[];
   getMinMaxPrice: () => string[];
   getMinMaxStock: () => string[];
-  getProductsFiltersSearch: () => IProduct[];
-  getProductsFiltersSort: () => IProduct[];
+  getProductsFiltersSearch: (products: IProduct[]) => IProduct[];
+  getProductsFiltersSort: (products: IProduct[]) => IProduct[];
 }
 
 export interface IFilter {

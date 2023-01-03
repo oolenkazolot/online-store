@@ -12,7 +12,7 @@ class ProductsList {
   }
 
   public createProductsList(router?: IRouter): HTMLElement {
-    const url = new URL(window.location.href);
+    const url: URL = new URL(window.location.href);
     const urlParameterViewMode: string | null = url.searchParams.get(
       "view-mode"
     );
@@ -33,22 +33,9 @@ class ProductsList {
   }
 
   private createProductsElement(router?: IRouter): HTMLElement[] {
-    const url = new URL(window.location.href);
-    const urlParameterSearch: string | null = url.searchParams.get("search");
-    const urlParameterSort: string | null = url.searchParams.get("sort");
     let products: IProduct[] = this.products.getProductsFilters();
-
-    if (products.length && !urlParameterSearch) {
-      products = this.products.getProductsFilters();
-    }
-
-    if (products.length && urlParameterSearch && !urlParameterSort) {
-      products = this.products.getProductsFiltersSearch();
-    }
-
-    if (products.length && urlParameterSort) {
-      products = this.products.getProductsFiltersSort();
-    }
+    products = this.products.getProductsFiltersSearch(products);
+    products = this.products.getProductsFiltersSort(products);
 
     const amountProducts = document.querySelector(".amount");
     if (amountProducts) {
