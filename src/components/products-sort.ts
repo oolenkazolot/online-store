@@ -15,7 +15,7 @@ class ProductsSort {
     const sortBar: HTMLElement = this.createSortBar(router);
     const amountElement: HTMLElement = this.createAmountElement();
     const searchBar: HTMLElement = this.createSearchBar(router);
-    const viewModeBlock: HTMLElement = this.createViewModeBlock();
+    const viewModeBlock: HTMLElement = this.createViewModeBlock(router);
     productsSort.append(sortBar, amountElement, searchBar, viewModeBlock);
     return productsSort;
   }
@@ -138,25 +138,75 @@ class ProductsSort {
     return input;
   }
 
-  private createViewModeBlock(): HTMLElement {
-    const arr = ["icon-grid", "icon-grid1"];
+  private createViewModeBlock(router?: IRouter): HTMLElement {
+    const icons = ["icon-grid", "icon-grid1"];
+    const prefix = ["big", "small"];
     const viewModeBlock: HTMLElement = document.createElement("div");
     viewModeBlock.classList.add("view-mode");
-    const viewModeButtons: HTMLElement[] = arr.map((item) => {
-      const btn = this.createViewModeBtn(item);
+    const viewModeButtons: HTMLElement[] = icons.map((item, index) => {
+      const btn = this.createViewModeBtn(item, prefix[index], router);
       return btn;
     });
     viewModeBlock.append(...viewModeButtons);
     return viewModeBlock;
   }
 
-  private createViewModeBtn(item: string): HTMLElement {
+  private createViewModeBtn(
+    item: string,
+    prefix: string,
+    router?: IRouter
+  ): HTMLElement {
+    const url = new URL(window.location.href);
+    const urlParameterViewMode: string | null = url.searchParams.get(
+      "view-mode"
+    );
     const btn: HTMLElement = document.createElement("button");
-    btn.classList.add("view-mode__btn");
+    btn.classList.add(`view-mode__btn-${prefix}`);
+    if (prefix === "big" && !urlParameterViewMode) {
+      btn.classList.add("active-mode");
+    }
+
+    if (urlParameterViewMode === prefix) {
+      const elem: HTMLElement | null = document.querySelector(".active-mode");
+      elem?.classList.remove("active-mode");
+      btn.classList.add("active-mode");
+    }
+
     const icon: HTMLElement = document.createElement("i");
     icon.classList.add(item);
     btn.append(icon);
+    btn.addEventListener("click", () => {
+      this.addQueryParametersViewMode(prefix, "view-mode", router);
+      const productList: HTMLElement | null = document.querySelector(
+        ".products__list"
+      );
+      if (prefix === "small") {
+        productList?.classList.add("products__list--small");
+      } else {
+        productList?.classList.remove("products__list--small");
+      }
+
+      const elem: HTMLElement | null = document.querySelector(".active-mode");
+      elem?.classList.remove("active-mode");
+      btn.classList.add("active-mode");
+    });
     return btn;
+  }
+
+  private addQueryParametersViewMode(
+    text: string,
+    paramsName: string,
+    router?: IRouter
+  ): void {
+    const url = new URL(window.location.href);
+    const param: string = url.searchParams.get(paramsName) || "";
+    if (param) {
+      url.searchParams.set(paramsName, text);
+    } else {
+      url.searchParams.set(paramsName, text);
+    }
+
+    window.history.pushState(null, "", url);
   }
 
   private addQueryParameters(

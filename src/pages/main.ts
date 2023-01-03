@@ -10,7 +10,6 @@ class MainPage {
   private productsView?: IProductsView;
   public productsList?: IProductsList;
   public router?: IRouter;
-  constructor() {}
 
   public draw(): void {
     const mainElement: HTMLElement | null = document.querySelector("main");
