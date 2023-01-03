@@ -5,7 +5,10 @@ import ModalWindow from "../components/modal-window";
 import { IProduct, IProductInCart } from "src/types";
 import { Promo } from "../components/promo-block";
 const modal = new ModalWindow();
-const promoCode = new Promo(["rs", 10], ["epm", 10]);
+const promoCode = new Promo(
+  ["rs", 10, "Rolling Scopes School "],
+  ["epm", 10, "EPAM Systems"]
+);
 const itemsInCart = [
   {
     id: 1,
@@ -346,6 +349,8 @@ class Temp extends Template {
       "sum-prod__total-cont",
       sumInfoWrap
     );
+    totalContPromo.id = "total-sum-wrapper";
+    totalContPromo.classList.add("invisible");
     const totalPromo = this.createElement(
       "total",
       totalContPromo,
@@ -353,15 +358,32 @@ class Temp extends Template {
     );
 
     const totalSumPromo = this.createElement("total-sum", totalContPromo);
+    totalSumPromo.id = "total-sum-discount";
+
+    const appliedPromosBlock = this.createElement(
+      "applied-promos-block",
+      sumInfoWrap
+    );
+    appliedPromosBlock.classList.add("invisible");
+
+    const appliedCodesTitle = document.createElement("h3");
+    appliedPromosBlock.append(appliedCodesTitle);
+
+    appliedCodesTitle.className = "applied-codes-title";
+
+    appliedCodesTitle.innerText = textObj.applyCodesTitle;
 
     const promoInput = document.createElement("input");
     promoInput.classList.add("sum-prod__promo-input");
-    // promoInput.addEventListener("input", () => {
-    //   promoCode.applyPromo();
-    // });
+    promoInput.addEventListener("input", () => {
+      promoCode.applyPromo();
+    });
 
     sumInfoWrap.append(promoInput);
     promoInput.placeholder = "Enter promo code";
+
+    const appliedCodesWrapper = this.createDiscountItem();
+    sumInfoWrap.append(appliedCodesWrapper);
 
     const promo = this.createElement("promo", sumInfoWrap, textObj.testPromo);
   }
@@ -462,6 +484,7 @@ class Temp extends Template {
       localStorage.setItem("itemsArray", JSON.stringify(itemsArray));
       headerCart.innerHTML = String(itemsArray[1]);
       headerSum.innerHTML = `&#8364 ${itemsArray[0]}`;
+      promoCode.applyPromo();
     }
   }
   public getTotalSumAndQt(itemsInCart: IProductInCart[] | []): number[] {
@@ -583,6 +606,17 @@ class Temp extends Template {
       const message = this.createElement("message", mainElement);
       message.innerText = textObj.message;
     }
+  }
+
+  public createDiscountItem(): HTMLElement {
+    const discountWrapper = this.createElement("discount-wrapper");
+    discountWrapper.classList.add("invisible");
+    const discountType = this.createElement("discount-type", discountWrapper);
+    discountType.id = "disc-type";
+    discountType.innerText = "Rolling Scopes School - 10% -";
+    const discountBtn = this.createElement("add-drop-btn", discountWrapper);
+    discountBtn.innerText = "add";
+    return discountWrapper;
   }
 
   // public linkChange(

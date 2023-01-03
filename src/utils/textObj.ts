@@ -32,6 +32,7 @@ const textObj: TtextObject = {
   CVVErr: "CVV validation: Error: enter 3 numbers",
   confirmBtn: "confirm",
   message: "Cart is empty",
+  applyCodesTitle: "Applied codes",
 };
 
 export default textObj;
