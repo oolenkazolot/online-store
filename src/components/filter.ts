@@ -225,7 +225,7 @@ class Filter {
     const block: HTMLElement = document.createElement("div");
     block.classList.add("filter-buttons");
     const btnReset: HTMLElement = document.createElement("button");
-    btnReset.classList.add("filter-buttons__btn");
+    btnReset.classList.add("filter-buttons__reset");
     btnReset.classList.add("btn");
     btnReset.textContent = "Reset filters";
     btnReset.addEventListener("click", () => {
@@ -234,9 +234,19 @@ class Filter {
       }
     });
     const btnCopyLink: HTMLElement = document.createElement("button");
-    btnCopyLink.classList.add("filter-buttons__btn");
+    btnCopyLink.classList.add("filter-buttons__copy");
     btnCopyLink.classList.add("btn");
     btnCopyLink.textContent = "Copy link";
+    btnCopyLink.addEventListener("click", () => {
+      window.navigator.clipboard.writeText(window.location.href); // копирование ссылки в буфер обмена
+      btnCopyLink.textContent = "Copied link";
+
+      setTimeout(updateTextBtn, 1000);
+      function updateTextBtn(): void {
+        btnCopyLink.textContent = "Copy link";
+      }
+    });
+
     block.append(btnReset, btnCopyLink);
     return block;
   }

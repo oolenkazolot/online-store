@@ -1,31 +1,34 @@
-import { IProductsSortOptionals, IRouter } from "../types/index";
+import { IProductsSortOptionals, IRouter, IProducts } from "../types/index";
+import Products from "../utils/products";
 
 class ProductsSort {
   private drawProductList: (router?: IRouter) => void;
+  private products: IProducts;
   constructor(drawProductList: (router?: IRouter) => void) {
     this.drawProductList = drawProductList;
+    this.products = new Products();
   }
 
   public createProductsSort(router?: IRouter): HTMLElement {
     const productsSort: HTMLElement = document.createElement("section");
     productsSort.classList.add("products__sort");
-    const sortBar: HTMLElement = this.createSortBar();
+    const sortBar: HTMLElement = this.createSortBar(router);
     const amountElement: HTMLElement = this.createAmountElement();
     const searchBar: HTMLElement = this.createSearchBar(router);
-    const viewModeBlock: HTMLElement = this.createViewModeBlock();
+    const viewModeBlock: HTMLElement = this.createViewModeBlock(router);
     productsSort.append(sortBar, amountElement, searchBar, viewModeBlock);
     return productsSort;
   }
 
-  private createSortBar(): HTMLElement {
+  private createSortBar(router?: IRouter): HTMLElement {
     const sortBar: HTMLElement = document.createElement("div");
     sortBar.classList.add("sort-bar");
-    const selectSorting = this.createSelectSorting();
+    const selectSorting = this.createSelectSorting(router);
     sortBar.append(selectSorting);
     return sortBar;
   }
 
-  private createSelectSorting(): HTMLElement {
+  private createSelectSorting(router?: IRouter): HTMLElement {
     const options: IProductsSortOptionals[] = [
       {
         value: "sort-title",
@@ -52,11 +55,15 @@ class ProductsSort {
       },
       {
         value: "discount-ASC",
+        content: "Sort by discount ASC",
+      },
+      {
+        value: "discount-DESC",
         content: "Sort by discount DESC",
       },
     ];
 
-    const selectSorting: HTMLElement = document.createElement("select");
+    const selectSorting: HTMLSelectElement = document.createElement("select");
     selectSorting.classList.add("select-sorting");
     selectSorting.setAttribute("id", "select-sorting");
     selectSorting.setAttribute("name", "select-sorting");
@@ -65,30 +72,41 @@ class ProductsSort {
     });
 
     selectSorting.append(...optionElements);
+
+    selectSorting.addEventListener("change", () => {
+      if (selectSorting.value === "sort-title") {
+        this.removeQueryParameters("sort", router);
+      } else {
+        this.addQueryParameters(selectSorting.value, "sort", router);
+      }
+    });
     return selectSorting;
   }
 
   private createSortOption(item: IProductsSortOptionals): HTMLElement {
+    const url = new URL(window.location.href);
+    const urlParameterSort: string | null = url.searchParams.get("sort");
+
     const option: HTMLElement = document.createElement("option");
     if (item.class) {
       option.setAttribute("class", item.class);
     }
 
     option.setAttribute("value", item.value);
-    if (item.disabled) {
-      option.setAttribute("disabled", "true");
-    }
-    if (item.selected) {
+    if (urlParameterSort && item.value === urlParameterSort) {
       option.setAttribute("selected", "true");
     }
+
     option.textContent = item.content;
+
     return option;
   }
 
   private createAmountElement(): HTMLElement {
     const amountElement: HTMLElement = document.createElement("div");
     amountElement.classList.add("amount");
-    amountElement.textContent = "Found: 0";
+    const products = this.products.getProductsFilters();
+    amountElement.textContent = `Found: ${products.length}`;
     return amountElement;
   }
 
@@ -112,51 +130,105 @@ class ProductsSort {
     }
     input.addEventListener("input", () => {
       if (input.value) {
-        this.addQueryParametersSearch(input.value, router);
+        this.addQueryParameters(input.value, "search", router);
       } else {
-        this.removeQueryParametersSearch(router);
+        this.removeQueryParameters("search", router);
       }
     });
     return input;
   }
 
-  private createViewModeBlock(): HTMLElement {
-    const arr = ["icon-grid", "icon-grid1"];
+  private createViewModeBlock(router?: IRouter): HTMLElement {
+    const icons = ["icon-grid", "icon-grid1"];
+    const prefix = ["big", "small"];
     const viewModeBlock: HTMLElement = document.createElement("div");
     viewModeBlock.classList.add("view-mode");
-    const viewModeButtons: HTMLElement[] = arr.map((item) => {
-      const btn = this.createViewModeBtn(item);
+    const viewModeButtons: HTMLElement[] = icons.map((item, index) => {
+      const btn = this.createViewModeBtn(item, prefix[index], router);
       return btn;
     });
     viewModeBlock.append(...viewModeButtons);
     return viewModeBlock;
   }
 
-  private createViewModeBtn(item: string): HTMLElement {
+  private createViewModeBtn(
+    item: string,
+    prefix: string,
+    router?: IRouter
+  ): HTMLElement {
+    const url = new URL(window.location.href);
+    const urlParameterViewMode: string | null = url.searchParams.get(
+      "view-mode"
+    );
     const btn: HTMLElement = document.createElement("button");
-    btn.classList.add("view-mode__btn");
+    btn.classList.add(`view-mode__btn-${prefix}`);
+    if (prefix === "big" && !urlParameterViewMode) {
+      btn.classList.add("active-mode");
+    }
+
+    if (urlParameterViewMode === prefix) {
+      const elem: HTMLElement | null = document.querySelector(".active-mode");
+      elem?.classList.remove("active-mode");
+      btn.classList.add("active-mode");
+    }
+
     const icon: HTMLElement = document.createElement("i");
     icon.classList.add(item);
     btn.append(icon);
+    btn.addEventListener("click", () => {
+      this.addQueryParametersViewMode(prefix, "view-mode", router);
+      const productList: HTMLElement | null = document.querySelector(
+        ".products__list"
+      );
+      if (prefix === "small") {
+        productList?.classList.add("products__list--small");
+      } else {
+        productList?.classList.remove("products__list--small");
+      }
+
+      const elem: HTMLElement | null = document.querySelector(".active-mode");
+      elem?.classList.remove("active-mode");
+      btn.classList.add("active-mode");
+    });
     return btn;
   }
 
-  private addQueryParametersSearch(text: string, router?: IRouter): void {
+  private addQueryParametersViewMode(
+    text: string,
+    paramsName: string,
+    router?: IRouter
+  ): void {
     const url = new URL(window.location.href);
-    const param: string = url.searchParams.get("search") || "";
+    const param: string = url.searchParams.get(paramsName) || "";
     if (param) {
-      url.searchParams.set("search", text);
+      url.searchParams.set(paramsName, text);
     } else {
-      url.searchParams.set("search", text);
+      url.searchParams.set(paramsName, text);
+    }
+
+    window.history.pushState(null, "", url);
+  }
+
+  private addQueryParameters(
+    text: string,
+    paramsName: string,
+    router?: IRouter
+  ): void {
+    const url = new URL(window.location.href);
+    const param: string = url.searchParams.get(paramsName) || "";
+    if (param) {
+      url.searchParams.set(paramsName, text);
+    } else {
+      url.searchParams.set(paramsName, text);
     }
 
     window.history.pushState(null, "", url);
     this.drawProductList(router);
   }
 
-  private removeQueryParametersSearch(router?: IRouter): void {
+  private removeQueryParameters(paramsName: string, router?: IRouter): void {
     const url = new URL(window.location.href);
-    url.searchParams.delete("search");
+    url.searchParams.delete(paramsName);
     window.history.pushState(null, "", url);
     this.drawProductList(router);
   }

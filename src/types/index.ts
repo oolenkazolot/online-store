@@ -43,6 +43,7 @@ export interface IProducts {
   getMinMaxPrice: () => string[];
   getMinMaxStock: () => string[];
   getProductsFiltersSearch: () => IProduct[];
+  getProductsFiltersSort: () => IProduct[];
 }
 
 export interface IFilter {

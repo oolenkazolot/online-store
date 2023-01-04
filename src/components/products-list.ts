@@ -12,8 +12,15 @@ class ProductsList {
   }
 
   public createProductsList(router?: IRouter): HTMLElement {
+    const url = new URL(window.location.href);
+    const urlParameterViewMode: string | null = url.searchParams.get(
+      "view-mode"
+    );
     this.productsList.textContent = "";
     this.productsList.classList.add("products__list");
+    if (urlParameterViewMode === "small") {
+      this.productsList.classList.add("products__list--small");
+    }
     const productsElements = this.createProductsElement(router);
     this.productsList.append(...productsElements);
     return this.productsList;
@@ -28,14 +35,24 @@ class ProductsList {
   private createProductsElement(router?: IRouter): HTMLElement[] {
     const url = new URL(window.location.href);
     const urlParameterSearch: string | null = url.searchParams.get("search");
+    const urlParameterSort: string | null = url.searchParams.get("sort");
     let products: IProduct[] = this.products.getProductsFilters();
 
     if (products.length && !urlParameterSearch) {
       products = this.products.getProductsFilters();
     }
 
-    if (products.length && urlParameterSearch) {
+    if (products.length && urlParameterSearch && !urlParameterSort) {
       products = this.products.getProductsFiltersSearch();
+    }
+
+    if (products.length && urlParameterSort) {
+      products = this.products.getProductsFiltersSort();
+    }
+
+    const amountProducts = document.querySelector(".amount");
+    if (amountProducts) {
+      amountProducts.textContent = `Found: ${products.length}`;
     }
 
     if (!products.length) {
@@ -99,6 +116,7 @@ class ProductsList {
     const arr = ["category", "discount", "rating", "stock"];
     const productInfo: HTMLElement = document.createElement("div");
     productInfo.classList.add("product__info");
+
     const productsInfoItems = arr.map((elem: string) => {
       const span: HTMLElement = document.createElement("span");
       span.classList.add("product__" + elem);

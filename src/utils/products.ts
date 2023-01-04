@@ -190,6 +190,48 @@ class Products {
     return products;
   }
 
+  public getProductsFiltersSort(): IProduct[] {
+    const url = new URL(window.location.href);
+    const urlParameterSearch: string | null = url.searchParams.get("search");
+    const urlParameterSort: string | null = url.searchParams.get("sort");
+
+    const productsFilters: IProduct[] | undefined = urlParameterSearch
+      ? this.getProductsFiltersSearch()
+      : this.getProductsFilters();
+
+    const products: IProduct[] = productsFilters.sort(
+      (a: IProduct, b: IProduct) => {
+        if (urlParameterSort && urlParameterSort == "price-ASC") {
+          return a.price - b.price;
+        }
+
+        if (urlParameterSort && urlParameterSort == "price-DESC") {
+          return b.price - a.price;
+        }
+
+        if (urlParameterSort && urlParameterSort === "rating-ASC") {
+          return a.rating - b.rating;
+        }
+
+        if (urlParameterSort && urlParameterSort === "rating-DESC") {
+          return b.rating - a.rating;
+        }
+
+        if (urlParameterSort && urlParameterSort === "discount-ASC") {
+          return a.discount - b.discount;
+        }
+
+        if (urlParameterSort && urlParameterSort === "discount-DESC") {
+          return b.discount - a.discount;
+        }
+
+        return a.price - b.price;
+      }
+    );
+
+    return products;
+  }
+
   public getProductsFiltersSearch(): IProduct[] {
     const url = new URL(window.location.href);
     let urlParameterSearch: string | null = url.searchParams.get("search");
@@ -197,7 +239,7 @@ class Products {
       urlParameterSearch = urlParameterSearch.toLowerCase();
     }
 
-    const productsFilters = this.getProductsFilters();
+    const productsFilters: IProduct[] | undefined = this.getProductsFilters();
 
     const products: IProduct[] = productsFilters.filter((element) => {
       if (
