@@ -18,7 +18,7 @@ const textObj: TtextObject = {
   buyBtn: "buy now",
   products: "Products:",
   total: "Total:",
-  testPromo: "Promo for test: 'RS', 'EPM",
+  testPromo: "Promo for test: 'rs', 'epm",
   title1: "Personal details",
   title2: "Credit card details",
   nameErr: "Enter at least two words with a length of at least three chars",

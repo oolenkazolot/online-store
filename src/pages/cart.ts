@@ -383,6 +383,7 @@ class Temp extends Template {
     promoInput.placeholder = "Enter promo code";
 
     const appliedCodesWrapper = this.createDiscountItem();
+    appliedCodesWrapper.id = "promo-item-wrapper";
     sumInfoWrap.append(appliedCodesWrapper);
 
     const promo = this.createElement("promo", sumInfoWrap, textObj.testPromo);
@@ -485,6 +486,13 @@ class Temp extends Template {
       headerCart.innerHTML = String(itemsArray[1]);
       headerSum.innerHTML = `&#8364 ${itemsArray[0]}`;
       promoCode.applyPromo();
+      const totalSumDiscount = document.getElementById(
+        "total-sum-discount"
+      ) as HTMLElement;
+      if (totalSumDiscount) {
+        console.log(promoCode.totSumValue);
+        totalSumDiscount.innerHTML = promoCode.totSumValue;
+      }
     }
   }
   public getTotalSumAndQt(itemsInCart: IProductInCart[] | []): number[] {
@@ -600,7 +608,6 @@ class Temp extends Template {
   public emptyCart(): void {
     const mainElement = document.querySelector("main") as HTMLElement;
     const itemsInCart = temp.getLocalStorageData();
-    console.log(itemsInCart.length);
     if (itemsInCart.length === 0) {
       mainElement.innerHTML = "";
       const message = this.createElement("message", mainElement);
@@ -616,6 +623,7 @@ class Temp extends Template {
     discountType.innerText = "Rolling Scopes School - 10% -";
     const discountBtn = this.createElement("add-drop-btn", discountWrapper);
     discountBtn.innerText = "add";
+    discountBtn.id = "disc-btn";
     return discountWrapper;
   }
 
@@ -660,6 +668,7 @@ class CartPage {
       temp.changePageNum(itemsInCart);
       // temp.linkChange("items", itemsInCart);
       modal.createModalWindow();
+      promoCode.appendDelPromoItem();
     }
   }
 }
