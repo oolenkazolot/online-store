@@ -266,12 +266,14 @@
   align-items: center;
   padding: 1rem;
   color: black;
+  width: 100%;
   @media (max-width: 690px) {
     margin-bottom: 0.5rem;
 }
 }
 
 .sum-prod__promo-input {
+  width: 90%;
   height: 2rem;
   border-radius: 25px;
   outline: 2px solid $bg-gray;
@@ -358,4 +360,72 @@
   @media (max-width: 500px) {
    width: 70%;
 }
+}
+
+.message {
+  text-align: center;
+  font-size: 2rem;
+  margin-top: 2rem;
+  font-family: 'Inter', sans-serif;
+  color: $color-gray;
+}
+
+.applied-promos-block {
+  width: 90%;
+  color: #878787;
+  border: 2px solid #fd2;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 3px 3px 7px 0px rgba(34, 60, 80, 0.2);
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.applied-codes-title {
+  width: 100%;
+  text-align: center;
+  background-color: #f5f5f5;
+  padding: 0.3rem;
+  border-bottom: 2px solid #fd2;
+}
+
+.discount-wrapper {
+  font-size: 1rem;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  gap: 10px;
+}
+
+.add-drop-btn {
+  font-size: 0.8rem;
+  padding: 5px 15px;
+  font-size: 15px;
+  font-weight: 600;
+  color: $color-dark-blue;
+  border-radius: 25px;
+  text-transform: uppercase;
+  border: none;
+  text-align: center;
+  @include buttons;
+  &:hover {
+    background-color: $hover;
+  }
+  &:active {
+    background-color: $active;
+  }
+}
+
+.invisible {
+  display: none;
+}
+
+.crossed {
+  text-decoration: line-through;
 }
