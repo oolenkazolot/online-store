@@ -3,7 +3,12 @@ import textObj from "../utils/textObj";
 import Template from "../templates/template";
 import ModalWindow from "../components/modal-window";
 import { IProduct, IProductInCart } from "src/types";
+import { Promo } from "../components/promo-block";
 const modal = new ModalWindow();
+const promoCode = new Promo(
+  ["rs", 10, "Rolling Scopes School "],
+  ["epm", 10, "EPAM Systems"]
+);
 const itemsInCart = [
   {
     id: 1,
@@ -340,10 +345,46 @@ class Temp extends Template {
     const totalSum = this.createElement("total-sum", totalCont);
     totalSum.innerHTML = `&#8364 ${itemsArray[0]}`;
 
+    const totalContPromo = this.createElement(
+      "sum-prod__total-cont",
+      sumInfoWrap
+    );
+    totalContPromo.id = "total-sum-wrapper";
+    totalContPromo.classList.add("invisible");
+    const totalPromo = this.createElement(
+      "total",
+      totalContPromo,
+      textObj.total
+    );
+
+    const totalSumPromo = this.createElement("total-sum", totalContPromo);
+    totalSumPromo.id = "total-sum-discount";
+
+    const appliedPromosBlock = this.createElement(
+      "applied-promos-block",
+      sumInfoWrap
+    );
+    appliedPromosBlock.classList.add("invisible");
+
+    const appliedCodesTitle = document.createElement("h3");
+    appliedPromosBlock.append(appliedCodesTitle);
+
+    appliedCodesTitle.className = "applied-codes-title";
+
+    appliedCodesTitle.innerText = textObj.applyCodesTitle;
+
     const promoInput = document.createElement("input");
     promoInput.classList.add("sum-prod__promo-input");
+    promoInput.addEventListener("input", () => {
+      promoCode.applyPromo();
+    });
+
     sumInfoWrap.append(promoInput);
     promoInput.placeholder = "Enter promo code";
+
+    const appliedCodesWrapper = this.createDiscountItem();
+    appliedCodesWrapper.id = "promo-item-wrapper";
+    sumInfoWrap.append(appliedCodesWrapper);
 
     const promo = this.createElement("promo", sumInfoWrap, textObj.testPromo);
   }
@@ -366,7 +407,9 @@ class Temp extends Template {
       ".header-bottom__total-sum"
     ) as HTMLElement;
 
-    cardsWrapper.addEventListener("click", getClickedItem);
+    if (itemsInCart.length > 0) {
+      cardsWrapper.addEventListener("click", getClickedItem);
+    }
 
     function getClickedItem(event: Event): void {
       const quantities = document.querySelectorAll(".quantity");
@@ -418,7 +461,9 @@ class Temp extends Template {
                   pageEl.innerText = String(temp.page);
                 }
                 temp.createItemBlock(itemsInCart, temp.page);
+                temp.addQueryParameters("page", String(temp.page));
                 itemsNum.max = `${itemsInCart.length}`;
+                temp.emptyCart();
               }
             }
             for (let i = 0; i < quantities.length; i++) {
@@ -440,6 +485,14 @@ class Temp extends Template {
       localStorage.setItem("itemsArray", JSON.stringify(itemsArray));
       headerCart.innerHTML = String(itemsArray[1]);
       headerSum.innerHTML = `&#8364 ${itemsArray[0]}`;
+      promoCode.applyPromo();
+      const totalSumDiscount = document.getElementById(
+        "total-sum-discount"
+      ) as HTMLElement;
+      if (totalSumDiscount) {
+        console.log(promoCode.totSumValue);
+        totalSumDiscount.innerHTML = promoCode.totSumValue;
+      }
     }
   }
   public getTotalSumAndQt(itemsInCart: IProductInCart[] | []): number[] {
@@ -500,7 +553,8 @@ class Temp extends Template {
           temp.page++;
           pageEl.innerText = String(temp.page);
           cardsWrapper.innerHTML = "";
-          temp.addQueryParameters("page", String(temp.page), itemsInCart);
+          temp.createItemBlock(itemsInCart, temp.page);
+          temp.addQueryParameters("page", String(temp.page));
         }
       }
       if (target.innerText === "<") {
@@ -508,7 +562,8 @@ class Temp extends Template {
           temp.page--;
           pageEl.innerText = String(temp.page);
           cardsWrapper.innerHTML = "";
-          temp.addQueryParameters("page", String(temp.page), itemsInCart);
+          temp.createItemBlock(itemsInCart, temp.page);
+          temp.addQueryParameters("page", String(temp.page));
         }
       }
     }
@@ -531,21 +586,45 @@ class Temp extends Template {
           pageEl.innerHTML = String(temp.page);
         }
         cardsWrapper.innerHTML = "";
-        temp.addQueryParameters("items", rowsInput.value, itemsInCart);
+        temp.createItemBlock(itemsInCart, temp.page);
+        temp.addQueryParameters("items", rowsInput.value);
+        temp.addQueryParameters("page", String(temp.page));
       }
     }
   }
 
   public addQueryParameters(
     paramName: string,
-    items: string,
-    itemsInCart: IProductInCart[] | []
+    items: string
+    // itemsInCart: IProductInCart[] | []
   ): void {
     const url = new URL(window.location.href);
     const param: string = url.searchParams.get(paramName) || "";
     url.searchParams.set(paramName, items);
     window.history.pushState(null, "", url);
-    this.createItemBlock(itemsInCart, this.page);
+    // this.createItemBlock(itemsInCart, this.page);
+  }
+
+  public emptyCart(): void {
+    const mainElement = document.querySelector("main") as HTMLElement;
+    const itemsInCart = temp.getLocalStorageData();
+    if (itemsInCart.length === 0) {
+      mainElement.innerHTML = "";
+      const message = this.createElement("message", mainElement);
+      message.innerText = textObj.message;
+    }
+  }
+
+  public createDiscountItem(): HTMLElement {
+    const discountWrapper = this.createElement("discount-wrapper");
+    discountWrapper.classList.add("invisible");
+    const discountType = this.createElement("discount-type", discountWrapper);
+    discountType.id = "disc-type";
+    discountType.innerText = "Rolling Scopes School - 10% -";
+    const discountBtn = this.createElement("add-drop-btn", discountWrapper);
+    discountBtn.innerText = "add";
+    discountBtn.id = "disc-btn";
+    return discountWrapper;
   }
 
   // public linkChange(
@@ -580,13 +659,17 @@ class CartPage {
     temp.getTotalSumAndQt(itemsInCart);
     temp.createCardHeader(itemsInCart);
     temp.createItemBlock(itemsInCart, temp.page);
-    temp.createSummary(itemsInCart);
-    temp.changeAmountInCart(itemsInCart);
-    temp.createArraysForPagination(itemsInCart);
-    temp.changePages();
-    temp.changePageNum(itemsInCart);
-    // temp.linkChange("items", itemsInCart);
-    modal.createModalWindow();
+    temp.emptyCart();
+    if (itemsInCart.length > 0) {
+      temp.createSummary(itemsInCart);
+      temp.changeAmountInCart(itemsInCart);
+      temp.createArraysForPagination(itemsInCart);
+      temp.changePages();
+      temp.changePageNum(itemsInCart);
+      // temp.linkChange("items", itemsInCart);
+      modal.createModalWindow();
+      promoCode.appendDelPromoItem();
+    }
   }
 }
 
