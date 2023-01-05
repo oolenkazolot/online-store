@@ -1,8 +1,7 @@
-import { title } from "process";
 import textObj from "../utils/textObj";
 import Template from "../templates/template";
 import ModalWindow from "../components/modal-window";
-import { IProduct, IProductInCart } from "src/types";
+import { IProductInCart } from "src/types";
 import { Promo } from "../components/promo-block";
 const modal = new ModalWindow();
 const promoCode = new Promo(
@@ -172,7 +171,7 @@ class Temp extends Template {
 
     const statCont = this.createElement("prod-cont__stat-cont", titleCont);
     const itemsCont = this.createElement("prod-cont__items-cont", statCont);
-    const items = this.createElement("items", itemsCont, textObj.items);
+    this.createElement("items", itemsCont, textObj.items);
     const itemsNum = document.createElement("input");
     itemsNum.classList.add("prod-cont__items-num");
     itemsNum.type = "number";
@@ -183,20 +182,20 @@ class Temp extends Template {
     itemsNum.value = "3";
 
     const pageCont = this.createElement("prod-cont__pages-cont", statCont);
-    const page = this.createElement("page", pageCont, textObj.page);
+    this.createElement("page", pageCont, textObj.page);
 
     const separLeft = document.createElement("button");
     separLeft.classList.add("prod-cont__separ");
     pageCont.append(separLeft);
 
-    const count = this.createElement("count", pageCont, textObj.count);
+    this.createElement("count", pageCont, textObj.count);
     separLeft.innerText = textObj.separLeft;
 
     const separRight = document.createElement("button");
     separRight.classList.add("prod-cont__separ");
     pageCont.append(separRight);
     separRight.innerText = textObj.separRight;
-    const cardsWrapper = this.createElement("cards-wrapper", prodCont);
+    this.createElement("cards-wrapper", prodCont);
   }
 
   public createItemBlock(
@@ -207,103 +206,119 @@ class Temp extends Template {
     const itemsNum = document.querySelector(
       ".prod-cont__items-num"
     ) as HTMLInputElement;
+    const cardsWrapper = document.querySelector(
+      ".cards-wrapper"
+    ) as HTMLElement;
 
     if (paginationArray[page - 1]) {
-      for (let i = 0; i < paginationArray[page - 1].length; i++) {
-        const cardsWrapper = document.querySelector(
-          ".cards-wrapper"
-        ) as HTMLElement;
+      collectElements();
+    }
 
-        const cardCont = this.createElement(
+    function collectElements() {
+      for (let i = 0; i < paginationArray[page - 1].length; i++) {
+        const cardCont = createCardCont(paginationArray[page - 1][i].id);
+
+        temp.createElement(
+          "item-num",
+          cardCont,
+          String(i + 1 + Number(itemsNum.value) * (temp.page - 1))
+        );
+
+        createDataCont(cardCont, paginationArray[page - 1][i].thumbnail);
+
+        createInfoBlock(
+          cardCont,
+          paginationArray[page - 1][i].title,
+          paginationArray[page - 1][i].description,
+          paginationArray[page - 1][i].rating,
+          paginationArray[page - 1][i].discount
+        );
+
+        createControlBlock(
+          cardCont,
+          paginationArray[page - 1][i].price,
+          paginationArray[page - 1][i].id,
+          paginationArray[page - 1][i].quantityInCart,
+          paginationArray[page - 1][i].stock
+        );
+      }
+
+      function createCardCont(arg: number): HTMLElement {
+        const cardCont = temp.createElement(
           "prod-cont__card-cont",
           cardsWrapper
         );
-        cardCont.setAttribute(
-          "data-id",
-          String(paginationArray[page - 1][i].id)
-        );
-        const itemNumb = this.createElement(
-          "item-num",
-          cardCont,
-          String(i + 1 + Number(itemsNum.value) * (this.page - 1))
-        );
+        cardCont.setAttribute("data-id", String(arg));
+        return cardCont;
+      }
 
-        const dataCont = this.createElement("data-cont", cardCont);
-        const imageCont = this.createElement("img-cont", dataCont);
+      function createDataCont(cardCont: HTMLElement, src: string): HTMLElement {
+        const dataCont = temp.createElement("data-cont", cardCont);
+        const imageCont = temp.createElement("img-cont", dataCont);
         const itemImage = document.createElement("img");
         itemImage.className = "prod-cont__item-img";
         imageCont.append(itemImage);
-        itemImage.src = paginationArray[page - 1][i].thumbnail;
+        itemImage.src = src;
+        return dataCont;
+      }
 
-        const infoBlock = this.createElement("prod-cont__info-block", dataCont);
-        const controlBlock = this.createElement(
-          "prod-cont__contr-block",
-          cardCont
-        );
+      function createInfoBlock(
+        dataCont: HTMLElement,
+        title: string,
+        description: string,
+        rating: number,
+        discount: number
+      ) {
+        const infoBlock = temp.createElement("prod-cont__info-block", dataCont);
+        temp.createElement("prod-cont__prod-name", infoBlock, title);
+        temp.createElement("item-descr", infoBlock, description);
 
-        const prodName = this.createElement(
-          "prod-cont__prod-name",
-          infoBlock,
-          paginationArray[page - 1][i].title
-        );
-
-        const desc = this.createElement(
-          "item-descr",
-          infoBlock,
-          paginationArray[page - 1][i].description
-        );
-
-        const addInfoCont = this.createElement("prod-cont__addInfo", infoBlock);
-        const ratWrap = this.createElement("prod-cont__rat-wrap", addInfoCont);
-        const rating = this.createElement("rating", ratWrap, textObj.rating);
-
-        const ratNum = this.createElement(
-          "rat-num",
-          ratWrap,
-          String(paginationArray[page - 1][i].rating)
-        );
-
-        const discWrap = this.createElement(
+        const addInfoCont = temp.createElement("prod-cont__addInfo", infoBlock);
+        const ratWrap = temp.createElement("prod-cont__rat-wrap", addInfoCont);
+        const discWrap = temp.createElement(
           "prod-cont__disc-wrap",
           addInfoCont
         );
-        const discount = this.createElement("discount", discWrap, textObj.disc);
+        temp.createElement("rating", ratWrap, textObj.rating);
+        temp.createElement("rat-num", ratWrap, String(rating));
+        temp.createElement("discount", discWrap, textObj.disc);
+        temp.createElement("disc-num", discWrap, String(discount));
+      }
 
-        const discNum = this.createElement(
-          "disc-num",
-          discWrap,
-          String(paginationArray[page - 1][i].discount)
+      function createControlBlock(
+        cardCont: HTMLElement,
+        priceArg: number,
+        id: number,
+        quantity: number,
+        stock: number
+      ) {
+        const controlBlock = temp.createElement(
+          "prod-cont__contr-block",
+          cardCont
         );
-
-        const stockBl = this.createElement("prod-cont__stock-bl", controlBlock);
-        const stock = this.createElement("stock", stockBl, textObj.stock);
-
-        const stockNum = this.createElement(
-          "stock-num",
-          stockBl,
-          String(paginationArray[page - 1][i].stock)
-        );
-        stockNum.setAttribute(
-          "data-id",
-          String(paginationArray[page - 1][i].id)
-        );
-        const controlsWrap = this.createElement(
+        const controlsWrap = temp.createElement(
           "prod-cont__contr-wrap",
           controlBlock
         );
-        const price = this.createElement("prod-cont__price", controlBlock);
-        price.innerHTML = `&#8364 ${String(
-          paginationArray[page - 1][i].price
-        )}`;
-        price.setAttribute("data-id", String(paginationArray[page - 1][i].id));
+        const stockBl = temp.createElement("prod-cont__stock-bl", controlBlock);
+        const price = temp.createElement("prod-cont__price", controlBlock);
+        price.innerHTML = `&#8364 ${String(priceArg)}`;
+        price.setAttribute("data-id", String(id));
 
-        const incr = this.createElement("contr", controlsWrap, textObj.incr);
-        const itemQt = this.createElement("quantity", controlsWrap);
-        itemQt.setAttribute("data-id", String(paginationArray[page - 1][i].id));
-        itemQt.innerText = String(paginationArray[page - 1][i].quantityInCart);
-        incr.setAttribute("data-id", String(paginationArray[page - 1][i].id));
-        const decr = this.createElement("contr", controlsWrap, textObj.decr);
-        decr.setAttribute("data-id", String(paginationArray[page - 1][i].id));
+        const incr = temp.createElement("contr", controlsWrap, textObj.incr);
+        const itemQt = temp.createElement("quantity", controlsWrap);
+        itemQt.setAttribute("data-id", String(id));
+        itemQt.innerText = String(quantity);
+        incr.setAttribute("data-id", String(id));
+        const decr = temp.createElement("contr", controlsWrap, textObj.decr);
+        decr.setAttribute("data-id", String(id));
+        temp.createElement("stock", stockBl, textObj.stock);
+        const stockNum = temp.createElement(
+          "stock-num",
+          stockBl,
+          String(stock)
+        );
+        stockNum.setAttribute("data-id", String(id));
       }
     }
   }
@@ -334,13 +349,13 @@ class Temp extends Template {
     buyBtn.innerText = textObj.buyBtn;
 
     const prodCont = this.createElement("sum-cont__prod-cont", sumInfoWrap);
-    const products = this.createElement("prod-c", prodCont, textObj.products);
+    this.createElement("prod-c", prodCont, textObj.products);
     const quantity = this.createElement("prod-amt", prodCont);
     const itemsArray = temp.getTotalSumAndQt(itemsInCart);
     quantity.innerHTML = String(itemsArray[1]);
 
     const totalCont = this.createElement("sum-prod__total-cont", sumInfoWrap);
-    const total = this.createElement("total", totalCont, textObj.total);
+    this.createElement("total", totalCont, textObj.total);
 
     const totalSum = this.createElement("total-sum", totalCont);
     totalSum.innerHTML = `&#8364 ${itemsArray[0]}`;
@@ -351,11 +366,7 @@ class Temp extends Template {
     );
     totalContPromo.id = "total-sum-wrapper";
     totalContPromo.classList.add("invisible");
-    const totalPromo = this.createElement(
-      "total",
-      totalContPromo,
-      textObj.total
-    );
+    this.createElement("total", totalContPromo, textObj.total);
 
     const totalSumPromo = this.createElement("total-sum", totalContPromo);
     totalSumPromo.id = "total-sum-discount";
@@ -386,7 +397,7 @@ class Temp extends Template {
     appliedCodesWrapper.id = "promo-item-wrapper";
     sumInfoWrap.append(appliedCodesWrapper);
 
-    const promo = this.createElement("promo", sumInfoWrap, textObj.testPromo);
+    this.createElement("promo", sumInfoWrap, textObj.testPromo);
   }
 
   public getLocalStorageData(): IProductInCart[] | [] {
@@ -416,7 +427,7 @@ class Temp extends Template {
       const stockArray = document.querySelectorAll(".stock-num");
       const priceElements = document.querySelectorAll(".prod-cont__price");
       const target = event.target as HTMLElement;
-      const paginationArray = temp.createArraysForPagination(itemsInCart);
+      temp.createArraysForPagination(itemsInCart);
       const pageEl = document.querySelector(".count") as HTMLElement;
       const itemsNum = document.querySelector(
         ".prod-cont__items-num"
@@ -490,7 +501,6 @@ class Temp extends Template {
         "total-sum-discount"
       ) as HTMLElement;
       if (totalSumDiscount) {
-        console.log(promoCode.totSumValue);
         totalSumDiscount.innerHTML = promoCode.totSumValue;
       }
     }
@@ -546,7 +556,7 @@ class Temp extends Template {
       const rowsInput = document.querySelector(
         ".prod-cont__items-num"
       ) as HTMLInputElement;
-      const inputValue = Number(rowsInput.value);
+      Number(rowsInput.value);
 
       if (target.innerText === ">") {
         if (temp.page <= paginationArray.length - 1) {
