@@ -1,14 +1,23 @@
-import { log } from "console";
-import { IProducts, IProduct, IRouter } from "../types/index";
+import {
+  IProducts,
+  IProduct,
+  IRouter,
+  IUpdateCart,
+  ITopHeader,
+  IBottomHeader,
+} from "../types/index";
 import Products from "../utils/products";
+import UpdateCart from "../components/update-cart";
 
 class ProductsList {
   private products: IProducts;
   private productsList: HTMLElement;
+  private updateCart: IUpdateCart;
 
   constructor() {
     this.products = new Products();
     this.productsList = document.createElement("div");
+    this.updateCart = new UpdateCart();
   }
 
   public createProductsList(router?: IRouter): HTMLElement {
@@ -121,7 +130,7 @@ class ProductsList {
     productPrice.classList.add("product__price");
     productPrice.textContent = "€" + item.price;
     const btnDetails = this.createBtnDetails(item.id, router);
-    const btnCart = this.createBtnCart();
+    const btnCart = this.createBtnCart(item, router);
     productBtnWrap.append(productPrice, btnDetails, btnCart);
     return productBtnWrap;
   }
@@ -130,7 +139,6 @@ class ProductsList {
     const btnDetails: HTMLElement = document.createElement("button");
     btnDetails.classList.add("product__btn-details");
     btnDetails.textContent = "Details";
-
     if (router) {
       btnDetails.addEventListener("click", (e) => {
         e.preventDefault();
@@ -138,13 +146,31 @@ class ProductsList {
         router.navigate(`products/${id}`);
       });
     }
-
     return btnDetails;
   }
 
-  private createBtnCart(): HTMLElement {
+  private createBtnCart(item: IProduct, router?: IRouter): HTMLElement {
+    const btnCart: HTMLElement = this.createBtn(item);
+    btnCart.addEventListener("click", () => {
+      const productsInCart = this.updateCart.checkProductInCart(item);
+      if (productsInCart) {
+        btnCart.classList.remove("product__btn-cart--active");
+        this.updateCart.removeProductCart(item);
+      } else {
+        btnCart.classList.add("product__btn-cart--active");
+        this.updateCart.addProductCart(item);
+      }
+    });
+    return btnCart;
+  }
+
+  private createBtn(item: IProduct): HTMLElement {
     const btnCart: HTMLElement = document.createElement("button");
     btnCart.classList.add("product__btn-cart");
+    const productInCart = this.updateCart.checkProductInCart(item);
+    if (productInCart) {
+      btnCart.classList.add("product__btn-cart--active");
+    }
     const icon: HTMLElement = document.createElement("i");
     icon.classList.add("icon-shopping-cart");
     btnCart.append(icon);

@@ -258,5 +258,9 @@
     &:active {
       background-color: $active;
     }
+
+    &--active {
+      background-color: $color-main;
+    }
   }
 }

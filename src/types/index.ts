@@ -99,7 +99,10 @@ export interface ILinkNavigation {
 }
 
 export interface IProductDetail {
-  createProductDetail: (id: string | undefined) => HTMLElement;
+  createProductDetail: (
+    id: string | undefined,
+    router?: IRouter
+  ) => HTMLElement;
 }
 
 export interface IProductInCart {
@@ -121,4 +124,35 @@ export interface IProductInCart {
 export interface IProductsAmount {
   all: number;
   filter: number;
+}
+
+export interface IUpdateCart {
+  checkProductInCart: (item: IProduct) => IProduct | undefined;
+  addProductCart: (item: IProduct) => void;
+  removeProductCart: (item: IProduct) => void;
+}
+
+export interface ITopHeader {
+  header: HTMLElement;
+  createElement: (
+    element: string,
+    myClass: string,
+    parentElement?: HTMLElement
+  ) => HTMLElement;
+  createContainers: (
+    contClass: string,
+    firstElClass: string,
+    secElement: string,
+    secElClass: string,
+    secElContent: string,
+    firstElContent?: string
+  ) => HTMLElement;
+  drawElements: () => void;
+}
+
+export interface IBottomHeader {
+  router?: IRouter;
+  drawElements: () => void;
+  createLinkOnMainPage: () => void;
+  createLinkOnCartPage: () => void;
 }
