@@ -1,3 +1,4 @@
+import { log } from "console";
 import {
   IProducts,
   IFilterRange,
@@ -127,13 +128,18 @@ class Filter {
 
   private createFilterBlockItems(
     obj: Record<string, IProductsAmount>,
+
     nameBlock: string
   ): HTMLElement {
     const blockItems: HTMLElement = document.createElement("div");
     blockItems.classList.add("filter-block__items");
+
     for (const key in obj) {
       const item: HTMLElement = document.createElement("div");
       item.classList.add("filter-block__item");
+      if (obj[key].filter) {
+        item.classList.add("item-active");
+      }
       const label: HTMLElement = document.createElement("label");
       label.classList.add("filter-block__checkbox");
       const input = this.createInputCheckbox(key);
