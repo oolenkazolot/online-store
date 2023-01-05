@@ -143,9 +143,7 @@ class Filter {
         } else {
           this.removeQueryParametersBrandsCategory(input.id, nameBlock);
         }
-        this.updatePrice();
-        this.updateStock();
-        this.drawFilterBlock();
+        this.updateFilter();
       });
       const customCheckbox: HTMLElement = document.createElement("span");
       customCheckbox.classList.add("filter-block__custom-checkbox");
@@ -160,6 +158,12 @@ class Filter {
       blockItems.append(item);
     }
     return blockItems;
+  }
+
+  public updateFilter(): void {
+    this.updatePrice();
+    this.updateStock();
+    this.drawFilterBlock();
   }
 
   private createInputCheckbox(key: string): HTMLInputElement {

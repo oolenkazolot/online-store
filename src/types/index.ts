@@ -49,6 +49,7 @@ export interface IProducts {
 export interface IFilter {
   createFilter: (router?: IRouter) => HTMLElement;
   drawFilterBlock: () => void;
+  updateFilter: () => void;
 }
 
 export interface IFilterRange {
@@ -69,7 +70,7 @@ export interface IProductsSortOptionals {
 }
 
 export interface IProductsSort {
-  createProductsSort: (router?: IRouter) => HTMLElement;
+  createProductsSort: (router?: IRouter, filter?: IFilter) => HTMLElement;
 }
 
 export interface IProductsView {

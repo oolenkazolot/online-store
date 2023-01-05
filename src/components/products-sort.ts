@@ -1,4 +1,9 @@
-import { IProductsSortOptionals, IRouter, IProducts } from "../types/index";
+import {
+  IProductsSortOptionals,
+  IRouter,
+  IProducts,
+  IFilter,
+} from "../types/index";
 import Products from "../utils/products";
 
 class ProductsSort {
@@ -9,12 +14,12 @@ class ProductsSort {
     this.products = new Products();
   }
 
-  public createProductsSort(router?: IRouter): HTMLElement {
+  public createProductsSort(router?: IRouter, filter?: IFilter): HTMLElement {
     const productsSort: HTMLElement = document.createElement("section");
     productsSort.classList.add("products__sort");
     const sortBar: HTMLElement = this.createSortBar(router);
     const amountElement: HTMLElement = this.createAmountElement();
-    const searchBar: HTMLElement = this.createSearchBar(router);
+    const searchBar: HTMLElement = this.createSearchBar(router, filter);
     const viewModeBlock: HTMLElement = this.createViewModeBlock(router);
     productsSort.append(sortBar, amountElement, searchBar, viewModeBlock);
     return productsSort;
@@ -110,15 +115,18 @@ class ProductsSort {
     return amountElement;
   }
 
-  private createSearchBar(router?: IRouter): HTMLElement {
+  private createSearchBar(router?: IRouter, filter?: IFilter): HTMLElement {
     const searchBar: HTMLElement = document.createElement("div");
     searchBar.classList.add("search-bar");
-    const input = this.createInputSearch(router);
+    const input = this.createInputSearch(router, filter);
     searchBar.append(input);
     return searchBar;
   }
 
-  private createInputSearch(router?: IRouter): HTMLInputElement {
+  private createInputSearch(
+    router?: IRouter,
+    filter?: IFilter
+  ): HTMLInputElement {
     const input: HTMLInputElement = document.createElement("input");
     input.classList.add("search-bar__input");
     input.setAttribute("type", "text");
@@ -134,6 +142,7 @@ class ProductsSort {
       } else {
         this.removeQueryParameters("search", router);
       }
+      filter?.updateFilter();
     });
     return input;
   }

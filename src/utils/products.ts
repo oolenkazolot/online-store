@@ -46,7 +46,8 @@ class Products {
     );
 
     const productsFilters = this.getProductsFilters();
-    productsFilters.forEach((element) => {
+    const productsSearch = this.getProductsFiltersSearch(productsFilters);
+    productsSearch.forEach((element) => {
       categories[element.category].filter += 1;
     });
 
@@ -73,7 +74,8 @@ class Products {
     );
 
     const productsFilters = this.getProductsFilters();
-    productsFilters.forEach((element) => {
+    const productsSearch = this.getProductsFiltersSearch(productsFilters);
+    productsSearch.forEach((element) => {
       brands[element.brand].filter += 1;
     });
 
