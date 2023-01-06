@@ -13,10 +13,11 @@ class MainPage {
 
   public draw(): void {
     const mainElement: HTMLElement | null = document.querySelector("main");
-
     if (!mainElement) {
       return;
     }
+    mainElement.classList.add("main");
+
     this.productsList = new ProductsList();
     this.filter = new Filter(
       this.productsList.draw.bind(this.productsList, this.router)
