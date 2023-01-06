@@ -29,6 +29,7 @@ export interface IProduct {
   category: string;
   thumbnail: string;
   images: string[];
+  quantityInCart?: number;
 }
 
 export interface IProducts {

@@ -18,6 +18,7 @@ class UpdateCart {
     const itemsInCart: IProduct[] = itemsInCartStr
       ? JSON.parse(itemsInCartStr)
       : [];
+    item.quantityInCart = 1;
     itemsInCart.push(item);
     this.setItemLocalStorage("itemsInCart", itemsInCart);
     this.updateProductAmount();
@@ -54,11 +55,15 @@ class UpdateCart {
       cartTotalEl.textContent = `€ 0`;
       return;
     }
-    const totalAmount: number = products.reduce((acc, currentValue) => {
+
+    const totalAmount = products?.reduce((acc, currentValue) => {
+      if (currentValue.quantityInCart) {
+        return acc + currentValue.price * currentValue.quantityInCart;
+      }
       return acc + currentValue.price;
     }, 0);
 
-    cartTotalEl.textContent = `€ ${totalAmount}`;
+    cartTotalEl.textContent = totalAmount ? `€ ${totalAmount}` : "€ 0";
   }
 
   private updateCartAmount(products: IProduct[] | undefined): void {
@@ -66,7 +71,13 @@ class UpdateCart {
       ".header-bottom__items-amount"
     );
     if (cart) {
-      cart.textContent = products ? products.length.toString() : "0";
+      const cartAmount = products?.reduce((acc, currentValue) => {
+        if (currentValue.quantityInCart) {
+          return acc + currentValue.quantityInCart;
+        }
+        return acc + 1;
+      }, 0);
+      cart.textContent = cartAmount ? cartAmount?.toString() : "0";
     }
   }
 

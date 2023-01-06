@@ -120,7 +120,10 @@ class ProductDetail {
     const description: HTMLElement = document.createElement("p");
     description.classList.add("product-data__description");
     if (this.product) {
-      description.textContent = this.product[item as keyof IProduct].toString();
+      const str: string | number | string[] | undefined = this.product[
+        item as keyof IProduct
+      ];
+      description.textContent = str ? str.toString() : "";
     }
     itemInfo.append(title, description);
     return itemInfo;
@@ -190,6 +193,9 @@ class ProductDetail {
     btn.textContent = "Buy now";
     btn.addEventListener("click", () => {
       router?.navigate("cart");
+      if (this.product) {
+        this.updateCart.addProductCart(this.product);
+      }
     });
     return btn;
   }
