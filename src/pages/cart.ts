@@ -5,135 +5,6 @@ import { IProductInCart } from 'src/types';
 import { Promo } from '../components/promo-block';
 const modal = new ModalWindow();
 const promoCode = new Promo(['rs', 10, 'Rolling Scopes School '], ['epm', 10, 'EPAM Systems']);
-const itemsInCart = [
-  {
-    id: 1,
-    title: 'iPhone 9',
-    description: 'An apple mobile which is nothing like apple',
-    price: 549,
-    discount: 12.96,
-    rating: 4.69,
-    stock: 94,
-    brand: 'Apple',
-    category: 'smartphones',
-    thumbnail: 'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-    images: [
-      'https://i.dummyjson.com/data/products/1/1.jpg',
-      'https://i.dummyjson.com/data/products/1/2.jpg',
-      'https://i.dummyjson.com/data/products/1/3.jpg',
-      'https://i.dummyjson.com/data/products/1/4.jpg',
-      'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-    ],
-    quantityInCart: 1,
-  },
-  {
-    id: 2,
-    title: 'iPhone X',
-    description: 'SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...',
-    price: 899,
-    discount: 17.94,
-    rating: 4.44,
-    stock: 34,
-    brand: 'Apple',
-    category: 'smartphones',
-    thumbnail: 'https://i.dummyjson.com/data/products/2/thumbnail.jpg',
-    images: [
-      'https://i.dummyjson.com/data/products/2/1.jpg',
-      'https://i.dummyjson.com/data/products/2/2.jpg',
-      'https://i.dummyjson.com/data/products/2/3.jpg',
-      'https://i.dummyjson.com/data/products/2/thumbnail.jpg',
-    ],
-    quantityInCart: 1,
-  },
-  {
-    id: 3,
-    title: 'Universe 9',
-    description: "Samsung's new variant which goes beyond Galaxy to the Universe",
-    price: 1249,
-    discount: 15.46,
-    rating: 4.09,
-    stock: 36,
-    brand: 'Samsung',
-    category: 'smartphones',
-    thumbnail: 'https://i.dummyjson.com/data/products/3/thumbnail.jpg',
-    images: ['https://i.dummyjson.com/data/products/3/1.jpg'],
-    quantityInCart: 1,
-  },
-  {
-    id: 4,
-    title: 'F19',
-    description: 'OPPO F19 is officially announced on April 2021.',
-    price: 280,
-    discount: 17.91,
-    rating: 4.3,
-    stock: 123,
-    brand: 'OPPO',
-    category: 'smartphones',
-    thumbnail: 'https://i.dummyjson.com/data/products/4/thumbnail.jpg',
-    images: [
-      'https://i.dummyjson.com/data/products/4/1.jpg',
-      'https://i.dummyjson.com/data/products/4/2.jpg',
-      'https://i.dummyjson.com/data/products/4/3.jpg',
-      'https://i.dummyjson.com/data/products/4/4.jpg',
-      'https://i.dummyjson.com/data/products/4/thumbnail.jpg',
-    ],
-    quantityInCart: 1,
-  },
-  {
-    id: 5,
-    title: 'P30',
-    description: 'Huawei’s re-badged P30 Pro New Edition was officially unveiled yesterday in Germany and now the device has made its way to the UK.',
-    price: 499,
-    discount: 10.58,
-    rating: 4.09,
-    stock: 32,
-    brand: 'Huawei',
-    category: 'smartphones',
-    thumbnail: 'https://i.dummyjson.com/data/products/5/thumbnail.jpg',
-    images: ['https://i.dummyjson.com/data/products/5/1.jpg', 'https://i.dummyjson.com/data/products/5/2.jpg', 'https://i.dummyjson.com/data/products/5/3.jpg'],
-    quantityInCart: 1,
-  },
-  {
-    id: 7,
-    title: 'Galaxy Book',
-    description: 'Samsung Galaxy Book S (2020) Laptop With Intel Lakefield Chip, 8GB of RAM Launched',
-    price: 1499,
-    discount: 4.15,
-    rating: 4.25,
-    stock: 50,
-    brand: 'Samsung',
-    category: 'laptops',
-    thumbnail: 'https://i.dummyjson.com/data/products/7/thumbnail.jpg',
-    images: [
-      'https://i.dummyjson.com/data/products/7/1.jpg',
-      'https://i.dummyjson.com/data/products/7/2.jpg',
-      'https://i.dummyjson.com/data/products/7/3.jpg',
-      'https://i.dummyjson.com/data/products/7/thumbnail.jpg',
-    ],
-    quantityInCart: 1,
-  },
-  {
-    id: 8,
-    title: 'Laptop 4',
-    description: 'Style and speed. Stand out on HD video calls backed by Studio Mics. Capture ideas on the vibrant touchscreen.',
-    price: 1499,
-    discount: 10.23,
-    rating: 4.43,
-    stock: 68,
-    brand: 'Microsoft Surface',
-    category: 'laptops',
-    thumbnail: 'https://i.dummyjson.com/data/products/8/thumbnail.jpg',
-    images: [
-      'https://i.dummyjson.com/data/products/8/1.jpg',
-      'https://i.dummyjson.com/data/products/8/2.jpg',
-      'https://i.dummyjson.com/data/products/8/3.jpg',
-      'https://i.dummyjson.com/data/products/8/4.jpg',
-      'https://i.dummyjson.com/data/products/8/thumbnail.jpg',
-    ],
-    quantityInCart: 1,
-  },
-];
-localStorage.setItem('itemsInCart', JSON.stringify(itemsInCart));
 
 class Temp extends Template {
   page = this.getPage();
@@ -190,22 +61,23 @@ class Temp extends Template {
     const paginationArray = this.createArraysForPagination(itemsInCartObj);
     const itemsNum = document.querySelector('.prod-cont__items-num') as HTMLInputElement;
     const cardsWrapper = document.querySelector('.cards-wrapper') as HTMLElement;
-
-    if (paginationArray[page - 1]) {
+    if (paginationArray) {
       collectElements();
     }
 
     function collectElements() {
-      for (let i = 0; i < paginationArray[page - 1].length; i++) {
-        const cardCont = createCardCont(paginationArray[page - 1][i].id);
+      if (paginationArray[page - 1]) {
+        for (let i = 0; i < paginationArray[page - 1].length; i++) {
+          const cardCont = createCardCont(paginationArray[page - 1][i].id);
 
-        temp.createElement('item-num', cardCont, String(i + 1 + Number(itemsNum.value) * (temp.page - 1)));
+          temp.createElement('item-num', cardCont, String(i + 1 + Number(itemsNum.value) * (temp.page - 1)));
 
-        createDataCont(cardCont, paginationArray[page - 1][i].thumbnail);
+          createDataCont(cardCont, paginationArray[page - 1][i].thumbnail);
 
-        createInfoBlock(cardCont, paginationArray[page - 1][i].title, paginationArray[page - 1][i].description, paginationArray[page - 1][i].rating, paginationArray[page - 1][i].discount);
+          createInfoBlock(cardCont, paginationArray[page - 1][i].title, paginationArray[page - 1][i].description, paginationArray[page - 1][i].rating, paginationArray[page - 1][i].discount);
 
-        createControlBlock(cardCont, paginationArray[page - 1][i].price, paginationArray[page - 1][i].id, paginationArray[page - 1][i].quantityInCart, paginationArray[page - 1][i].stock);
+          createControlBlock(cardCont, paginationArray[page - 1][i].price, paginationArray[page - 1][i].id, paginationArray[page - 1][i].quantityInCart, paginationArray[page - 1][i].stock);
+        }
       }
 
       function createCardCont(arg: number): HTMLElement {
@@ -275,14 +147,17 @@ class Temp extends Template {
 
     buyBtn.addEventListener('click', () => {
       modal.overlay.classList.remove('invisible');
-      console.log(modal.overlay);
-
       modal.formWrapper.classList.remove('invisible');
     });
-    modal.overlay.addEventListener('click', () => {
-      modal.overlay.classList.add('invisible');
-      modal.formWrapper.classList.add('invisible');
-    });
+    modal.formWrapper.addEventListener('click', getClickedEl);
+
+    function getClickedEl(e: Event): void {
+      const target = e.target as HTMLElement;
+      if (target.className === 'form-wrapper') {
+        modal.overlay.classList.add('invisible');
+        modal.formWrapper.classList.add('invisible');
+      }
+    }
 
     sumInfoCont.append(buyBtn);
     buyBtn.innerText = textObj.buyBtn;
@@ -382,7 +257,9 @@ class Temp extends Template {
                 cardsWrapper.innerHTML = '';
                 const paginationArray = temp.createArraysForPagination(itemsInCart);
                 if (!paginationArray[temp.page - 1]) {
-                  temp.page--;
+                  if (temp.page > 1) {
+                    temp.page--;
+                  }
                   pageEl.innerText = String(temp.page);
                 }
                 temp.createItemBlock(itemsInCart, temp.page);
@@ -576,6 +453,7 @@ class CartPage {
       temp.changePageNum(itemsInCart);
       // temp.linkChange("items", itemsInCart);
       modal.createModalWindow();
+      modal.clickConfirmButton();
       promoCode.appendDelPromoItem();
     }
   }
