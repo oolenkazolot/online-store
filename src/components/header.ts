@@ -198,7 +198,7 @@ export class BottomHeader extends TopHeader {
     const sumArray: number[] = [];
     const qtArray: number[] = [];
     const resArr: number[] = [];
-    if (itemsInCart.length) {
+    if (itemsInCart && itemsInCart.length) {
       for (let i = 0; i < itemsInCart.length; i++) {
         sumArray.push(Number(itemsInCart[i].price));
         qtArray.push(Number(itemsInCart[i].quantityInCart));
