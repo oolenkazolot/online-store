@@ -14,6 +14,7 @@ class ModalWindow extends Template {
     this.formWrapper.className = "form-wrapper";
     document.body.append(this.formWrapper);
     this.formWrapper.classList.add("invisible");
+    this.formWrapper.innerHTML = "";
 
     const modalCont = document.createElement("form");
     modalCont.classList.add("modal-cont");
