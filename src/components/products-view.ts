@@ -1,11 +1,13 @@
-import { IProductsSort, IProductsList, IRouter } from "../types/index";
+import { IProductsSort, IProductsList, IRouter, IFilter } from "../types/index";
 import ProductsSort from "./products-sort";
 
 class ProductsView {
   private productsSort: IProductsSort;
   private productsList: IProductsList;
-  constructor(productsList: IProductsList) {
+  private filter: IFilter;
+  constructor(productsList: IProductsList, filter: IFilter) {
     this.productsList = productsList;
+    this.filter = filter;
     this.productsSort = new ProductsSort(
       this.productsList.draw.bind(this.productsList)
     );
@@ -17,7 +19,8 @@ class ProductsView {
     title.classList.add("products__title");
     title.textContent = "Products";
     const productsSortBlock: HTMLElement = this.productsSort.createProductsSort(
-      router
+      router,
+      this.filter
     );
     const productsListBlock: HTMLElement = this.productsList.createProductsList(
       router

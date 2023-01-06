@@ -1,15 +1,22 @@
 import Products from "../utils/products";
-import { IProducts, IProduct } from "../types/index";
+import UpdateCart from "../components/update-cart";
+
+import { IProducts, IProduct, IUpdateCart, IRouter } from "../types/index";
 
 class ProductDetail {
-  products: IProducts;
-  product?: IProduct;
+  private products: IProducts;
+  private product?: IProduct;
+  private updateCart: IUpdateCart;
 
   constructor() {
     this.products = new Products();
+    this.updateCart = new UpdateCart();
   }
 
-  public createProductDetail(id: string | undefined): HTMLElement {
+  public createProductDetail(
+    id: string | undefined,
+    router?: IRouter
+  ): HTMLElement {
     this.product = this.products.getProduct(id);
     const productDetail: HTMLElement = document.createElement("section");
     productDetail.classList.add("product-detail");
@@ -18,17 +25,17 @@ class ProductDetail {
     if (this.product) {
       title.textContent = this.product?.title;
     }
-    const productData: HTMLElement = this.createProductData();
+    const productData: HTMLElement = this.createProductData(router);
     productDetail.append(title, productData);
     return productDetail;
   }
 
-  private createProductData(): HTMLElement {
+  private createProductData(router?: IRouter): HTMLElement {
     const productData: HTMLElement = document.createElement("div");
     productData.classList.add("product-data");
     const photosBlock: HTMLElement = this.createPhotosBlock();
     const infoBlock: HTMLElement = this.createInfoBlock();
-    const cartBlock: HTMLElement = this.createCartBlock();
+    const cartBlock: HTMLElement = this.createCartBlock(router);
     productData.append(photosBlock, infoBlock, cartBlock);
     return productData;
   }
@@ -113,13 +120,16 @@ class ProductDetail {
     const description: HTMLElement = document.createElement("p");
     description.classList.add("product-data__description");
     if (this.product) {
-      description.textContent = this.product[item as keyof IProduct].toString();
+      const str: string | number | string[] | undefined = this.product[
+        item as keyof IProduct
+      ];
+      description.textContent = str ? str.toString() : "";
     }
     itemInfo.append(title, description);
     return itemInfo;
   }
 
-  private createCartBlock(): HTMLElement {
+  private createCartBlock(router?: IRouter): HTMLElement {
     const blockCart: HTMLElement = document.createElement("div");
     blockCart.classList.add("product-data__cart");
     const price: HTMLElement = document.createElement("span");
@@ -127,24 +137,67 @@ class ProductDetail {
     if (this.product) {
       price.textContent = "€" + this.product.price.toString();
     }
-    const buttonsCart = this.createButtonsCart();
-    blockCart.append(price, buttonsCart);
+    const btnWrap = this.createBtnWrap(router);
+    blockCart.append(price, btnWrap);
     return blockCart;
   }
 
-  private createButtonsCart(): HTMLElement {
+  private createBtnWrap(router?: IRouter): HTMLElement {
     const btnWrap: HTMLElement = document.createElement("div");
     btnWrap.classList.add("product-data__btn-wrap");
-    const btnOne: HTMLElement = document.createElement("button");
-    btnOne.classList.add("product-data__btn");
-    btnOne.classList.add("btn");
-    btnOne.textContent = "Drop from cart";
-    const btnTwo: HTMLElement = document.createElement("button");
-    btnTwo.classList.add("product-data__btn");
-    btnTwo.classList.add("btn");
-    btnTwo.textContent = "Buy now";
-    btnWrap.append(btnOne, btnTwo);
+    const btnUpdateCart = this.createBtnUpdateCart();
+    const btnBuyNow = this.createBtnBuyNow(router);
+    btnWrap.append(btnUpdateCart, btnBuyNow);
     return btnWrap;
+  }
+
+  private createBtnUpdateCart(): HTMLElement {
+    const btn: HTMLElement = document.createElement("button");
+    btn.classList.add("product-data__update-cart");
+    btn.classList.add("btn");
+    btn.textContent = "Drop from cart";
+    const productInCart = this.product
+      ? this.updateCart.checkProductInCart(this.product)
+      : "";
+    if (productInCart) {
+      btn.textContent = "Drop from cart";
+    } else {
+      btn.textContent = "Add to cart";
+    }
+    this.addHandlerBtn(btn);
+    return btn;
+  }
+
+  private addHandlerBtn(btn: HTMLElement): void {
+    btn.addEventListener("click", () => {
+      if (!this.product) {
+        return;
+      }
+      const productsInCart = this.product
+        ? this.updateCart.checkProductInCart(this.product)
+        : "";
+      if (productsInCart) {
+        btn.textContent = "Add to cart";
+        this.updateCart.removeProductCart(this.product);
+      } else {
+        btn.textContent = "Drop from cart";
+        this.updateCart.addProductCart(this.product);
+      }
+    });
+  }
+
+  private createBtnBuyNow(router?: IRouter): HTMLElement {
+    const btn: HTMLElement = document.createElement("button");
+    btn.classList.add("product-data__buy-now");
+    btn.classList.add("btn");
+    btn.textContent = "Buy now";
+    btn.addEventListener("click", () => {
+      router?.navigate("cart");
+      if (this.product) {
+        this.updateCart.addProductCart(this.product);
+      }
+    });
+    return btn;
   }
 
   private showSlidesImg(src: string): void {
