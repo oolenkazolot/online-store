@@ -678,6 +678,7 @@ class CartPage {
       temp.changePageNum(itemsInCart);
       // temp.linkChange("items", itemsInCart);
       modal.createModalWindow();
+      modal.clickConfirmButton();
       promoCode.appendDelPromoItem();
     }
   }
