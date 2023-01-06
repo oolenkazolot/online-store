@@ -22,7 +22,7 @@ class MainPage {
       this.productsList.draw.bind(this.productsList, this.router)
     );
     this.productsView = new ProductsView(this.productsList, this.filter);
-    mainElement.textContent = "";
+    // mainElement.textContent = "";
     const mainPageElement: HTMLElement = document.createElement("div");
     mainPageElement.classList.add("main-page");
     const filterElement: HTMLElement = this.filter.createFilter(this.router);

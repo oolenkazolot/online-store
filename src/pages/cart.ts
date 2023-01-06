@@ -338,6 +338,8 @@ class Temp extends Template {
 
     buyBtn.addEventListener("click", () => {
       modal.overlay.classList.remove("invisible");
+      console.log(modal.overlay);
+
       modal.formWrapper.classList.remove("invisible");
     });
     modal.overlay.addEventListener("click", () => {
