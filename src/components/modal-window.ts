@@ -74,7 +74,8 @@ class ModalWindow extends Template {
       cardNumberCont,
       "Card number"
     );
-    cardInput.maxLength = 16;
+  
+    cardInput.type = "number";
 
     const validCont = this.createElement(
       "validity-details-cont",
@@ -221,7 +222,10 @@ class ModalWindow extends Template {
         paymSyst.classList.add("creditCard")}
      
     }
-    cardInput.addEventListener("change", () => {
+    cardInput.addEventListener("input", () => {
+      if (cardInput.value.length > 16) {
+        cardInput.value = cardInput.value.slice(0, 16);
+      }
       changeCartIcon();
       cardValidity = /^[\d]{16}$/g.test(cardInput.value);
       if (cardValidity === false) {
@@ -241,6 +245,9 @@ class ModalWindow extends Template {
       "card-date-error"
     ) as HTMLElement;
     let cardDateValidity = false;
+    cardDateInput.addEventListener("keypress", function(){
+      this.value = this.value.replace(/[^\d]/g, "")});
+
     cardDateInput.addEventListener("change", () => {
       cardDateInput.value = cardDateInput.value.replace(
         /^([\d]{2})\/?([0-9]+)/,
