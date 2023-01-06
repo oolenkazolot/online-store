@@ -379,7 +379,7 @@ class Temp extends Template {
     const sumArray: number[] = [];
     const qtArray: number[] = [];
     const resArr: number[] = [];
-    if (itemsInCart.length > 0) {
+    if (itemsInCart && itemsInCart.length > 0) {
       for (let i = 0; i < itemsInCart.length; i++) {
         sumArray.push(Number(itemsInCart[i].price));
         qtArray.push(Number(itemsInCart[i].quantityInCart));
@@ -389,7 +389,7 @@ class Temp extends Template {
       localStorage.setItem("itemsArray", JSON.stringify(resArr));
       return resArr;
     } else {
-      localStorage.setItem("itemsArray", JSON.stringify(resArr));
+      localStorage.setItem("itemsArray", JSON.stringify([0, 0]));
       return [0, 0];
     }
   }

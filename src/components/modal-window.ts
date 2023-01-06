@@ -245,7 +245,7 @@ class ModalWindow extends Template {
       "card-date-error"
     ) as HTMLElement;
     let cardDateValidity = false;
-    cardDateInput.addEventListener("keypress", function(){
+    cardDateInput.addEventListener("keyup", function(){
       this.value = this.value.replace(/[^\d]/g, "")});
 
     cardDateInput.addEventListener("change", () => {
