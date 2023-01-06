@@ -1,11 +1,4 @@
-import {
-  IProducts,
-  IProduct,
-  IRouter,
-  IUpdateCart,
-  ITopHeader,
-  IBottomHeader,
-} from "../types/index";
+import { IProducts, IProduct, IRouter, IUpdateCart } from "../types/index";
 import Products from "../utils/products";
 import UpdateCart from "../components/update-cart";
 
@@ -42,46 +35,74 @@ class ProductsList {
   }
 
   private createProductsElement(router?: IRouter): HTMLElement[] {
-    let products: IProduct[] = this.products.getProductsFilters();
-    products = this.products.getProductsFiltersSearch(products);
-    products = this.products.getProductsFiltersSort(products);
-
-    const amountProducts = document.querySelector(".amount");
-    if (amountProducts) {
-      amountProducts.textContent = `Found: ${products.length}`;
-    }
+    const products: IProduct[] = this.createFiltersProducts();
+    this.createAmountProducts(products);
 
     if (!products.length) {
-      const productElement: HTMLElement = document.createElement("div");
-      productElement.classList.add("products__not-found");
-      productElement.textContent = "No products found 😏";
-      this.productsList.classList.add("products__list--block");
-      return [productElement];
+      return this.createElementNotFound();
     }
 
     this.productsList.classList.remove("products__list--block");
     const productsElements = products.map(
       (item: IProduct, index: number): HTMLElement => {
-        const productElement: HTMLElement = document.createElement("div");
-        productElement.classList.add("product");
-        productElement.setAttribute("data-id", index + "");
-        const productName: HTMLElement = this.createProductName(item);
-        const productImg: HTMLElement = this.createProductImg(item);
-        const productInfo: HTMLElement = this.createProductInfo(item);
-        const productBtnWrap: HTMLElement = this.createProductBtnWrap(
+        const productElement: HTMLElement = this.createProductsElements(
           item,
+          index,
           router
-        );
-        productElement.append(
-          productName,
-          productImg,
-          productInfo,
-          productBtnWrap
         );
         return productElement;
       }
     );
     return productsElements;
+  }
+
+  private createElementNotFound(): HTMLElement[] {
+    const productElement: HTMLElement = document.createElement("div");
+    productElement.classList.add("products__not-found");
+    productElement.textContent = "No products found 😏";
+    this.productsList.classList.add("products__list--block");
+    return [productElement];
+  }
+
+  private createFiltersProducts(): IProduct[] {
+    let products: IProduct[] = this.products.getProductsFilters();
+    products = this.products.getProductsFiltersSearch(products);
+    products = this.products.getProductsFiltersSort(products);
+    return products;
+  }
+
+  private createAmountProducts(products: IProduct[]): void {
+    const amountProducts: HTMLElement | null = document.querySelector(
+      ".amount"
+    );
+    if (amountProducts) {
+      amountProducts.textContent = `Found: ${products.length}`;
+    }
+  }
+
+  private createProductsElements(
+    item: IProduct,
+    index: number,
+    router?: IRouter
+  ): HTMLElement {
+    const productElement: HTMLElement = document.createElement("div");
+    productElement.classList.add("product");
+    if (this.updateCart.checkProductInCart(item)) {
+      productElement.classList.add("product--in-cart");
+    } else {
+      productElement.classList.remove("product--in-cart");
+    }
+    productElement.setAttribute("data-id", index + "");
+    const productName: HTMLElement = this.createProductName(item);
+    const productImg: HTMLElement = this.createProductImg(item);
+    const productInfo: HTMLElement = this.createProductInfo(item);
+    const productBtnWrap: HTMLElement = this.createProductBtnWrap(
+      item,
+      productElement,
+      router
+    );
+    productElement.append(productName, productImg, productInfo, productBtnWrap);
+    return productElement;
   }
 
   private createProductName(item: IProduct): HTMLElement {
@@ -123,14 +144,18 @@ class ProductsList {
     return productInfo;
   }
 
-  private createProductBtnWrap(item: IProduct, router?: IRouter): HTMLElement {
+  private createProductBtnWrap(
+    item: IProduct,
+    productElement: HTMLElement,
+    router?: IRouter
+  ): HTMLElement {
     const productBtnWrap: HTMLElement = document.createElement("div");
     productBtnWrap.classList.add("product__btn-wrap");
     const productPrice: HTMLElement = document.createElement("h3");
     productPrice.classList.add("product__price");
     productPrice.textContent = "€" + item.price;
     const btnDetails = this.createBtnDetails(item.id, router);
-    const btnCart = this.createBtnCart(item, router);
+    const btnCart = this.createBtnCart(item, productElement, router);
     productBtnWrap.append(productPrice, btnDetails, btnCart);
     return productBtnWrap;
   }
@@ -149,15 +174,22 @@ class ProductsList {
     return btnDetails;
   }
 
-  private createBtnCart(item: IProduct, router?: IRouter): HTMLElement {
+  private createBtnCart(
+    item: IProduct,
+    productElement: HTMLElement,
+    router?: IRouter
+  ): HTMLElement {
     const btnCart: HTMLElement = this.createBtn(item);
+
     btnCart.addEventListener("click", () => {
       const productsInCart = this.updateCart.checkProductInCart(item);
       if (productsInCart) {
         btnCart.classList.remove("product__btn-cart--active");
+        productElement.classList.remove("product--in-cart");
         this.updateCart.removeProductCart(item);
       } else {
         btnCart.classList.add("product__btn-cart--active");
+        productElement.classList.add("product--in-cart");
         this.updateCart.addProductCart(item);
       }
     });

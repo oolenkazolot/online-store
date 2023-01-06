@@ -75,9 +75,15 @@ class ProductsSort {
     const optionElements: HTMLElement[] = options.map((item) => {
       return this.createSortOption(item);
     });
-
     selectSorting.append(...optionElements);
+    this.addHandlerInput(selectSorting, router);
+    return selectSorting;
+  }
 
+  private addHandlerInput(
+    selectSorting: HTMLSelectElement,
+    router?: IRouter
+  ): void {
     selectSorting.addEventListener("change", () => {
       if (selectSorting.value === "sort-title") {
         this.removeQueryParameters("sort", router);
@@ -85,25 +91,19 @@ class ProductsSort {
         this.addQueryParameters(selectSorting.value, "sort", router);
       }
     });
-    return selectSorting;
   }
 
   private createSortOption(item: IProductsSortOptionals): HTMLElement {
-    const url = new URL(window.location.href);
-    const urlParameterSort: string | null = url.searchParams.get("sort");
-
+    const urlParameterSort: string | null = this.getUrlParam("sort");
     const option: HTMLElement = document.createElement("option");
     if (item.class) {
       option.setAttribute("class", item.class);
     }
-
     option.setAttribute("value", item.value);
     if (urlParameterSort && item.value === urlParameterSort) {
       option.setAttribute("selected", "true");
     }
-
     option.textContent = item.content;
-
     return option;
   }
 
@@ -136,6 +136,15 @@ class ProductsSort {
     if (urlParameterSearch) {
       input.setAttribute("value", urlParameterSearch);
     }
+    this.addHandlerInputSearch(input, router, filter);
+    return input;
+  }
+
+  private addHandlerInputSearch(
+    input: HTMLInputElement,
+    router?: IRouter,
+    filter?: IFilter
+  ): void {
     input.addEventListener("input", () => {
       if (input.value) {
         this.addQueryParameters(input.value, "search", router);
@@ -144,7 +153,6 @@ class ProductsSort {
       }
       filter?.updateFilter();
     });
-    return input;
   }
 
   private createViewModeBlock(router?: IRouter): HTMLElement {
@@ -165,10 +173,42 @@ class ProductsSort {
     prefix: string,
     router?: IRouter
   ): HTMLElement {
+    const urlParameterViewMode: string | null = this.getUrlParam("view-mode");
+    const btn: HTMLElement = this.createBtn(prefix, urlParameterViewMode);
+    const icon: HTMLElement = document.createElement("i");
+    icon.classList.add(item);
+    btn.append(icon);
+    this.addHandlerBtn(btn, prefix, router);
+    return btn;
+  }
+
+  private addHandlerBtn(btn: HTMLElement, prefix: string, router?: IRouter) {
+    btn.addEventListener("click", () => {
+      this.addQueryParametersViewMode(prefix, "view-mode", router);
+      const productList: HTMLElement | null = document.querySelector(
+        ".products__list"
+      );
+      if (prefix === "small") {
+        productList?.classList.add("products__list--small");
+      } else {
+        productList?.classList.remove("products__list--small");
+      }
+      const elem: HTMLElement | null = document.querySelector(".active-mode");
+      elem?.classList.remove("active-mode");
+      btn.classList.add("active-mode");
+    });
+  }
+
+  private getUrlParam(nameParam: string): string | null {
     const url = new URL(window.location.href);
-    const urlParameterViewMode: string | null = url.searchParams.get(
-      "view-mode"
-    );
+    const urlParameter: string | null = url.searchParams.get("view-mode");
+    return urlParameter;
+  }
+
+  private createBtn(
+    prefix: string,
+    urlParameterViewMode: string | null
+  ): HTMLElement {
     const btn: HTMLElement = document.createElement("button");
     btn.classList.add(`view-mode__btn-${prefix}`);
     if (prefix === "big" && !urlParameterViewMode) {
@@ -181,24 +221,6 @@ class ProductsSort {
       btn.classList.add("active-mode");
     }
 
-    const icon: HTMLElement = document.createElement("i");
-    icon.classList.add(item);
-    btn.append(icon);
-    btn.addEventListener("click", () => {
-      this.addQueryParametersViewMode(prefix, "view-mode", router);
-      const productList: HTMLElement | null = document.querySelector(
-        ".products__list"
-      );
-      if (prefix === "small") {
-        productList?.classList.add("products__list--small");
-      } else {
-        productList?.classList.remove("products__list--small");
-      }
-
-      const elem: HTMLElement | null = document.querySelector(".active-mode");
-      elem?.classList.remove("active-mode");
-      btn.classList.add("active-mode");
-    });
     return btn;
   }
 
