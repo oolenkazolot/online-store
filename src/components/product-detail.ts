@@ -191,13 +191,33 @@ class ProductDetail {
     btn.classList.add("product-data__buy-now");
     btn.classList.add("btn");
     btn.textContent = "Buy now";
+    this.addHandlerBtnBuyNow(btn, router);
+    return btn;
+  }
+
+  private addHandlerBtnBuyNow(btn: HTMLElement, router?: IRouter): void {
     btn.addEventListener("click", () => {
       router?.navigate("cart");
+
+      setTimeout(() => {
+        this.showModal();
+      }, 0);
+
       if (this.product) {
         this.updateCart.addProductCart(this.product);
       }
     });
-    return btn;
+  }
+
+  private showModal(): void {
+    const overlayModal: HTMLElement | null = document.querySelector(".overlay");
+    const wrapperModal: HTMLElement | null = document.querySelector(
+      ".form-wrapper"
+    );
+    if (overlayModal && wrapperModal) {
+      overlayModal.classList.remove("invisible");
+      wrapperModal.classList.remove("invisible");
+    }
   }
 
   private showSlidesImg(src: string): void {

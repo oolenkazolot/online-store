@@ -12,6 +12,7 @@
 @import './error.scss';
 @import './product-page.scss';
 @import './product-detail.scss';
+@import './footer.scss';
 
 * {
   box-sizing: border-box;
@@ -60,6 +61,15 @@
 body {
   font-family: 'Inter', sans-serif;
   font-size: 14px;
+}
+
+a {
+  font-family: inherit;
+  text-decoration: none;
+}
+
+li {
+  list-style-type: none;
 }
 
 .btn {
