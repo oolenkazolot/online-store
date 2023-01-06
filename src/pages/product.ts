@@ -28,7 +28,8 @@ class ProductPage {
       this.router
     );
     const productDetail: HTMLElement = this.productDetail.createProductDetail(
-      id
+      id,
+      this.router
     );
     productPageContainer.append(linksNavigation, productDetail);
     productPageElement.append(productPageContainer);

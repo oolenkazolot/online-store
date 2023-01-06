@@ -21,7 +21,7 @@ class MainPage {
     this.filter = new Filter(
       this.productsList.draw.bind(this.productsList, this.router)
     );
-    this.productsView = new ProductsView(this.productsList);
+    this.productsView = new ProductsView(this.productsList, this.filter);
     mainElement.textContent = "";
     const mainPageElement: HTMLElement = document.createElement("div");
     mainPageElement.classList.add("main-page");

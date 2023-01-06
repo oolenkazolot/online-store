@@ -29,6 +29,7 @@ export interface IProduct {
   category: string;
   thumbnail: string;
   images: string[];
+  quantityInCart?: number;
 }
 
 export interface IProducts {
@@ -42,13 +43,14 @@ export interface IProducts {
   getMinMaxStockUrlParameters: () => string[];
   getMinMaxPrice: () => string[];
   getMinMaxStock: () => string[];
-  getProductsFiltersSearch: () => IProduct[];
-  getProductsFiltersSort: () => IProduct[];
+  getProductsFiltersSearch: (products: IProduct[]) => IProduct[];
+  getProductsFiltersSort: (products: IProduct[]) => IProduct[];
 }
 
 export interface IFilter {
   createFilter: (router?: IRouter) => HTMLElement;
   drawFilterBlock: () => void;
+  updateFilter: () => void;
 }
 
 export interface IFilterRange {
@@ -69,7 +71,7 @@ export interface IProductsSortOptionals {
 }
 
 export interface IProductsSort {
-  createProductsSort: (router?: IRouter) => HTMLElement;
+  createProductsSort: (router?: IRouter, filter?: IFilter) => HTMLElement;
 }
 
 export interface IProductsView {
@@ -98,7 +100,10 @@ export interface ILinkNavigation {
 }
 
 export interface IProductDetail {
-  createProductDetail: (id: string | undefined) => HTMLElement;
+  createProductDetail: (
+    id: string | undefined,
+    router?: IRouter
+  ) => HTMLElement;
 }
 
 export interface IProductInCart {
@@ -120,4 +125,35 @@ export interface IProductInCart {
 export interface IProductsAmount {
   all: number;
   filter: number;
+}
+
+export interface IUpdateCart {
+  checkProductInCart: (item: IProduct) => IProduct | undefined;
+  addProductCart: (item: IProduct) => void;
+  removeProductCart: (item: IProduct) => void;
+}
+
+export interface ITopHeader {
+  header: HTMLElement;
+  createElement: (
+    element: string,
+    myClass: string,
+    parentElement?: HTMLElement
+  ) => HTMLElement;
+  createContainers: (
+    contClass: string,
+    firstElClass: string,
+    secElement: string,
+    secElClass: string,
+    secElContent: string,
+    firstElContent?: string
+  ) => HTMLElement;
+  drawElements: () => void;
+}
+
+export interface IBottomHeader {
+  router?: IRouter;
+  drawElements: () => void;
+  createLinkOnMainPage: () => void;
+  createLinkOnCartPage: () => void;
 }

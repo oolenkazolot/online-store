@@ -46,7 +46,8 @@ class Products {
     );
 
     const productsFilters = this.getProductsFilters();
-    productsFilters.forEach((element) => {
+    const productsSearch = this.getProductsFiltersSearch(productsFilters);
+    productsSearch.forEach((element) => {
       categories[element.category].filter += 1;
     });
 
@@ -73,7 +74,8 @@ class Products {
     );
 
     const productsFilters = this.getProductsFilters();
-    productsFilters.forEach((element) => {
+    const productsSearch = this.getProductsFiltersSearch(productsFilters);
+    productsSearch.forEach((element) => {
       brands[element.brand].filter += 1;
     });
 
@@ -190,16 +192,14 @@ class Products {
     return products;
   }
 
-  public getProductsFiltersSort(): IProduct[] {
-    const url = new URL(window.location.href);
-    const urlParameterSearch: string | null = url.searchParams.get("search");
+  public getProductsFiltersSort(products: IProduct[]): IProduct[] {
+    const url: URL = new URL(window.location.href);
     const urlParameterSort: string | null = url.searchParams.get("sort");
+    if (!urlParameterSort) {
+      return products;
+    }
 
-    const productsFilters: IProduct[] | undefined = urlParameterSearch
-      ? this.getProductsFiltersSearch()
-      : this.getProductsFilters();
-
-    const products: IProduct[] = productsFilters.sort(
+    const productsSort: IProduct[] = products.sort(
       (a: IProduct, b: IProduct) => {
         if (urlParameterSort && urlParameterSort == "price-ASC") {
           return a.price - b.price;
@@ -229,19 +229,19 @@ class Products {
       }
     );
 
-    return products;
+    return productsSort;
   }
 
-  public getProductsFiltersSearch(): IProduct[] {
+  public getProductsFiltersSearch(products: IProduct[]): IProduct[] {
     const url = new URL(window.location.href);
     let urlParameterSearch: string | null = url.searchParams.get("search");
-    if (urlParameterSearch) {
-      urlParameterSearch = urlParameterSearch.toLowerCase();
+
+    if (!urlParameterSearch) {
+      return products;
     }
+    urlParameterSearch = urlParameterSearch.toLowerCase();
 
-    const productsFilters: IProduct[] | undefined = this.getProductsFilters();
-
-    const products: IProduct[] = productsFilters.filter((element) => {
+    const productsSearch: IProduct[] = products.filter((element) => {
       if (
         (urlParameterSearch &&
           element.brand.toLowerCase().indexOf(urlParameterSearch) !== -1) ||
@@ -269,7 +269,7 @@ class Products {
       return false;
     });
 
-    return products;
+    return productsSearch;
   }
 
   private getProductFilterCategoryBrands(): IProduct[] {
