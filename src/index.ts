@@ -3,6 +3,7 @@ import Router from "./utils/Routing";
 import MainPage from "./pages/main";
 import ErrorPage from "./pages/error";
 import CartPage from "./pages/cart";
+
 import {
   IMainPage,
   IErrorPage,
@@ -12,6 +13,7 @@ import {
 } from "./types/index";
 import { TopHeader, BottomHeader } from "./components/header";
 import ProductPage from "./pages/product";
+import Footer from "./components/footer";
 
 const mainPage: IMainPage = new MainPage();
 const errorPage: IErrorPage = new ErrorPage();
@@ -22,6 +24,9 @@ const headerTop = new TopHeader();
 headerTop.drawElements();
 
 const headerBottom = new BottomHeader();
+
+const footer = new Footer();
+footer.drawFooter();
 // headerBottom.drawElements();
 
 //router start

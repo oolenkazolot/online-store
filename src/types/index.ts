@@ -157,3 +157,7 @@ export interface IBottomHeader {
   createLinkOnMainPage: () => void;
   createLinkOnCartPage: () => void;
 }
+
+export interface IFooter {
+  drawFooter: () => void;
+}
