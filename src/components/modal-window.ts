@@ -28,21 +28,21 @@ class ModalWindow extends Template {
       modalCont
     );
 
-    const title1 = this.createElement("title1", persInfoCont, textObj.title1);
+    this.createElement("title1", persInfoCont, textObj.title1);
     const nameCont = this.createElement("form-item", persInfoCont);
     const numberCont = this.createElement("form-item", persInfoCont);
     const addrCont = this.createElement("form-item", persInfoCont);
     const emailCont = this.createElement("form-item", persInfoCont);
 
-    const title2 = this.createElement("title2", creditCardCont, textObj.title2);
+    this.createElement("title2", creditCardCont, textObj.title2);
     const cardData = this.createElement("card-data", creditCardCont);
 
-    const nameInput = this.createInput("name-input", nameCont, "Name");
+    this.createInput("name-input", nameCont, "Name");
     const nameError = this.createElement("pd-err", nameCont, textObj.nameErr);
     nameError.id = "name-error";
     nameError.classList.add("hidden");
 
-    const phoneInput = this.createInput(
+    this.createInput(
       "phone-input",
       numberCont,
       "Phone number"
@@ -51,7 +51,7 @@ class ModalWindow extends Template {
     phoneErr.classList.add("hidden");
     phoneErr.id = "phone-error";
 
-    const addressInput = this.createInput(
+    this.createInput(
       "address-input",
       addrCont,
       "Delivery address"
@@ -60,7 +60,7 @@ class ModalWindow extends Template {
     addressErr.classList.add("hidden");
     addressErr.id = "address-error";
 
-    const emailInput = this.createInput("email-input", emailCont, "E-mail");
+    this.createInput("email-input", emailCont, "E-mail");
     const emailErr = this.createElement("pd-err", emailCont, textObj.emailErr);
     emailErr.classList.add("hidden");
     emailErr.id = "email-error";
@@ -82,11 +82,11 @@ class ModalWindow extends Template {
     );
     const CVVCont = this.createElement("validity-details-cont", otherDataCont);
 
-    const valid = this.createElement("valid", validCont, textObj.valid);
+    this.createElement("valid", validCont, textObj.valid);
     const validDate = this.createInput("valid-date", validCont, "Valid thru");
     validDate.maxLength = 4;
 
-    const CVV = this.createElement("CVV", CVVCont, textObj.CVV);
+    this.createElement("CVV", CVVCont, textObj.CVV);
     const CVVNumb = this.createInput("CVV-numb", CVVCont, "Code");
     CVVNumb.maxLength = 3;
 
@@ -216,9 +216,9 @@ class ModalWindow extends Template {
       else if (cardInput.value[0] === "6") {
         paymSyst.className = "payment-syst";
         paymSyst.classList.add("unionPay");
-      } else { console.log(cardInput.value[0], "here")
+      } else {
         paymSyst.className = "payment-syst";
-      paymSyst.classList.add("creditCard")}
+        paymSyst.classList.add("creditCard")}
      
     }
     cardInput.addEventListener("change", () => {
@@ -243,7 +243,7 @@ class ModalWindow extends Template {
     let cardDateValidity = false;
     cardDateInput.addEventListener("change", () => {
       cardDateInput.value = cardDateInput.value.replace(
-        /^([\d]{2})\/?(.+)/,
+        /^([\d]{2})\/?([0-9]+)/,
         "$1/$2"
       );
       cardDateValidity = /^(0[1-9]|1[0-2])\/\d{2}$/g.test(cardDateInput.value);
