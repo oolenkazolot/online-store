@@ -1,4 +1,5 @@
 import { IRouter } from "src/types";
+import { IProductInCart } from "src/types";
 
 export class TopHeader {
   public header = document.querySelector("header") as HTMLElement;
@@ -88,6 +89,12 @@ export class TopHeader {
 export class BottomHeader extends TopHeader {
   public router?: IRouter;
   public drawElements(): void {
+    const itemsInCart: IProductInCart[] | [] = JSON.parse(
+      String(localStorage.getItem("itemsInCart"))
+    );
+
+    const itemsArray: number[] = this.getTotalSumAndQt(itemsInCart);
+
     const headerBottom = super.createElement(
       "div",
       "header-bottom",
@@ -184,6 +191,25 @@ export class BottomHeader extends TopHeader {
     }
     if (itemsInCart) {
       a.append(itemsInCart);
+    }
+  }
+
+  public getTotalSumAndQt(itemsInCart: IProductInCart[] | []): number[] {
+    const sumArray: number[] = [];
+    const qtArray: number[] = [];
+    const resArr: number[] = [];
+    if (itemsInCart.length) {
+      for (let i = 0; i < itemsInCart.length; i++) {
+        sumArray.push(Number(itemsInCart[i].price));
+        qtArray.push(Number(itemsInCart[i].quantityInCart));
+      }
+      resArr.push(sumArray.reduce((acc, value) => acc + value));
+      resArr.push(qtArray.reduce((acc, value) => acc + value));
+      localStorage.setItem("itemsArray", JSON.stringify(resArr));
+      return resArr;
+    } else {
+      localStorage.setItem("itemsArray", JSON.stringify([0, 0]));
+      return [0, 0];
     }
   }
 }

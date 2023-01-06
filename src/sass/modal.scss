@@ -21,7 +21,6 @@
   justify-content: center;
   align-items: center;
   z-index: 10;
-  transition: $transition;
 }
 
 .modal-cont {
@@ -120,9 +119,29 @@
 .payment-syst {
   width: 50px;
   height: 40px;
-  background-image: url(../assets/cardsIcons/creditCard.png);
   background-size: cover;
   background-position: center;
+}
+
+.creditCard {
+   background-image: url(../assets/cardsIcons/creditCard.png);
+}
+
+.amex {
+  background-image: url(../assets/cardsIcons/amex.svg);
+}
+
+.visa {
+  background-image: url(../assets/cardsIcons/visa.svg);
+}
+
+.mastercard {
+  background-image: url(../assets/cardsIcons/mastercard.svg);
+  background-size: 50px 40px;
+}
+
+.unionPay {
+  background-image: url(../assets/cardsIcons/unionPay.svg);
 }
 
 .card-input {
