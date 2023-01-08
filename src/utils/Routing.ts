@@ -4,6 +4,7 @@ class Router {
   private routes: IRout[];
   private root: string;
   private errorAction: () => void;
+  private isGo = true;
 
   constructor(routes: IRout[], errorAction: () => void) {
     this.routes = routes;
@@ -21,6 +22,11 @@ class Router {
   public init(): void {
     const path: string = window.location.pathname.replace(this.root, "");
     this.action(path);
+
+    window.addEventListener("popstate", (e) => {
+      //перерисовка при нажатии кнопок в браузере forward/back
+      this.action(window.location.pathname.replace("/", "")); //берет текущий путь, после того как сделал шаг назад
+    });
   }
 
   //метод для вызова колбека соответствущего роута
