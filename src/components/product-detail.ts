@@ -204,7 +204,12 @@ class ProductDetail {
       }, 0);
 
       if (this.product) {
-        this.updateCart.addProductCart(this.product);
+        const isInCart:
+          | IProduct
+          | undefined = this.updateCart.checkProductInCart(this.product);
+        if (!isInCart) {
+          this.updateCart.addProductCart(this.product);
+        }
       }
     });
   }
