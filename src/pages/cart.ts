@@ -527,11 +527,9 @@ class Temp extends Template {
         if (cardsWrapper) {
           for (let i = 0; i < vars.length; i++) {
             if (array[0] === vars[i].split("=")[0]) {
-              console.log(`items: ${vars[i].split("=")[1]}`);
               rowsInput.value = vars[i].split("=")[1];
             }
             if (array[1] === vars[i].split("=")[0]) {
-              console.log(`pages: ${vars[i].split("=")[1]}`);
               this.page = Number(vars[i].split("=")[1]);
             }
             if (
