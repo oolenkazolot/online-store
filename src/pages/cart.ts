@@ -379,7 +379,7 @@ class Temp extends Template {
     const sumArray: number[] = [];
     const qtArray: number[] = [];
     const resArr: number[] = [];
-    if (itemsInCart.length > 0) {
+    if (itemsInCart && itemsInCart.length > 0) {
       for (let i = 0; i < itemsInCart.length; i++) {
         sumArray.push(Number(itemsInCart[i].price));
         qtArray.push(Number(itemsInCart[i].quantityInCart));
@@ -389,7 +389,7 @@ class Temp extends Template {
       localStorage.setItem("itemsArray", JSON.stringify(resArr));
       return resArr;
     } else {
-      localStorage.setItem("itemsArray", JSON.stringify(resArr));
+      localStorage.setItem("itemsArray", JSON.stringify([0, 0]));
       return [0, 0];
     }
   }
@@ -464,25 +464,20 @@ class Temp extends Template {
         if (!paginationArray[temp.page - 1]) {
           temp.page = paginationArray.length;
           pageEl.innerHTML = String(temp.page);
+          temp.addQueryParameters("page", String(temp.page));
         }
         cardsWrapper.innerHTML = "";
         temp.createItemBlock(itemsInCart, temp.page);
         temp.addQueryParameters("items", rowsInput.value);
-        temp.addQueryParameters("page", String(temp.page));
       }
     }
   }
 
-  public addQueryParameters(
-    paramName: string,
-    items: string
-    // itemsInCart: IProductInCart[] | []
-  ): void {
+  public addQueryParameters(paramName: string, items: string): void {
     const url = new URL(window.location.href);
     const param: string = url.searchParams.get(paramName) || "";
     url.searchParams.set(paramName, items);
-    window.history.pushState(null, "", url);
-    // this.createItemBlock(itemsInCart, this.page);
+    window.history.pushState({ paramName: `${paramName}` }, "", url);
   }
 
   public emptyCart(): void {
@@ -507,28 +502,53 @@ class Temp extends Template {
     return discountWrapper;
   }
 
-  // public linkChange(
-  //   paramName: string,
-  //   itemsInCart: IProductInCart[] | []
-  // ): void {
-  //   window.addEventListener(
-  //     "popstate",
-  //     () => {
-  //       const url = new URL(window.location.href);
-  //       const param: string = url.searchParams.get(paramName) || "";
-  //       const rowsInput = document.querySelector(
-  //         ".prod-cont__items-num"
-  //       ) as HTMLInputElement;
-  //       const cardsWrapper = document.querySelector(
-  //         ".cards-wrapper"
-  //       ) as HTMLElement;
-  //       rowsInput.value = param;
-  //       cardsWrapper.innerHTML = "";
-  //       this.createItemBlock(itemsInCart, this.page);
-  //     },
-  //     false
-  //   );
-  // }
+  public linkChange(itemsInCart: IProductInCart[] | []): void {
+    window.addEventListener("popstate", (e) => {
+      const query = window.location.search.substring(1);
+      const vars = query.split("&");
+      const url = new URL(window.location.href);
+      const rowsInput = document.querySelector(
+        ".prod-cont__items-num"
+      ) as HTMLInputElement;
+      const cardsWrapper = document.querySelector(
+        ".cards-wrapper"
+      ) as HTMLElement;
+      const pageEl = document.querySelector(".count") as HTMLElement;
+      if (e.state !== null) {
+        if (e.state.paramName === "items") {
+          console.log(e.state.paramName);
+          for (let i = 0; i < vars.length; i++) {
+            const pairs = vars[i].split("=");
+            console.log(pairs[1]);
+            if (pairs[0] === "items") {
+              rowsInput.value = pairs[1];
+              cardsWrapper.innerHTML = "";
+              this.createItemBlock(itemsInCart, this.page);
+            }
+          }
+        } else if (e.state.paramName === "page") {
+          console.log(e.state.paramName);
+          for (let i = 0; i < vars.length; i++) {
+            const pairs = vars[i].split("=");
+            console.log(pairs[1]);
+            if (pairs[0] === "page") {
+              this.page = Number(pairs[1]);
+              cardsWrapper.innerHTML = "";
+              this.createItemBlock(itemsInCart, this.page);
+              pageEl.innerHTML = String(this.page);
+            }
+          }
+        }
+      } else {
+        this.page = 1;
+        rowsInput.value = "3";
+        cardsWrapper.innerHTML = "";
+        this.createItemBlock(itemsInCart, this.page);
+        pageEl.innerHTML = String(this.page);
+      }
+      false;
+    });
+  }
 }
 
 const temp = new Temp();
@@ -546,7 +566,7 @@ class CartPage {
       temp.createArraysForPagination(itemsInCart);
       temp.changePages();
       temp.changePageNum(itemsInCart);
-      // temp.linkChange("items", itemsInCart);
+      temp.linkChange(itemsInCart);
       modal.createModalWindow();
       modal.clickConfirmButton();
       promoCode.appendDelPromoItem();
