@@ -60,6 +60,7 @@ export interface IFilterRange {
 }
 export interface ICartPage {
   draw: () => void;
+  router?: IRouter;
 }
 
 export interface IProductsSortOptionals {

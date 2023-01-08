@@ -1,7 +1,7 @@
 import textObj from "../utils/textObj";
 import Template from "../templates/template";
 import ModalWindow from "../components/modal-window";
-import { IProductInCart } from "src/types";
+import { IProductInCart, IRouter } from "src/types";
 import { Promo } from "../components/promo-block";
 const modal = new ModalWindow();
 const promoCode = new Promo(
@@ -565,6 +565,7 @@ class Temp extends Template {
 const temp = new Temp();
 
 class CartPage {
+  public router?: IRouter;
   public draw(): void {
     const itemsInCart = temp.getLocalStorageData();
     // temp.setInitQueryParam();
@@ -580,7 +581,7 @@ class CartPage {
       temp.changePageNum(itemsInCart);
       temp.linkChange(itemsInCart);
       modal.createModalWindow();
-      modal.clickConfirmButton();
+      modal.clickConfirmButton(this.router);
       promoCode.appendDelPromoItem();
     }
   }

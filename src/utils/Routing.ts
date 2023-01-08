@@ -4,7 +4,6 @@ class Router {
   private routes: IRout[];
   private root: string;
   private errorAction: () => void;
-  private isGo = true;
 
   constructor(routes: IRout[], errorAction: () => void) {
     this.routes = routes;
