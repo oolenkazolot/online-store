@@ -506,7 +506,7 @@ class Temp extends Template {
     window.addEventListener("popstate", (e) => {
       const query = window.location.search.substring(1);
       const vars = query.split("&");
-      const url = new URL(window.location.href);
+      console.log(vars[0].split("=")[1]);
       const rowsInput = document.querySelector(
         ".prod-cont__items-num"
       ) as HTMLInputElement;
@@ -514,40 +514,30 @@ class Temp extends Template {
         ".cards-wrapper"
       ) as HTMLElement;
       const pageEl = document.querySelector(".count") as HTMLElement;
-      if (e.state !== null) {
-        if (e.state.paramName === "items") {
-          console.log(e.state.paramName);
-          for (let i = 0; i < vars.length; i++) {
-            const pairs = vars[i].split("=");
-            console.log(pairs[1]);
-            if (pairs[0] === "items") {
-              rowsInput.value = pairs[1];
-              cardsWrapper.innerHTML = "";
-              this.createItemBlock(itemsInCart, this.page);
-            }
-          }
-        } else if (e.state.paramName === "page") {
-          console.log(e.state.paramName);
-          for (let i = 0; i < vars.length; i++) {
-            const pairs = vars[i].split("=");
-            console.log(pairs[1]);
-            if (pairs[0] === "page") {
-              this.page = Number(pairs[1]);
-              cardsWrapper.innerHTML = "";
-              this.createItemBlock(itemsInCart, this.page);
-              pageEl.innerHTML = String(this.page);
-            }
-          }
+      if (
+        vars.length === 2 &&
+        vars[0].split("=")[0] === "items" &&
+        vars[1].split("=")[0] === "page"
+      ) {
+        for (let i = 0; i < vars.length; i++) {
+          rowsInput.value = vars[0].split("=")[1];
+          this.page = Number(vars[1].split("=")[1]);
+          cardsWrapper.innerHTML = "";
+          this.createItemBlock(itemsInCart, this.page);
+          pageEl.innerHTML = String(this.page);
         }
-      } else {
-        this.page = 1;
-        rowsInput.value = "3";
-        cardsWrapper.innerHTML = "";
-        this.createItemBlock(itemsInCart, this.page);
-        pageEl.innerHTML = String(this.page);
       }
       false;
     });
+  }
+
+  public setInitQueryParam(): void {
+    const query = window.location.search.substring(1);
+    const vars = query.split("&");
+    if (vars[0] === "") {
+      temp.addQueryParameters("items", "3");
+      temp.addQueryParameters("page", "1");
+    }
   }
 }
 
@@ -556,6 +546,7 @@ const temp = new Temp();
 class CartPage {
   public draw(): void {
     const itemsInCart = temp.getLocalStorageData();
+    temp.setInitQueryParam();
     temp.getTotalSumAndQt(itemsInCart);
     temp.createCardHeader(itemsInCart);
     temp.createItemBlock(itemsInCart, temp.page);
@@ -566,7 +557,7 @@ class CartPage {
       temp.createArraysForPagination(itemsInCart);
       temp.changePages();
       temp.changePageNum(itemsInCart);
-      temp.linkChange(itemsInCart);
+      // temp.linkChange(itemsInCart);
       modal.createModalWindow();
       modal.clickConfirmButton();
       promoCode.appendDelPromoItem();
