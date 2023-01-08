@@ -1,10 +1,11 @@
-/* eslint-disable prettier/prettier */
 import Template from "../templates/template";
 import textObj from "../utils/textObj";
 
 class ModalWindow extends Template {
   public overlay: HTMLElement = document.createElement("div");
   public formWrapper: HTMLElement = document.createElement("div");
+  public validityArray: boolean[] = Array(7).fill(false);
+  public seconds = 5;
 
   createModalWindow(): void {
     this.overlay.classList.add("overlay");
@@ -14,6 +15,7 @@ class ModalWindow extends Template {
     this.formWrapper.className = "form-wrapper";
     document.body.append(this.formWrapper);
     this.formWrapper.classList.add("invisible");
+    this.formWrapper.innerHTML = "";
 
     const modalCont = document.createElement("form");
     modalCont.classList.add("modal-cont");
@@ -42,20 +44,12 @@ class ModalWindow extends Template {
     nameError.id = "name-error";
     nameError.classList.add("hidden");
 
-    this.createInput(
-      "phone-input",
-      numberCont,
-      "Phone number"
-    );
+    this.createInput("phone-input", numberCont, "Phone number");
     const phoneErr = this.createElement("pd-err", numberCont, textObj.phoneErr);
     phoneErr.classList.add("hidden");
     phoneErr.id = "phone-error";
 
-    this.createInput(
-      "address-input",
-      addrCont,
-      "Delivery address"
-    );
+    this.createInput("address-input", addrCont, "Delivery address");
     const addressErr = this.createElement("pd-err", addrCont, textObj.addrErr);
     addressErr.classList.add("hidden");
     addressErr.id = "address-error";
@@ -74,8 +68,8 @@ class ModalWindow extends Template {
       cardNumberCont,
       "Card number"
     );
-  
-    cardInput.type = "number";
+
+    // cardInput.type = "number";
 
     const validCont = this.createElement(
       "validity-details-cont",
@@ -85,34 +79,35 @@ class ModalWindow extends Template {
 
     this.createElement("valid", validCont, textObj.valid);
     const validDate = this.createInput("valid-date", validCont, "Valid thru");
-    validDate.maxLength = 4;
 
     this.createElement("CVV", CVVCont, textObj.CVV);
     const CVVNumb = this.createInput("CVV-numb", CVVCont, "Code");
-    CVVNumb.maxLength = 3;
+    // CVVNumb.type = "number";
 
-    const cardNumbErr = this.createElement("card-err", modalCont);
+    const cardNumbErr = this.createElement("pd-err", modalCont);
     cardNumbErr.classList.add("hidden");
     cardNumbErr.innerText = textObj.cardNumbErr;
     cardNumbErr.id = "card-num-error";
 
-    const validThruErr = this.createElement("card-err", modalCont);
+    const validThruErr = this.createElement("pd-err", modalCont);
     validThruErr.innerText = textObj.validErr;
     validThruErr.classList.add("hidden");
     validThruErr.id = "card-date-error";
 
-    const CVVError = this.createElement("card-err", modalCont, textObj.CVVErr);
+    const CVVError = this.createElement("pd-err", modalCont, textObj.CVVErr);
     CVVError.classList.add("hidden");
     CVVError.id = "cvv-error";
 
-    const confirmBtn = document.createElement("button");
+    const confirmBtn = document.createElement("div");
     confirmBtn.classList.add("modal-cont__button");
     modalCont.append(confirmBtn);
     confirmBtn.innerText = textObj.confirmBtn;
   }
 
   public clickConfirmButton(): void {
-    const confirmBtn = document.querySelector(".modal-cont__button");
+    const confirmBtn = document.querySelector(
+      ".modal-cont__button"
+    ) as HTMLElement;
     this.isNameValid();
     this.isPhoneValid();
     this.isAddressValid();
@@ -120,6 +115,9 @@ class ModalWindow extends Template {
     this.isCardNumValid();
     this.isCardDateValid();
     this.isCVVValid();
+    confirmBtn.addEventListener("click", () => {
+      this.orderConfirmation();
+    });
   }
 
   public isNameValid(): boolean {
@@ -128,6 +126,7 @@ class ModalWindow extends Template {
     let nameValidity = false;
     nameInput.addEventListener("change", () => {
       nameValidity = /^[A-Za-z]{3,}\b.+?[A-Za-z]{3,}/g.test(nameInput.value);
+      this.validityArray[0] = nameValidity;
       if (nameValidity === false) {
         nameError.classList.remove("hidden");
       } else {
@@ -145,6 +144,7 @@ class ModalWindow extends Template {
     let phoneValidity = false;
     phoneInput.addEventListener("change", () => {
       phoneValidity = /^[+][\d]{8,}\d$/g.test(phoneInput.value);
+      this.validityArray[1] = phoneValidity;
       if (phoneValidity === false) {
         phoneError.classList.remove("hidden");
       } else {
@@ -166,6 +166,7 @@ class ModalWindow extends Template {
       addressValidity = /^[A-Za-z]{5,}\b.+?[A-Za-z]{5,}\b.+?[A-Za-z]{5,}/u.test(
         addressInput.value
       );
+      this.validityArray[2] = addressValidity;
       if (addressValidity === false) {
         addressError.classList.remove("hidden");
       } else {
@@ -186,6 +187,7 @@ class ModalWindow extends Template {
       phoneValidity = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(
         emailInput.value
       );
+      this.validityArray[3] = phoneValidity;
       if (phoneValidity === false) {
         emailError.classList.remove("hidden");
       } else {
@@ -201,26 +203,27 @@ class ModalWindow extends Template {
     let cardValidity = false;
     const paymSyst = document.querySelector(".payment-syst") as HTMLElement;
 
+    cardInput.addEventListener("input", function () {
+      this.value = this.value.replace(/[^\d]/g, "");
+    });
+
     function changeCartIcon() {
       if (cardInput.value[0] === "3") {
         paymSyst.className = "payment-syst";
         paymSyst.classList.add("amex");
-      }
-      else if (cardInput.value[0] === "4") {
+      } else if (cardInput.value[0] === "4") {
         paymSyst.className = "payment-syst";
         paymSyst.classList.add("visa");
-      }
-      else if (cardInput.value[0] === "5") {
+      } else if (cardInput.value[0] === "5") {
         paymSyst.className = "payment-syst";
         paymSyst.classList.add("mastercard");
-      }
-      else if (cardInput.value[0] === "6") {
+      } else if (cardInput.value[0] === "6") {
         paymSyst.className = "payment-syst";
         paymSyst.classList.add("unionPay");
       } else {
         paymSyst.className = "payment-syst";
-        paymSyst.classList.add("creditCard")}
-     
+        paymSyst.classList.add("creditCard");
+      }
     }
     cardInput.addEventListener("input", () => {
       if (cardInput.value.length > 16) {
@@ -228,6 +231,7 @@ class ModalWindow extends Template {
       }
       changeCartIcon();
       cardValidity = /^[\d]{16}$/g.test(cardInput.value);
+      this.validityArray[4] = cardValidity;
       if (cardValidity === false) {
         cardError.classList.remove("hidden");
       } else {
@@ -245,15 +249,20 @@ class ModalWindow extends Template {
       "card-date-error"
     ) as HTMLElement;
     let cardDateValidity = false;
-    cardDateInput.addEventListener("keypress", function(){
-      this.value = this.value.replace(/[^\d]/g, "")});
+    cardDateInput.addEventListener("input", function () {
+      this.value = this.value.replace(/[^\d]/g, "");
+    });
 
-    cardDateInput.addEventListener("change", () => {
+    cardDateInput.addEventListener("input", () => {
       cardDateInput.value = cardDateInput.value.replace(
         /^([\d]{2})\/?([0-9]+)/,
         "$1/$2"
       );
+      if (cardDateInput.value.length > 5) {
+        cardDateInput.value = cardDateInput.value.slice(0, 5);
+      }
       cardDateValidity = /^(0[1-9]|1[0-2])\/\d{2}$/g.test(cardDateInput.value);
+      this.validityArray[5] = cardDateValidity;
       if (cardDateValidity === false) {
         cardDateError.classList.remove("hidden");
       } else {
@@ -264,15 +273,20 @@ class ModalWindow extends Template {
   }
 
   public isCVVValid(): boolean {
-    const CVVInput = document.querySelector(
-      ".CVV-numb"
-    ) as HTMLInputElement;
-    const CVVError = document.getElementById(
-      "cvv-error"
-    ) as HTMLElement;
+    const CVVInput = document.querySelector(".CVV-numb") as HTMLInputElement;
+    const CVVError = document.getElementById("cvv-error") as HTMLElement;
     let CVVValidity = false;
-    CVVInput.addEventListener("change", () => {
+
+    CVVInput.addEventListener("input", function () {
+      this.value = this.value.replace(/[^\d]/g, "");
+    });
+
+    CVVInput.addEventListener("input", () => {
+      if (CVVInput.value.length > 3) {
+        CVVInput.value = CVVInput.value.slice(0, 3);
+      }
       CVVValidity = /^[1-9]{3}$/g.test(CVVInput.value);
+      this.validityArray[6] = CVVValidity;
       if (CVVValidity === false) {
         CVVError.classList.remove("hidden");
       } else {
@@ -280,6 +294,54 @@ class ModalWindow extends Template {
       }
     });
     return CVVValidity;
+  }
+
+  public orderConfirmation(): void {
+    const mainElement = document.querySelector("main") as HTMLElement;
+    const overlay = document.querySelector(".overlay") as HTMLElement;
+    const formWrapper = document.querySelector(".form-wrapper") as HTMLElement;
+    const itemsQt = document.querySelector(
+      ".header-bottom__items-amount"
+    ) as HTMLElement;
+    const itemsSum = document.querySelector(
+      ".header-bottom__total-sum"
+    ) as HTMLElement;
+    const errorElements = document.querySelectorAll(".pd-err");
+
+    const isFormValid = this.validityArray.every((el) => el === true);
+
+    const emptyInput = () => {
+      for (let i = 0; i < this.validityArray.length; i++) {
+        if (this.validityArray[i] === false) {
+          errorElements[i].classList.remove("hidden");
+        }
+      }
+    };
+
+    emptyInput();
+
+    const timer = () => {
+      if (this.seconds > 0) {
+        this.seconds--;
+      }
+      mainElement.innerHTML = "";
+      const message = this.createElement("message", mainElement);
+      message.innerText = `${textObj.confirmation} ${this.seconds} seconds`;
+      if (this.seconds === 0) {
+        location.href =
+          "https://github.com/rolling-scopes-school/tasks/blob/master/tasks/online-store-team/modules/purchase-modal.md";
+      }
+      setTimeout(timer, 1000);
+    };
+    if (isFormValid) {
+      mainElement.innerHTML = "";
+      localStorage.removeItem("itemsInCart");
+      overlay.classList.add("invisible");
+      formWrapper.classList.add("invisible");
+      itemsQt.innerHTML = "0";
+      itemsSum.innerHTML = `&#8364 0`;
+      timer();
+    }
   }
 }
 

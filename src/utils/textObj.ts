@@ -33,6 +33,7 @@ const textObj: TtextObject = {
   confirmBtn: "confirm",
   message: "Cart is empty",
   applyCodesTitle: "Applied codes",
+  confirmation: "Thanks for your order. Redirect to the store after",
 };
 
 export default textObj;
