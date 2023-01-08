@@ -114,7 +114,7 @@ class FilterRange {
     return span;
   }
 
-  private slideOne(): void {
+  private slideOne(e?: Event): void {
     const minGap = 0;
     if (
       parseInt(this.sliderTwo.value) - parseInt(this.sliderOne.value) <=
@@ -124,10 +124,12 @@ class FilterRange {
     }
     this.displayValueOne.textContent = this.sliderOne.value;
     this.fillColor();
-    this.addQueryParametersPriceStock();
+    if (e) {
+      this.addQueryParametersPriceStock();
+    }
   }
 
-  private slideTwo(): void {
+  private slideTwo(e?: Event): void {
     const minGap = 0;
     if (
       parseInt(this.sliderTwo.value) - parseInt(this.sliderOne.value) <=
@@ -137,7 +139,9 @@ class FilterRange {
     }
     this.displayValueTwo.textContent = this.sliderTwo.value;
     this.fillColor();
-    this.addQueryParametersPriceStock();
+    if (e) {
+      this.addQueryParametersPriceStock();
+    }
   }
 
   private fillColor(): void {
