@@ -13,9 +13,17 @@ class Temp extends Template {
   page = this.getPage();
 
   public getPage(): number {
-    if (localStorage.getItem("page")) {
-      return Number(localStorage.getItem("page"));
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("page")) {
+      return Number(url.searchParams.get("page"));
     } else return 1;
+  }
+
+  public getItems(): number {
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("items")) {
+      return Number(url.searchParams.get("items"));
+    } else return 3;
   }
 
   public createCardHeader(itemsInCart: IProductInCart[] | []): void {
@@ -41,7 +49,7 @@ class Temp extends Template {
     itemsNum.max = `${itemsInCart.length}`;
     itemsCont.append(itemsNum);
 
-    itemsNum.value = "3";
+    itemsNum.value = String(this.getItems());
 
     const pageCont = this.createElement("prod-cont__pages-cont", statCont);
     this.createElement("page", pageCont, textObj.page);
@@ -503,52 +511,53 @@ class Temp extends Template {
   }
 
   public linkChange(itemsInCart: IProductInCart[] | []): void {
-    window.addEventListener("popstate", (e) => {
-      const query = window.location.search.substring(1);
-      const vars = query.split("&");
-      const url = new URL(window.location.href);
-      const rowsInput = document.querySelector(
-        ".prod-cont__items-num"
-      ) as HTMLInputElement;
-      const cardsWrapper = document.querySelector(
-        ".cards-wrapper"
-      ) as HTMLElement;
-      const pageEl = document.querySelector(".count") as HTMLElement;
-      if (e.state !== null) {
-        if (e.state.paramName === "items") {
-          console.log(e.state.paramName);
+    window.addEventListener(
+      "popstate",
+      (e) => {
+        const query = window.location.search.substring(1);
+        const vars = query.split("&");
+        const rowsInput = document.querySelector(
+          ".prod-cont__items-num"
+        ) as HTMLInputElement;
+        const cardsWrapper = document.querySelector(
+          ".cards-wrapper"
+        ) as HTMLElement;
+        const pageEl = document.querySelector(".count") as HTMLElement;
+        const array: string[] = ["items", "page"];
+        if (cardsWrapper) {
           for (let i = 0; i < vars.length; i++) {
-            const pairs = vars[i].split("=");
-            console.log(pairs[1]);
-            if (pairs[0] === "items") {
-              rowsInput.value = pairs[1];
-              cardsWrapper.innerHTML = "";
-              this.createItemBlock(itemsInCart, this.page);
+            if (array[0] === vars[i].split("=")[0]) {
+              rowsInput.value = vars[i].split("=")[1];
+            }
+            if (array[1] === vars[i].split("=")[0]) {
+              this.page = Number(vars[i].split("=")[1]);
+            }
+            if (
+              !(array[0] === vars[i].split("=")[0]) &&
+              !(array[1] === vars[i].split("=")[0])
+            ) {
+              rowsInput.value = "3";
+              this.page = 1;
             }
           }
-        } else if (e.state.paramName === "page") {
-          console.log(e.state.paramName);
-          for (let i = 0; i < vars.length; i++) {
-            const pairs = vars[i].split("=");
-            console.log(pairs[1]);
-            if (pairs[0] === "page") {
-              this.page = Number(pairs[1]);
-              cardsWrapper.innerHTML = "";
-              this.createItemBlock(itemsInCart, this.page);
-              pageEl.innerHTML = String(this.page);
-            }
-          }
+          cardsWrapper.innerHTML = "";
+          this.createItemBlock(itemsInCart, this.page);
+          pageEl.innerHTML = String(this.page);
         }
-      } else {
-        this.page = 1;
-        rowsInput.value = "3";
-        cardsWrapper.innerHTML = "";
-        this.createItemBlock(itemsInCart, this.page);
-        pageEl.innerHTML = String(this.page);
-      }
-      false;
-    });
+      },
+      false
+    );
   }
+
+  // public setInitQueryParam(): void {
+  //   const query = window.location.search.substring(1);
+  //   const vars = query.split("&");
+  //   const array: string[] = ["items", "page"];
+  //   if (!(vars[0] === "")) {
+  //     temp.addQueryParameters("items", "3");
+  //     temp.addQueryParameters("page", "1");
+  //   }
+  // }
 }
 
 const temp = new Temp();
@@ -557,6 +566,7 @@ class CartPage {
   public router?: IRouter;
   public draw(): void {
     const itemsInCart = temp.getLocalStorageData();
+    // temp.setInitQueryParam();
     temp.getTotalSumAndQt(itemsInCart);
     temp.createCardHeader(itemsInCart);
     temp.createItemBlock(itemsInCart, temp.page);
