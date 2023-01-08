@@ -324,6 +324,8 @@ class ModalWindow extends Template {
     const timer = () => {
       if (this.seconds > 0) {
         this.seconds--;
+      } else {
+        return;
       }
       mainElement.innerHTML = "";
       const message = this.createElement("message", mainElement);
