@@ -38,7 +38,7 @@ const routs: IRout[] = [
   },
   {
     path: "cart",
-    cb: cartPage.draw,
+    cb: cartPage.draw.bind(cartPage),
   },
   {
     path: "products/:id",
@@ -49,9 +49,11 @@ const routs: IRout[] = [
 ];
 //объект роутера
 const router = new Router(routs, errorPage.draw);
+
 //проврка какая скйчас страница
 mainPage.router = router;
 productPage.router = router;
+cartPage.router = router;
 headerBottom.router = router;
 headerBottom.drawElements();
 router.init();

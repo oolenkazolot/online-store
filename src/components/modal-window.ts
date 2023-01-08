@@ -1,3 +1,4 @@
+import { IRouter } from "src/types";
 import Template from "../templates/template";
 import textObj from "../utils/textObj";
 
@@ -104,7 +105,7 @@ class ModalWindow extends Template {
     confirmBtn.innerText = textObj.confirmBtn;
   }
 
-  public clickConfirmButton(): void {
+  public clickConfirmButton(router?: IRouter): void {
     const confirmBtn = document.querySelector(
       ".modal-cont__button"
     ) as HTMLElement;
@@ -116,7 +117,7 @@ class ModalWindow extends Template {
     this.isCardDateValid();
     this.isCVVValid();
     confirmBtn.addEventListener("click", () => {
-      this.orderConfirmation();
+      this.orderConfirmation(router);
     });
   }
 
@@ -296,7 +297,7 @@ class ModalWindow extends Template {
     return CVVValidity;
   }
 
-  public orderConfirmation(): void {
+  public orderConfirmation(router?: IRouter): void {
     const mainElement = document.querySelector("main") as HTMLElement;
     const overlay = document.querySelector(".overlay") as HTMLElement;
     const formWrapper = document.querySelector(".form-wrapper") as HTMLElement;
@@ -328,8 +329,8 @@ class ModalWindow extends Template {
       const message = this.createElement("message", mainElement);
       message.innerText = `${textObj.confirmation} ${this.seconds} seconds`;
       if (this.seconds === 0) {
-        location.href =
-          "https://github.com/rolling-scopes-school/tasks/blob/master/tasks/online-store-team/modules/purchase-modal.md";
+        router?.navigate("");
+        // location.href = 'https://github.com/rolling-scopes-school/tasks/blob/master/tasks/online-store-team/modules/purchase-modal.md';
       }
       setTimeout(timer, 1000);
     };
