@@ -13,9 +13,17 @@ class Temp extends Template {
   page = this.getPage();
 
   public getPage(): number {
-    if (localStorage.getItem("page")) {
-      return Number(localStorage.getItem("page"));
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("page")) {
+      return Number(url.searchParams.get("page"));
     } else return 1;
+  }
+
+  public getItems(): number {
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("items")) {
+      return Number(url.searchParams.get("items"));
+    } else return 3;
   }
 
   public createCardHeader(itemsInCart: IProductInCart[] | []): void {
@@ -41,7 +49,7 @@ class Temp extends Template {
     itemsNum.max = `${itemsInCart.length}`;
     itemsCont.append(itemsNum);
 
-    itemsNum.value = "3";
+    itemsNum.value = String(this.getItems());
 
     const pageCont = this.createElement("prod-cont__pages-cont", statCont);
     this.createElement("page", pageCont, textObj.page);
@@ -503,42 +511,55 @@ class Temp extends Template {
   }
 
   public linkChange(itemsInCart: IProductInCart[] | []): void {
-    window.addEventListener("popstate", (e) => {
-      const query = window.location.search.substring(1);
-      const vars = query.split("&");
-      console.log(vars[0].split("=")[1]);
-      const rowsInput = document.querySelector(
-        ".prod-cont__items-num"
-      ) as HTMLInputElement;
-      const cardsWrapper = document.querySelector(
-        ".cards-wrapper"
-      ) as HTMLElement;
-      const pageEl = document.querySelector(".count") as HTMLElement;
-      if (
-        vars.length === 2 &&
-        vars[0].split("=")[0] === "items" &&
-        vars[1].split("=")[0] === "page"
-      ) {
-        for (let i = 0; i < vars.length; i++) {
-          rowsInput.value = vars[0].split("=")[1];
-          this.page = Number(vars[1].split("=")[1]);
+    window.addEventListener(
+      "popstate",
+      (e) => {
+        const query = window.location.search.substring(1);
+        const vars = query.split("&");
+        const rowsInput = document.querySelector(
+          ".prod-cont__items-num"
+        ) as HTMLInputElement;
+        const cardsWrapper = document.querySelector(
+          ".cards-wrapper"
+        ) as HTMLElement;
+        const pageEl = document.querySelector(".count") as HTMLElement;
+        const array: string[] = ["items", "page"];
+        if (cardsWrapper) {
+          for (let i = 0; i < vars.length; i++) {
+            if (array[0] === vars[i].split("=")[0]) {
+              console.log(`items: ${vars[i].split("=")[1]}`);
+              rowsInput.value = vars[i].split("=")[1];
+            }
+            if (array[1] === vars[i].split("=")[0]) {
+              console.log(`pages: ${vars[i].split("=")[1]}`);
+              this.page = Number(vars[i].split("=")[1]);
+            }
+            if (
+              !(array[0] === vars[i].split("=")[0]) &&
+              !(array[1] === vars[i].split("=")[0])
+            ) {
+              rowsInput.value = "3";
+              this.page = 1;
+            }
+          }
           cardsWrapper.innerHTML = "";
           this.createItemBlock(itemsInCart, this.page);
           pageEl.innerHTML = String(this.page);
         }
-      }
-      false;
-    });
+      },
+      false
+    );
   }
 
-  public setInitQueryParam(): void {
-    const query = window.location.search.substring(1);
-    const vars = query.split("&");
-    if (vars[0] === "") {
-      temp.addQueryParameters("items", "3");
-      temp.addQueryParameters("page", "1");
-    }
-  }
+  // public setInitQueryParam(): void {
+  //   const query = window.location.search.substring(1);
+  //   const vars = query.split("&");
+  //   const array: string[] = ["items", "page"];
+  //   if (!(vars[0] === "")) {
+  //     temp.addQueryParameters("items", "3");
+  //     temp.addQueryParameters("page", "1");
+  //   }
+  // }
 }
 
 const temp = new Temp();
@@ -546,7 +567,7 @@ const temp = new Temp();
 class CartPage {
   public draw(): void {
     const itemsInCart = temp.getLocalStorageData();
-    temp.setInitQueryParam();
+    // temp.setInitQueryParam();
     temp.getTotalSumAndQt(itemsInCart);
     temp.createCardHeader(itemsInCart);
     temp.createItemBlock(itemsInCart, temp.page);
@@ -557,7 +578,7 @@ class CartPage {
       temp.createArraysForPagination(itemsInCart);
       temp.changePages();
       temp.changePageNum(itemsInCart);
-      // temp.linkChange(itemsInCart);
+      temp.linkChange(itemsInCart);
       modal.createModalWindow();
       modal.clickConfirmButton();
       promoCode.appendDelPromoItem();
