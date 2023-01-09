@@ -141,6 +141,8 @@ class FilterRange {
     this.fillColor();
     if (e) {
       this.addQueryParametersPriceStock();
+    } else {
+      this.removeQueryParametersPriceStock();
     }
   }
 
@@ -157,6 +159,13 @@ class FilterRange {
       this.prefix,
       this.sliderOne.value + "," + this.sliderTwo.value
     );
+    window.history.pushState(null, "", url);
+    this.updateView();
+  }
+
+  private removeQueryParametersPriceStock(): void {
+    const url = new URL(window.location.href);
+    url.searchParams.delete(this.prefix);
     window.history.pushState(null, "", url);
     this.updateView();
   }
