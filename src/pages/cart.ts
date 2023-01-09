@@ -3,6 +3,7 @@ import Template from "../templates/template";
 import ModalWindow from "../components/modal-window";
 import { IProductInCart, IRouter } from "src/types";
 import { Promo } from "../components/promo-block";
+import productsData from "../utils/products-data";
 const modal = new ModalWindow();
 const promoCode = new Promo(
   ["rs", 10, "Rolling Scopes School "],
@@ -101,15 +102,16 @@ class Temp extends Template {
             paginationArray[page - 1][i].title,
             paginationArray[page - 1][i].description,
             paginationArray[page - 1][i].rating,
-            paginationArray[page - 1][i].discount
+            paginationArray[page - 1][i].discount,
+            paginationArray[page - 1][i].category
           );
 
           createControlBlock(
             cardCont,
             paginationArray[page - 1][i].price,
             paginationArray[page - 1][i].id,
-            paginationArray[page - 1][i].quantityInCart,
-            paginationArray[page - 1][i].stock
+            paginationArray[page - 1][i].quantityInCart
+            // paginationArray[page - 1][i].stock
           );
         }
       }
@@ -138,11 +140,13 @@ class Temp extends Template {
         title: string,
         description: string,
         rating: number,
-        discount: number
+        discount: number,
+        category: string
       ) {
         const infoBlock = temp.createElement("prod-cont__info-block", dataCont);
         temp.createElement("prod-cont__prod-name", infoBlock, title);
         temp.createElement("item-descr", infoBlock, description);
+        temp.createElement("category", infoBlock, category);
 
         const addInfoCont = temp.createElement("prod-cont__addInfo", infoBlock);
         const ratWrap = temp.createElement("prod-cont__rat-wrap", addInfoCont);
@@ -160,8 +164,8 @@ class Temp extends Template {
         cardCont: HTMLElement,
         priceArg: number,
         id: number,
-        quantity: number,
-        stock: number
+        quantity: number
+        // stock: number
       ) {
         const controlBlock = temp.createElement(
           "prod-cont__contr-block",
@@ -186,15 +190,27 @@ class Temp extends Template {
         temp.createElement("stock", stockBl, textObj.stock);
         const stockNum = temp.createElement(
           "stock-num",
-          stockBl,
-          String(stock)
+          stockBl
+          // String(stock)
         );
         stockNum.setAttribute("data-id", String(id));
+        for (let i = 0; i < productsData.products.length; i++) {
+          const productsID: number = productsData.products[i].id;
+          if (Number(stockNum.dataset.id) === productsID) {
+            stockNum.innerHTML = String(productsData.products[i].stock);
+          }
+        }
       }
     }
   }
 
   public createSummary(itemsInCart: IProductInCart[] | []): void {
+    const appliedDiscounts = JSON.parse(
+      localStorage.getItem("appliedPromos") || "[]"
+    );
+    const discountsArray = JSON.parse(
+      localStorage.getItem("discountsArray") || "[]"
+    );
     const wrapper = document.querySelector(".main__wrapper") as HTMLElement;
     const summaryCont = this.createElement("sum-cont", wrapper);
     const summaryTitle = document.createElement("h2");
@@ -260,6 +276,8 @@ class Temp extends Template {
 
     appliedCodesTitle.innerText = textObj.applyCodesTitle;
 
+    temp.restorePromos();
+
     const promoInput = document.createElement("input");
     promoInput.classList.add("sum-prod__promo-input");
     promoInput.addEventListener("input", () => {
@@ -313,7 +331,7 @@ class Temp extends Template {
         itemsInCart.forEach((el, index) => {
           if (el.id === Number(target.dataset.id)) {
             if (target.innerHTML === "+") {
-              if (el.stock > 0) {
+              if (el.stock > 1) {
                 el.stock--;
                 el.quantityInCart++;
                 el.price = el.price + el.price / (el.quantityInCart - 1);
@@ -361,7 +379,7 @@ class Temp extends Template {
               const elementPr = priceElements[i] as HTMLElement;
               if (elementQt.dataset.id === target.dataset.id) {
                 elementQt.innerText = String(el.quantityInCart);
-                elementSt.innerHTML = String(el.stock);
+                // elementSt.innerHTML = String(el.stock);
                 elementPr.innerHTML = `&#8364 ${String(el.price)}`;
               }
             }
@@ -378,8 +396,12 @@ class Temp extends Template {
       const totalSumDiscount = document.getElementById(
         "total-sum-discount"
       ) as HTMLElement;
+      const discount = Number(localStorage.getItem("discount"));
+      const totSum = Number(totalSum.innerHTML.split(" ")[1]);
       if (totalSumDiscount) {
-        totalSumDiscount.innerHTML = promoCode.totSumValue;
+        totalSumDiscount.innerHTML = `&#8364 ${String(
+          totSum - (totSum * discount) / 100
+        )}`;
       }
     }
   }
@@ -549,15 +571,45 @@ class Temp extends Template {
     );
   }
 
-  // public setInitQueryParam(): void {
-  //   const query = window.location.search.substring(1);
-  //   const vars = query.split("&");
-  //   const array: string[] = ["items", "page"];
-  //   if (!(vars[0] === "")) {
-  //     temp.addQueryParameters("items", "3");
-  //     temp.addQueryParameters("page", "1");
-  //   }
-  // }
+  public restorePromos(): void {
+    const discountsArray = JSON.parse(
+      localStorage.getItem("discountsArray") || "[]"
+    );
+    const appliedPromosBlock = document.querySelector(
+      ".applied-promos-block"
+    ) as HTMLElement;
+    const discount = localStorage.getItem("discount") || 0;
+    if (discountsArray.length) {
+      for (let i = 0; i < discountsArray.length; i++) {
+        const discountWrapper = document.createElement("div");
+        discountWrapper.className = "discount-wrapper";
+        const discountType = document.createElement("div");
+        const totalSumDiscWrapper = document.getElementById(
+          "total-sum-wrapper"
+        ) as HTMLElement;
+        const totalSumDiscount = document.getElementById(
+          "total-sum-discount"
+        ) as HTMLElement;
+        const totalSum = document.querySelector(".total-sum") as HTMLElement;
+        discountType.className = "discount-type";
+        discountType.innerText = `${discountsArray[i][1]} - ${discountsArray[i][0]}%`;
+        const discountBtn = document.createElement("div");
+        discountBtn.className = "add-drop-btn";
+        discountWrapper.append(discountType, discountBtn);
+        discountBtn.innerText = "drop";
+        discountBtn.setAttribute("id", discountsArray[i][1].trim());
+        appliedPromosBlock.append(discountWrapper);
+        appliedPromosBlock.classList.remove("invisible");
+        totalSumDiscWrapper.classList.remove("invisible");
+        const totSum = Number(totalSum.innerHTML.split(" ")[1]);
+
+        totalSumDiscount.innerHTML = `&#8364 ${
+          totSum - (Number(discount) / 100) * totSum
+        }`;
+        totalSum.classList.add("crossed");
+      }
+    }
+  }
 }
 
 const temp = new Temp();
@@ -566,7 +618,6 @@ class CartPage {
   public router?: IRouter;
   public draw(): void {
     const itemsInCart = temp.getLocalStorageData();
-    // temp.setInitQueryParam();
     temp.getTotalSumAndQt(itemsInCart);
     temp.createCardHeader(itemsInCart);
     temp.createItemBlock(itemsInCart, temp.page);
