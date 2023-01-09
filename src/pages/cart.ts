@@ -3,6 +3,7 @@ import Template from "../templates/template";
 import ModalWindow from "../components/modal-window";
 import { IProductInCart, IRouter } from "src/types";
 import { Promo } from "../components/promo-block";
+import productsData from "../utils/products-data";
 const modal = new ModalWindow();
 const promoCode = new Promo(
   ["rs", 10, "Rolling Scopes School "],
@@ -101,15 +102,16 @@ class Temp extends Template {
             paginationArray[page - 1][i].title,
             paginationArray[page - 1][i].description,
             paginationArray[page - 1][i].rating,
-            paginationArray[page - 1][i].discount
+            paginationArray[page - 1][i].discount,
+            paginationArray[page - 1][i].category
           );
 
           createControlBlock(
             cardCont,
             paginationArray[page - 1][i].price,
             paginationArray[page - 1][i].id,
-            paginationArray[page - 1][i].quantityInCart,
-            paginationArray[page - 1][i].stock
+            paginationArray[page - 1][i].quantityInCart
+            // paginationArray[page - 1][i].stock
           );
         }
       }
@@ -138,11 +140,13 @@ class Temp extends Template {
         title: string,
         description: string,
         rating: number,
-        discount: number
+        discount: number,
+        category: string
       ) {
         const infoBlock = temp.createElement("prod-cont__info-block", dataCont);
         temp.createElement("prod-cont__prod-name", infoBlock, title);
         temp.createElement("item-descr", infoBlock, description);
+        temp.createElement("category", infoBlock, category);
 
         const addInfoCont = temp.createElement("prod-cont__addInfo", infoBlock);
         const ratWrap = temp.createElement("prod-cont__rat-wrap", addInfoCont);
@@ -160,8 +164,8 @@ class Temp extends Template {
         cardCont: HTMLElement,
         priceArg: number,
         id: number,
-        quantity: number,
-        stock: number
+        quantity: number
+        // stock: number
       ) {
         const controlBlock = temp.createElement(
           "prod-cont__contr-block",
@@ -186,10 +190,16 @@ class Temp extends Template {
         temp.createElement("stock", stockBl, textObj.stock);
         const stockNum = temp.createElement(
           "stock-num",
-          stockBl,
-          String(stock)
+          stockBl
+          // String(stock)
         );
         stockNum.setAttribute("data-id", String(id));
+        for (let i = 0; i < productsData.products.length; i++) {
+          const productsID: number = productsData.products[i].id;
+          if (Number(stockNum.dataset.id) === productsID) {
+            stockNum.innerHTML = String(productsData.products[i].stock);
+          }
+        }
       }
     }
   }
