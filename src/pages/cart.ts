@@ -103,7 +103,8 @@ class Temp extends Template {
             paginationArray[page - 1][i].description,
             paginationArray[page - 1][i].rating,
             paginationArray[page - 1][i].discount,
-            paginationArray[page - 1][i].category
+            paginationArray[page - 1][i].category,
+            paginationArray[page - 1][i].brand
           );
 
           createControlBlock(
@@ -141,10 +142,12 @@ class Temp extends Template {
         description: string,
         rating: number,
         discount: number,
-        category: string
+        category: string,
+        brand: string
       ) {
         const infoBlock = temp.createElement("prod-cont__info-block", dataCont);
         temp.createElement("prod-cont__prod-name", infoBlock, title);
+        temp.createElement("brand", infoBlock, brand);
         temp.createElement("item-descr", infoBlock, description);
         temp.createElement("category", infoBlock, category);
 
