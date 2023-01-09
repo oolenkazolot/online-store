@@ -296,7 +296,6 @@ class Products {
 
       return true;
     });
-    console.log(products);
 
     return products;
   }

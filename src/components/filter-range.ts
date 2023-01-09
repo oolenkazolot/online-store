@@ -1,3 +1,6 @@
+import { log } from "console";
+import { unwatchFile } from "fs";
+
 class FilterRange {
   private prefix: string;
   private updateView: () => void;
@@ -124,6 +127,7 @@ class FilterRange {
     }
     this.displayValueOne.textContent = this.sliderOne.value;
     this.fillColor();
+
     if (e) {
       this.addQueryParametersPriceStock();
     }
@@ -139,10 +143,9 @@ class FilterRange {
     }
     this.displayValueTwo.textContent = this.sliderTwo.value;
     this.fillColor();
+
     if (e) {
       this.addQueryParametersPriceStock();
-    } else {
-      this.removeQueryParametersPriceStock();
     }
   }
 
@@ -153,19 +156,12 @@ class FilterRange {
     this.sliderTrack.style.background = `linear-gradient(to right, #f1f1f2 ${percent1}%, #fd2 ${percent1}%,  #fd2 ${percent2}%, #f1f1f2 ${percent2}%)`;
   }
 
-  private addQueryParametersPriceStock(): void {
+  public addQueryParametersPriceStock(): void {
     const url = new URL(window.location.href);
     url.searchParams.set(
       this.prefix,
       this.sliderOne.value + "," + this.sliderTwo.value
     );
-    window.history.pushState(null, "", url);
-    this.updateView();
-  }
-
-  private removeQueryParametersPriceStock(): void {
-    const url = new URL(window.location.href);
-    url.searchParams.delete(this.prefix);
     window.history.pushState(null, "", url);
     this.updateView();
   }
