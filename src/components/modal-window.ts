@@ -286,7 +286,7 @@ class ModalWindow extends Template {
       if (CVVInput.value.length > 3) {
         CVVInput.value = CVVInput.value.slice(0, 3);
       }
-      CVVValidity = /^[1-9]{3}$/g.test(CVVInput.value);
+      CVVValidity = /^[0-9]{3}$/g.test(CVVInput.value);
       this.validityArray[6] = CVVValidity;
       if (CVVValidity === false) {
         CVVError.classList.remove("hidden");
