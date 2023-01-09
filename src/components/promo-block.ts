@@ -7,12 +7,39 @@ export class Promo {
     this.epm = epm;
   }
 
-  appliedPromos: string[] = [];
-  discountsArray: Array<Array<number | string>> = [];
+  appliedPromos: string[] = this.getPromos();
+  discountsArray: Array<Array<number | string>> = this.getDiscountsArray();
   totSumValue = "";
-  discount = 0;
+  discount = this.getDiscount();
+
+  public getPromos(): string[] | [] {
+    let appliedPromos = [];
+    if (localStorage.getItem("appliedPromos")) {
+      appliedPromos = JSON.parse(String(localStorage.getItem("appliedPromos")));
+    }
+    return appliedPromos;
+  }
+
+  public getDiscountsArray(): Array<Array<number | string>> {
+    let discountsArray = [];
+    if (localStorage.getItem("discountsArray")) {
+      discountsArray = JSON.parse(
+        String(localStorage.getItem("discountsArray"))
+      );
+    }
+    return discountsArray;
+  }
+
+  public getDiscount(): number {
+    let discount = 0;
+    if (localStorage.getItem("discount")) {
+      discount = Number(localStorage.getItem("discountsArray"));
+    }
+    return discount;
+  }
 
   public applyPromo(): void {
+    console.log(this.appliedPromos);
     const input = document.querySelector(
       ".sum-prod__promo-input"
     ) as HTMLInputElement;
@@ -57,7 +84,7 @@ export class Promo {
     discountBtn.className = "add-drop-btn";
     discountWrapper.append(discountType, discountBtn);
     discountBtn.innerText = "drop";
-    discountBtn.setAttribute("id", element1.innerText);
+    discountBtn.setAttribute("id", element1.innerText.split("-")[0].trim());
     return discountWrapper;
   }
 
@@ -84,6 +111,10 @@ export class Promo {
         if (input.value === keysArr[i]) {
           if (!this.appliedPromos.includes(input.value)) {
             this.discountsArray.push([valuesArr[i][1], valuesArr[i][2]]);
+            localStorage.setItem(
+              "discountsArray",
+              JSON.stringify(this.discountsArray)
+            );
           }
         }
       }
@@ -91,13 +122,17 @@ export class Promo {
         (acc, val) => acc + Number(val[0]),
         0
       );
+      localStorage.setItem("discount", String(this.discount));
 
       const totalSum = document.querySelector(".total-sum") as HTMLElement;
       const totalSumValue = Number(totalSum.innerText.slice(1).trim());
       this.totSumValue = `&#8364 ${String(
         totalSumValue - (totalSumValue * this.discount) / 100
       )}`;
+
       this.appliedPromos.push(input.value);
+      localStorage.setItem("appliedPromos", JSON.stringify(this.appliedPromos));
+
       totalSumDiscount.innerHTML = this.totSumValue;
       const promoItem = this.createDiscountItem(discountType);
       appliedCodesBlock.append(promoItem);
@@ -113,10 +148,18 @@ export class Promo {
       const target = event.target as HTMLElement;
       if (target.className === "add-drop-btn") {
         this.discountsArray.forEach((el) => {
-          const targetId = target.id.split("-")[0].trim();
+          const targetId = target.id;
           if (String(el[1]).trim() === targetId) {
             this.appliedPromos.splice(this.discountsArray.indexOf(el), 1);
+            localStorage.setItem(
+              "appliedPromos",
+              JSON.stringify(this.appliedPromos)
+            );
             this.discountsArray.splice(this.discountsArray.indexOf(el), 1);
+            localStorage.setItem(
+              "discountsArray",
+              JSON.stringify(this.discountsArray)
+            );
           }
         });
         const delItem = target.parentNode as HTMLElement;
@@ -127,6 +170,8 @@ export class Promo {
             (acc, val) => acc + Number(val[0]),
             0
           );
+          console.log(discount);
+          localStorage.setItem("discount", String(discount));
           const totalSum = document.querySelector(".total-sum") as HTMLElement;
           const totalSumValue = Number(totalSum.innerText.slice(1).trim());
           this.totSumValue = `&#8364 ${String(

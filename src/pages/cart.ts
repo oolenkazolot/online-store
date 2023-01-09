@@ -195,6 +195,14 @@ class Temp extends Template {
   }
 
   public createSummary(itemsInCart: IProductInCart[] | []): void {
+    const appliedDiscounts = JSON.parse(
+      localStorage.getItem("appliedPromos") || "[]"
+    );
+    const discountsArray = JSON.parse(
+      localStorage.getItem("discountsArray") || "[]"
+    );
+    console.log(appliedDiscounts);
+    console.log(discountsArray);
     const wrapper = document.querySelector(".main__wrapper") as HTMLElement;
     const summaryCont = this.createElement("sum-cont", wrapper);
     const summaryTitle = document.createElement("h2");
@@ -260,10 +268,13 @@ class Temp extends Template {
 
     appliedCodesTitle.innerText = textObj.applyCodesTitle;
 
+    temp.restorePromos();
+
     const promoInput = document.createElement("input");
     promoInput.classList.add("sum-prod__promo-input");
     promoInput.addEventListener("input", () => {
       promoCode.applyPromo();
+      console.log(promoCode.discountsArray);
     });
 
     sumInfoWrap.append(promoInput);
@@ -378,8 +389,12 @@ class Temp extends Template {
       const totalSumDiscount = document.getElementById(
         "total-sum-discount"
       ) as HTMLElement;
+      const discount = Number(localStorage.getItem("discount"));
+      const totSum = Number(totalSum.innerHTML.split(" ")[1]);
       if (totalSumDiscount) {
-        totalSumDiscount.innerHTML = promoCode.totSumValue;
+        totalSumDiscount.innerHTML = `&#8364 ${String(
+          totSum - (totSum * discount) / 100
+        )}`;
       }
     }
   }
@@ -549,15 +564,45 @@ class Temp extends Template {
     );
   }
 
-  // public setInitQueryParam(): void {
-  //   const query = window.location.search.substring(1);
-  //   const vars = query.split("&");
-  //   const array: string[] = ["items", "page"];
-  //   if (!(vars[0] === "")) {
-  //     temp.addQueryParameters("items", "3");
-  //     temp.addQueryParameters("page", "1");
-  //   }
-  // }
+  public restorePromos(): void {
+    const discountsArray = JSON.parse(
+      localStorage.getItem("discountsArray") || "[]"
+    );
+    const appliedPromosBlock = document.querySelector(
+      ".applied-promos-block"
+    ) as HTMLElement;
+    const discount = localStorage.getItem("discount") || 0;
+    if (discountsArray.length) {
+      for (let i = 0; i < discountsArray.length; i++) {
+        const discountWrapper = document.createElement("div");
+        discountWrapper.className = "discount-wrapper";
+        const discountType = document.createElement("div");
+        const totalSumDiscWrapper = document.getElementById(
+          "total-sum-wrapper"
+        ) as HTMLElement;
+        const totalSumDiscount = document.getElementById(
+          "total-sum-discount"
+        ) as HTMLElement;
+        const totalSum = document.querySelector(".total-sum") as HTMLElement;
+        discountType.className = "discount-type";
+        discountType.innerText = `${discountsArray[i][1]} - ${discountsArray[i][0]}%`;
+        const discountBtn = document.createElement("div");
+        discountBtn.className = "add-drop-btn";
+        discountWrapper.append(discountType, discountBtn);
+        discountBtn.innerText = "drop";
+        discountBtn.setAttribute("id", discountsArray[i][1].trim());
+        appliedPromosBlock.append(discountWrapper);
+        appliedPromosBlock.classList.remove("invisible");
+        totalSumDiscWrapper.classList.remove("invisible");
+        const totSum = Number(totalSum.innerHTML.split(" ")[1]);
+
+        totalSumDiscount.innerHTML = `&#8364 ${
+          totSum - (Number(discount) / 100) * totSum
+        }`;
+        totalSum.classList.add("crossed");
+      }
+    }
+  }
 }
 
 const temp = new Temp();
@@ -566,7 +611,6 @@ class CartPage {
   public router?: IRouter;
   public draw(): void {
     const itemsInCart = temp.getLocalStorageData();
-    // temp.setInitQueryParam();
     temp.getTotalSumAndQt(itemsInCart);
     temp.createCardHeader(itemsInCart);
     temp.createItemBlock(itemsInCart, temp.page);

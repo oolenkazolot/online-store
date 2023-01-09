@@ -336,7 +336,13 @@ class ModalWindow extends Template {
       }
       setTimeout(timer, 1000);
     };
+
+    const restoreSeconds = () => {
+      this.seconds = 5;
+    };
+
     if (isFormValid) {
+      console.log(this.seconds);
       mainElement.innerHTML = "";
       localStorage.removeItem("itemsInCart");
       overlay.classList.add("invisible");
@@ -344,6 +350,7 @@ class ModalWindow extends Template {
       itemsQt.innerHTML = "0";
       itemsSum.innerHTML = `&#8364 0`;
       timer();
+      setTimeout(restoreSeconds, 6000);
     }
   }
 }
