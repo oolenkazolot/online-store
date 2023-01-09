@@ -1,3 +1,4 @@
+import { log } from "console";
 import { IProduct, IProductsAmount } from "../types/index";
 import productsData from "./products-data";
 
@@ -96,9 +97,10 @@ class Products {
   public getMinMaxPriceUrlParameters(): string[] {
     const arr: number[] = [];
     const products = this.getProductFilterCategoryBrands();
+    const productsSearch = this.getProductsFiltersSearch(products);
 
-    for (let i = 0; i < products.length; i++) {
-      arr.push(products[i].price);
+    for (let i = 0; i < productsSearch.length; i++) {
+      arr.push(productsSearch[i].price);
     }
     const min: string = Math.min.apply(null, arr).toString();
     const max: string = Math.max.apply(null, arr).toString();
@@ -111,9 +113,10 @@ class Products {
   public getMinMaxStockUrlParameters(): string[] {
     const arr: number[] = [];
     const products = this.getProductFilterCategoryBrands();
+    const productsSearch = this.getProductsFiltersSearch(products);
 
-    for (let i = 0; i < products.length; i++) {
-      arr.push(products[i].stock);
+    for (let i = 0; i < productsSearch.length; i++) {
+      arr.push(productsSearch[i].stock);
     }
     const min: string = Math.min.apply(null, arr).toString();
     const max: string = Math.max.apply(null, arr).toString();
@@ -293,6 +296,7 @@ class Products {
 
       return true;
     });
+    console.log(products);
 
     return products;
   }
