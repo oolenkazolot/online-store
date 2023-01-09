@@ -59,7 +59,9 @@ class Temp extends Template {
     separLeft.classList.add("prod-cont__separ");
     pageCont.append(separLeft);
 
-    this.createElement("count", pageCont, textObj.count);
+    const countItems = this.createElement("count", pageCont);
+    countItems.innerHTML = String(this.page);
+
     separLeft.innerText = textObj.separLeft;
 
     const separRight = document.createElement("button");
