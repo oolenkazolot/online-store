@@ -7,7 +7,7 @@ class Router {
 
   constructor(routes: IRout[], errorAction: () => void) {
     this.routes = routes;
-    this.root = "/"; //добавить наименование репозитория перед деплоем
+    this.root = "/"; //добавить наименование репозитория перед деплоем /deploy-prohect/
     this.errorAction = errorAction;
   }
 

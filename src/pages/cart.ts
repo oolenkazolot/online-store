@@ -29,6 +29,7 @@ class Temp extends Template {
 
   public createCardHeader(itemsInCart: IProductInCart[] | []): void {
     const mainElement = document.querySelector("main") as HTMLElement;
+    mainElement.classList.add("main");
     mainElement.innerHTML = "";
 
     const wrapper = this.createElement("main__wrapper", mainElement);
@@ -517,6 +518,7 @@ class Temp extends Template {
 
   public emptyCart(): void {
     const mainElement = document.querySelector("main") as HTMLElement;
+    mainElement.classList.add("main");
     const itemsInCart = temp.getLocalStorageData();
     if (itemsInCart.length === 0) {
       mainElement.innerHTML = "";
