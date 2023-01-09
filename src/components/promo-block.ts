@@ -39,7 +39,6 @@ export class Promo {
   }
 
   public applyPromo(): void {
-    console.log(this.appliedPromos);
     const input = document.querySelector(
       ".sum-prod__promo-input"
     ) as HTMLInputElement;
@@ -170,7 +169,6 @@ export class Promo {
             (acc, val) => acc + Number(val[0]),
             0
           );
-          console.log(discount);
           localStorage.setItem("discount", String(discount));
           const totalSum = document.querySelector(".total-sum") as HTMLElement;
           const totalSumValue = Number(totalSum.innerText.slice(1).trim());

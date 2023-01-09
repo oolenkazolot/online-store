@@ -342,7 +342,6 @@ class ModalWindow extends Template {
     };
 
     if (isFormValid) {
-      console.log(this.seconds);
       mainElement.innerHTML = "";
       localStorage.removeItem("itemsInCart");
       overlay.classList.add("invisible");

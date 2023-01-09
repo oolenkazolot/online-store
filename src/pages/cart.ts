@@ -201,8 +201,6 @@ class Temp extends Template {
     const discountsArray = JSON.parse(
       localStorage.getItem("discountsArray") || "[]"
     );
-    console.log(appliedDiscounts);
-    console.log(discountsArray);
     const wrapper = document.querySelector(".main__wrapper") as HTMLElement;
     const summaryCont = this.createElement("sum-cont", wrapper);
     const summaryTitle = document.createElement("h2");
@@ -274,7 +272,6 @@ class Temp extends Template {
     promoInput.classList.add("sum-prod__promo-input");
     promoInput.addEventListener("input", () => {
       promoCode.applyPromo();
-      console.log(promoCode.discountsArray);
     });
 
     sumInfoWrap.append(promoInput);
@@ -324,7 +321,7 @@ class Temp extends Template {
         itemsInCart.forEach((el, index) => {
           if (el.id === Number(target.dataset.id)) {
             if (target.innerHTML === "+") {
-              if (el.stock > 0) {
+              if (el.stock > 1) {
                 el.stock--;
                 el.quantityInCart++;
                 el.price = el.price + el.price / (el.quantityInCart - 1);
@@ -372,7 +369,7 @@ class Temp extends Template {
               const elementPr = priceElements[i] as HTMLElement;
               if (elementQt.dataset.id === target.dataset.id) {
                 elementQt.innerText = String(el.quantityInCart);
-                elementSt.innerHTML = String(el.stock);
+                // elementSt.innerHTML = String(el.stock);
                 elementPr.innerHTML = `&#8364 ${String(el.price)}`;
               }
             }
