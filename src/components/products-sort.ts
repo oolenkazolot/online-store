@@ -95,6 +95,8 @@ class ProductsSort {
 
   private createSortOption(item: IProductsSortOptionals): HTMLElement {
     const urlParameterSort: string | null = this.getUrlParam("sort");
+    console.log(urlParameterSort);
+
     const option: HTMLElement = document.createElement("option");
     if (item.class) {
       option.setAttribute("class", item.class);
@@ -201,7 +203,7 @@ class ProductsSort {
 
   private getUrlParam(nameParam: string): string | null {
     const url = new URL(window.location.href);
-    const urlParameter: string | null = url.searchParams.get("view-mode");
+    const urlParameter: string | null = url.searchParams.get(nameParam);
     return urlParameter;
   }
 

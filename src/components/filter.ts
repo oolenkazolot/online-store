@@ -76,7 +76,9 @@ class Filter {
     let minMaxPrice: string[] | null = urlParametersPrice
       ? urlParametersPrice.split(",")
       : null;
-    minMaxPrice = minMaxPrice ? minMaxPrice : this.products.getMinMaxPrice();
+    minMaxPrice = minMaxPrice
+      ? minMaxPrice
+      : this.products.getMinMaxPriceUrlParameters();
     return minMaxPrice;
   }
 
@@ -86,7 +88,9 @@ class Filter {
     let minMaxStock: string[] | null = urlParametersStock
       ? urlParametersStock.split(",")
       : null;
-    minMaxStock = minMaxStock ? minMaxStock : this.products.getMinMaxStock();
+    minMaxStock = minMaxStock
+      ? minMaxStock
+      : this.products.getMinMaxStockUrlParameters();
     return minMaxStock;
   }
 
