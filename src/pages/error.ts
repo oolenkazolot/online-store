@@ -1,5 +1,3 @@
-import { wrap } from "module";
-
 class ErrorPage {
   public draw(): void {
     const mainElement: HTMLElement | null = document.querySelector("main");
