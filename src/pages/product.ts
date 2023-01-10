@@ -14,10 +14,10 @@ class ProductPage {
 
   public draw(id: string | undefined): void {
     const mainElement: HTMLElement | null = document.querySelector("main");
-
     if (!mainElement) {
       return;
     }
+    mainElement.classList.add("main");
     mainElement.textContent = "";
     const productPageElement: HTMLElement = document.createElement("div");
     productPageElement.classList.add("product-page");
