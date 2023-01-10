@@ -7,7 +7,7 @@ class Router {
 
   constructor(routes: IRout[], errorAction: () => void) {
     this.routes = routes;
-    this.root = "/deploy-prohect/"; //добавить наименование репозитория перед деплоем /deploy-prohect/
+    this.root = "/"; //добавить наименование репозитория перед деплоем /online-store/
     this.errorAction = errorAction;
   }
 
@@ -20,11 +20,11 @@ class Router {
   //метод для проверки какая сейчас страница при перезагрузке
   public init(): void {
     const path: string = window.location.pathname.replace(this.root, "");
-    this.action(path);
+    this.action(path.replace(/\/$/, ""));
 
     window.addEventListener("popstate", (e) => {
       //перерисовка при нажатии кнопок в браузере forward/back
-      this.action(window.location.pathname.replace("/", "")); //берет текущий путь, после того как сделал шаг назад
+      this.action(window.location.pathname.replace(this.root, "")); //берет текущий путь, после того как сделал шаг назад
     });
   }
 
