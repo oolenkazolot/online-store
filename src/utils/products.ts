@@ -1,4 +1,3 @@
-import { log } from "console";
 import { IProduct, IProductsAmount } from "../types/index";
 import productsData from "./products-data";
 
