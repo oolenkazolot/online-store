@@ -297,6 +297,31 @@ class ModalWindow extends Template {
     return CVVValidity;
   }
 
+  public clearFields(): void {
+    const nameInput = document.querySelector(".name-input") as HTMLInputElement;
+    nameInput.value = "";
+    const phoneInput = document.querySelector(
+      ".phone-input"
+    ) as HTMLInputElement;
+    phoneInput.value = "";
+    const addressInput = document.querySelector(
+      ".address-input"
+    ) as HTMLInputElement;
+    addressInput.value = "";
+    const emailInput = document.querySelector(
+      ".email-input"
+    ) as HTMLInputElement;
+    emailInput.value = "";
+    const cardInput = document.querySelector(".card-input") as HTMLInputElement;
+    cardInput.value = "";
+    const cardDateInput = document.querySelector(
+      ".valid-date"
+    ) as HTMLInputElement;
+    cardDateInput.value = "";
+    const CVVInput = document.querySelector(".CVV-numb") as HTMLInputElement;
+    CVVInput.value = "";
+  }
+
   public orderConfirmation(router?: IRouter): void {
     const mainElement = document.querySelector("main") as HTMLElement;
     const overlay = document.querySelector(".overlay") as HTMLElement;
@@ -339,6 +364,8 @@ class ModalWindow extends Template {
 
     const restoreSeconds = () => {
       this.seconds = 5;
+      this.validityArray = Array(7).fill(false);
+      this.clearFields();
     };
 
     if (isFormValid) {
