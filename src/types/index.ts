@@ -57,6 +57,7 @@ export interface IFilterRange {
   createFilterRange: () => HTMLElement;
   createFilterValues: () => HTMLElement;
   updateValues: (min: string, max: string) => void;
+  addQueryParametersPriceStock: () => void;
 }
 export interface ICartPage {
   draw: () => void;
