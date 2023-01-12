@@ -32,7 +32,7 @@ class Router {
   private action(path: string): void {
     const current: IRout | undefined = this.routes.find((rout: IRout) => {
       if (rout.path.indexOf("/:") !== -1) {
-        return rout.path.replace(/\/:.+$/, "") === path.replace(/\/.+$/, "");
+        return rout.path.replace(/\/:.+$/, "") === path.replace(/\/[\w]+$/, "");
       }
       return rout.path === path;
     });

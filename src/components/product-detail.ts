@@ -58,7 +58,9 @@ class ProductDetail {
     if (!images?.length) {
       return;
     }
+
     const imagesSlides: string[] | undefined = images.reverse().slice(0, 3);
+
     if (!imagesSlides?.length) {
       return;
     }
