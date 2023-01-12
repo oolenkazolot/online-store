@@ -47,7 +47,7 @@ const baseConfig = {
   },
   output: {
     filename: 'index.js',
-    publicPath: '/online-store/',
+    // publicPath: '/online-store/',
     path: path.resolve(__dirname, './dist'),
     assetModuleFilename: 'images/[name][ext]',
   },

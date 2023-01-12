@@ -7,7 +7,7 @@ class Router {
 
   constructor(routes: IRout[], errorAction: () => void) {
     this.routes = routes;
-    this.root = "/online-store/"; //добавить наименование репозитория перед деплоем /online-store/
+    this.root = "/"; //добавить наименование репозитория перед деплоем /online-store/
     this.errorAction = errorAction;
   }
 
