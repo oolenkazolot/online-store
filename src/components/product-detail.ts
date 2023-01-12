@@ -199,12 +199,6 @@ class ProductDetail {
 
   private addHandlerBtnBuyNow(btn: HTMLElement, router?: IRouter): void {
     btn.addEventListener("click", () => {
-      router?.navigate("cart");
-
-      setTimeout(() => {
-        this.showModal();
-      }, 0);
-
       if (this.product) {
         const isInCart:
           | IProduct
@@ -213,6 +207,11 @@ class ProductDetail {
           this.updateCart.addProductCart(this.product);
         }
       }
+      router?.navigate("cart");
+
+      setTimeout(() => {
+        this.showModal();
+      }, 0);
     });
   }
 
