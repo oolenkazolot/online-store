@@ -1,0 +1,48 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: $bg-whitesmoke;
+  color: $color-gray20;
+
+  &__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__content {
+    margin-right: 5px;
+  }
+
+  &__link {
+    color: $color-gray20;
+    transition: color $transition;
+
+    &:not(:last-child) {
+      margin-right: 5px;
+    }
+
+    &:hover {
+      color: $color-main;
+    }
+
+    &:active {
+      color: $active;
+    }
+  }
+
+  &__rss-img {
+    display: block;
+    content: '';
+    background-image: url('../assets/svg/rs-school.svg');
+    width: 86px;
+    height: 32px;
+    cursor: pointer;
+    transition: opacity $transition;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}

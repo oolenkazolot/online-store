@@ -1,0 +1,40 @@
+.product-page {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+
+  @media (max-width: 960px) {
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
+}
+
+.links-navigation {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 15px 0;
+  text-transform: uppercase;
+  flex-wrap: wrap;
+  gap: 10px;
+  text-align: center;
+
+  &__link {
+    text-decoration: none;
+    color: $color-black;
+    transition: color $transition;
+
+    &:first-child {
+      &:hover {
+        color: $hover;
+      }
+
+      &:active {
+        color: $active;
+      }
+    }
+  }
+}

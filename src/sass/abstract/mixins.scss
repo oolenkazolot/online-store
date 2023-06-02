@@ -1,0 +1,41 @@
+@mixin icon ($url) {
+    width: 15px;
+    height: 15px;
+    background-image: $url;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-right: 10px;
+    &:hover {
+        cursor: pointer;;
+    }
+    @media (max-width: 450px) {
+        width: 10px;
+        height: 10px;
+        margin-right: 5px;
+    }
+}
+
+@mixin buttons {
+    background-color: $color-main;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 1px 1px 3px 0px rgba(34, 60, 80, 0.2);
+    cursor: pointer;
+    transition: 0.4s;
+    &:hover {
+        background-color: $hover;
+      }
+    &:active {
+        background-color: $active;
+      }
+}
+
+@mixin error($marginBottom) {
+    color: $color-error;
+    margin-bottom: $marginBottom;
+    text-align: center;
+    font-weight: 500; 
+}
+

@@ -1,0 +1,29 @@
+// scroll gray @extend
+
+%scroll-gray {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background: #f1f1f2;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: #cdcdce;
+    margin: 0;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #f1f1f2;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background: #cdcdce;
+  }
+}
+
+// scroll gray @extend end

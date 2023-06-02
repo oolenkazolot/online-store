@@ -1,0 +1,18 @@
+.main {
+  min-height: calc(100vh - 228px);
+  padding-bottom: 50px;
+}
+
+.main-page {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+  padding: 0 30px;
+
+  @media (max-width: 960px) {
+    display: block;
+    justify-content: start;
+    margin-top: 30px;
+    padding: 0 20px;
+  }
+}
