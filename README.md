@@ -50,9 +50,9 @@ Get detailed information about the product by visiting its description page, whe
 
 <image src="src/assets/screenshots/Screenshot_7.png" alt="mobile-view">
 
-## Shopping cart item counter
+## Shopping cart item counter, shopping cart total amount counter
 
-Keep track of the number of items added to your cart with a bright and intuitive counter in the header
+Keep track of the quantity and total amount of items added to the shopping cart using intuitive counters in the header
 
 <image src="src/assets/screenshots/Screenshot_8.png" alt="counter">
 
