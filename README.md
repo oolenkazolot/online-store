@@ -6,16 +6,18 @@ Stack: JavaScript, TypeScript, SASS, Webpack
 
 Online store includes a number of convenient features to make your online shopping journey enjoyable and convenient
 
-## Start screen and routing in pure JavaScript
+## Start screen
 
 <image src="src/assets/screenshots/Screenshot_1.png" alt="start">
 
+## Routing in pure JavaScript
+
 ## Product filtering
 
-<div>Simplify your search by using various filters to quickly find the products you need</div>
-<div>Filter products by price, category, brand, availability, or other parameters to easily find the most suitable options</div>
+Simplify your search by using various filters to quickly find the products you need<br/>
+Filter products by price, category, brand, availability, or other parameters to easily find the most suitable options
 
-<image src="src/assets/screenshots/Screenshot_2.png" alt="filtering">
+<image src="src/assets/screenshots/Screenshot_3.png" alt="filtering">
 
 ## Product sorting
 
@@ -27,14 +29,14 @@ Sorting products based on price, rating, and discount for a seamless shopping ex
 
 Use the text search feature to find the desired product by its name, description, or other characteristics
 
-<image src="src/assets/screenshots/Screenshot_3.png" alt="search">
+<image src="src/assets/screenshots/Screenshot_5.png" alt="search">
 
 ## Reset and copy link
 
 Easily reset search results or copy queries to quickly apply them to other searches
 Copy the link to preserve your filtered and sorted search, allowing you to open it in another tab for seamless navigation.
 
-<image src="src/assets/screenshots/Screenshot_5.png" alt="reset-copy">
+<image src="src/assets/screenshots/Screenshot_2.png" alt="reset-copy>
 
 ## Switching product view
 
