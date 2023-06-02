@@ -13,22 +13,28 @@ Online store includes a number of convenient features to make your online shoppi
 ## Product filtering
 
 Simplify your search by using various filters to quickly find the products you need
+Filter products by price, category, brand, availability, or other parameters to easily find the most suitable options.
 
 <image src="src/assets/screenshots/Screenshot_2.png" alt="filtering">
-<image src="src/assets/screenshots/Screenshot_3.png" alt="filtering">
 
 ## Product sorting
 
-Sort products by price, category, brand, availability, or other parameters to easily find the most suitable options.
+Sorting products based on price, rating, and discount for a seamless shopping experience
 
 <image src="src/assets/screenshots/Screenshot_4.png" alt="sorting">
 
 ## Text search && Reset and copy search
 
 Use the text search feature to find the desired product by its name, description, or other characteristics
-Easily reset search results or copy queries to quickly apply them to other searches
 
 <image src="src/assets/screenshots/Screenshot_5.png" alt="search ">
+
+## Reset and copy link
+
+Easily reset search results or copy queries to quickly apply them to other searches
+Copy the link to preserve your filtered and sorted search, allowing you to open it in another tab for seamless navigation.
+
+<image src="src/assets/screenshots/Screenshot_3.png" alt="reset-copy">
 
 ## Switching product view
 
@@ -42,7 +48,7 @@ Get detailed information about the product by visiting its description page, whe
 
 <image src="src/assets/screenshots/Screenshot_7.png" alt="mobile-view">
 
-## Added items counter located in the header
+## Items counter located in the header
 
 Keep track of the number of items added to your cart with a bright and intuitive counter
 
