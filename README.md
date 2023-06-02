@@ -31,10 +31,10 @@ Use the text search feature to find the desired product by its name, description
 
 <image src="src/assets/screenshots/Screenshot_5.png" alt="search">
 
-## Reset and copy link
+## Reset search parameters or copy the link to save search settings
 
-Easily reset search results or copy queries to quickly apply them to other searches
-Copy the link to preserve your filtered and sorted search, allowing you to open it in another tab for seamless navigation.
+Easily reset selected search parameters.
+You can also copy the link to save your filtered and sorted search, allowing you to open it in another tab for convenient navigation.
 
 <image src="src/assets/screenshots/Screenshot_2.png" alt="reset-copy">
 
@@ -79,5 +79,3 @@ If you accidentally land on a non-existent page, we will provide you with inform
 <image src="src/assets/screenshots/Screenshot_12.png" alt="mobile-view">
 <image src="src/assets/screenshots/Screenshot_13.png" alt="mobile-view">
 <image src="src/assets/screenshots/Screenshot_14.png" alt="mobile-view">
-<image src="src/assets/screenshots/Screenshot_15.png" alt="mobile-view">
-<image src="src/assets/screenshots/Screenshot_16.png" alt="mobile-view">
