@@ -50,7 +50,7 @@ Get detailed information about the product by visiting its description page, whe
 
 <image src="src/assets/screenshots/Screenshot_7.png" alt="mobile-view">
 
-## Items counter located
+## Shopping cart item counter
 
 Keep track of the number of items added to your cart with a bright and intuitive counter in the header
 
