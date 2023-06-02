@@ -36,7 +36,7 @@ Use the text search feature to find the desired product by its name, description
 Easily reset search results or copy queries to quickly apply them to other searches
 Copy the link to preserve your filtered and sorted search, allowing you to open it in another tab for seamless navigation.
 
-<image src="src/assets/screenshots/Screenshot_2.png" alt="reset-copy>
+<image src="src/assets/screenshots/Screenshot_2.png" alt="reset-copy">
 
 ## Switching product view
 
@@ -50,9 +50,9 @@ Get detailed information about the product by visiting its description page, whe
 
 <image src="src/assets/screenshots/Screenshot_7.png" alt="mobile-view">
 
-## Items counter located in the header
+## Items counter located
 
-Keep track of the number of items added to your cart with a bright and intuitive counter
+Keep track of the number of items added to your cart with a bright and intuitive counter in the header
 
 <image src="src/assets/screenshots/Screenshot_8.png" alt="counter">
 
